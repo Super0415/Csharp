@@ -1,0 +1,8 @@
+d:\用户目录\我的文档\visual studio 2015\Projects\FirstTest\FirstTest\bin\Debug\FirstTest.exe.config
+d:\用户目录\我的文档\visual studio 2015\Projects\FirstTest\FirstTest\obj\Debug\FirstTest.Form1.resources
+d:\用户目录\我的文档\visual studio 2015\Projects\FirstTest\FirstTest\obj\Debug\FirstTest.Properties.Resources.resources
+d:\用户目录\我的文档\visual studio 2015\Projects\FirstTest\FirstTest\obj\Debug\FirstTest.csproj.GenerateResource.Cache
+d:\用户目录\我的文档\visual studio 2015\Projects\FirstTest\FirstTest\bin\Debug\FirstTest.exe
+d:\用户目录\我的文档\visual studio 2015\Projects\FirstTest\FirstTest\bin\Debug\FirstTest.pdb
+d:\用户目录\我的文档\visual studio 2015\Projects\FirstTest\FirstTest\obj\Debug\FirstTest.exe
+d:\用户目录\我的文档\visual studio 2015\Projects\FirstTest\FirstTest\obj\Debug\FirstTest.pdb
