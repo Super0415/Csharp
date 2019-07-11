@@ -18,7 +18,15 @@ namespace MyTest00
         private TcpClient client;                   //创建一个客户端
         NetworkStream sendStream;                   //创建一个数据流
         private const int buffSize = 10240;         //设置数据流大小为1024
-        private int Connectstate = 0;               //记录端口连接状态
+        private UInt16 HardConnectstate = 0;               //记录硬件端口连接状态
+        private UInt16 SoftConnectstate = 0;               //记录socket连接状态
+        //结构体 IP端口
+        struct EndPoint
+        {
+            public string Ip;
+            //public string Port;   //暂时固定4000端口
+        }
+        EndPoint endPoint = new EndPoint();
 
         public Form1()
         {
@@ -57,27 +65,43 @@ namespace MyTest00
 
         }
 
-        //点击事件 - 网口连接
+        //点击事件 - 网口连接状态判断
         private void button1_Click(object sender, EventArgs e)
         {
-            IPAddress serverIp = IPAddress.Parse(this.textBox1.Text);  //服务端IP 将IP字符串转化为IPAddress实例  注：未填写IP地址，此处阻塞
-            TcpClient client = new TcpClient(); //实例化客户端
-            
-            if (Connectstate == 0)
+            endPoint.Ip = textBox1.Text.Trim();
+            IPAddress serverIp = IPAddress.Parse(endPoint.Ip);  //服务端IP 将IP字符串转化为IPAddress实例  注：未填写IP地址，此处阻塞
+            if (endPoint.Ip == string.Empty)     //确保不会误操作导致IP为空
             {
-                client.Connect(serverIp, 4000); //端口8888需与服务端开启的端口一致，否则无法与服务端建立链接    注：未链接服务器此处阻塞
+                //MessageBox.Show("IP不能为空", "登录提示", 0, MessageBoxIcon.Exclamation);
                 this.textBox3.AppendText(DateTime.Now.ToString() + " ");
-                this.textBox3.AppendText("网口打开链接" + "\r\n");
-                this.button1.Text = "已连接";
-                Connectstate = 1;
+                this.textBox3.AppendText("IP为空" + "\r\n");
+                return;
+            }
+            GetTcpPOPnnections();               //确保物理层线路连接正常
+            if (HardConnectstate != 0xFF)
+            {
+                
+
+                if (SoftConnectstate == 0)
+                {
+                    this.textBox3.AppendText(DateTime.Now.ToString() + " ");
+                    this.textBox3.AppendText("网口打开链接" + "\r\n");
+                    this.button1.Text = "已连接";
+                    SoftConnectstate = 1;
+                }
+                else
+                {
+                    client.Close();
+                    this.textBox3.AppendText(DateTime.Now.ToString() + " ");
+                    this.textBox3.AppendText("网口断开链接" + "\r\n");
+                    this.button1.Text = "未连接";
+                    SoftConnectstate = 0;
+                }
             }
             else
             {
-                client.Close();
-                this.textBox3.AppendText(DateTime.Now.ToString() + " ");
-                this.textBox3.AppendText("网口断开链接" + "\r\n");
-                this.button1.Text = "未连接";
-                Connectstate = 0;
+                HardConnectstate = 0;
+                SoftConnectstate = 0;
             }
         }
 
@@ -103,15 +127,15 @@ namespace MyTest00
             {
                 this.textBox3.AppendText(DateTime.Now.ToString() + " ");
                 this.textBox3.AppendText("物理链路连接成功" + "\r\n");
-                Connectstate = 1;
+                HardConnectstate = 1;
             }
             else
             {
                 this.textBox3.AppendText(DateTime.Now.ToString() + " ");
                 this.textBox3.AppendText("物理链路连接失败" + "\r\n");
                 this.button1.Text = "未连接";
-                Connectstate = 0;
-            };
+                HardConnectstate = 0xFF;
+            }
         }
 
 
@@ -131,10 +155,43 @@ namespace MyTest00
 
         private void button4_Click(object sender, EventArgs e)
         {
+            if (HardConnectstate == 1 && SoftConnectstate == 1)
+            {
+                client = new TcpClient(); //实例化客户端
+                client.Connect(endPoint.Ip, 4000); //端口需与服务端开启的端口一致，否则无法与服务端建立链接    注：未链接服务器此处阻塞
+                sendStream = client.GetStream();
+
+                if (client != null)                             //确保连接有效
+                {
+                    if (textBox2.Text.Trim() == string.Empty)   //确保数据非空
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        string sendData = textBox2.Text.Trim(); //要发送的数据
+                        byte[] buffer = Encoding.Default.GetBytes(sendData); //将数据存入缓存
+                        sendStream.Write(buffer, 0, buffer.Length);
+                        client.Close();
+
+                    }
+                }
+            }
+            else
+            {
+                this.textBox3.AppendText(DateTime.Now.ToString() + " ");
+                this.textBox3.AppendText("网口连接异常" + "\r\n");
+            }
+
 
         }
         //点击事件 - 串口连接（暂未写）
         private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }

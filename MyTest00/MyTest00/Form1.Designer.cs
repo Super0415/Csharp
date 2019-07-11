@@ -55,6 +55,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -140,25 +141,25 @@
             // 未定1ToolStripMenuItem
             // 
             this.未定1ToolStripMenuItem.Name = "未定1ToolStripMenuItem";
-            this.未定1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.未定1ToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.未定1ToolStripMenuItem.Text = "未定1";
             // 
             // 未定2ToolStripMenuItem
             // 
             this.未定2ToolStripMenuItem.Name = "未定2ToolStripMenuItem";
-            this.未定2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.未定2ToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.未定2ToolStripMenuItem.Text = "未定2";
             // 
             // 未定3ToolStripMenuItem
             // 
             this.未定3ToolStripMenuItem.Name = "未定3ToolStripMenuItem";
-            this.未定3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.未定3ToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.未定3ToolStripMenuItem.Text = "未定3";
             // 
             // 未定4ToolStripMenuItem
             // 
             this.未定4ToolStripMenuItem.Name = "未定4ToolStripMenuItem";
-            this.未定4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.未定4ToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.未定4ToolStripMenuItem.Text = "未定4";
             // 
             // 编辑ToolStripMenuItem
@@ -174,19 +175,19 @@
             // 未定1ToolStripMenuItem1
             // 
             this.未定1ToolStripMenuItem1.Name = "未定1ToolStripMenuItem1";
-            this.未定1ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.未定1ToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.未定1ToolStripMenuItem1.Text = "未定1";
             // 
             // 未定2ToolStripMenuItem1
             // 
             this.未定2ToolStripMenuItem1.Name = "未定2ToolStripMenuItem1";
-            this.未定2ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.未定2ToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.未定2ToolStripMenuItem1.Text = "未定2";
             // 
             // 未定3ToolStripMenuItem1
             // 
             this.未定3ToolStripMenuItem1.Name = "未定3ToolStripMenuItem1";
-            this.未定3ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.未定3ToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.未定3ToolStripMenuItem1.Text = "未定3";
             // 
             // 帮助ToolStripMenuItem
@@ -202,19 +203,19 @@
             // 中英切换ToolStripMenuItem
             // 
             this.中英切换ToolStripMenuItem.Name = "中英切换ToolStripMenuItem";
-            this.中英切换ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.中英切换ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.中英切换ToolStripMenuItem.Text = "中英切换";
             // 
             // 技术支持ToolStripMenuItem
             // 
             this.技术支持ToolStripMenuItem.Name = "技术支持ToolStripMenuItem";
-            this.技术支持ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.技术支持ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.技术支持ToolStripMenuItem.Text = "技术支持";
             // 
             // 版本ToolStripMenuItem
             // 
             this.版本ToolStripMenuItem.Name = "版本ToolStripMenuItem";
-            this.版本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.版本ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.版本ToolStripMenuItem.Text = "版本";
             // 
             // comboBox1
@@ -271,7 +272,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(51, 270);
+            this.button4.Location = new System.Drawing.Point(303, 276);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 15;
@@ -279,11 +280,20 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(51, 278);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(246, 21);
+            this.textBox2.TabIndex = 16;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(728, 512);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.comboBox2);
@@ -335,6 +345,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
 
