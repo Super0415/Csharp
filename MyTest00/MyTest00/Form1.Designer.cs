@@ -112,7 +112,6 @@
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 8;
             this.label3.Text = "端口";
-            this.label3.Click += new System.EventHandler(this.label3_Click_1);
             // 
             // menuStrip1
             // 
@@ -125,7 +124,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(728, 25);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // 连接方式ToolStripMenuItem
             // 
@@ -286,7 +284,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(246, 21);
             this.textBox2.TabIndex = 16;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // Form1
             // 
