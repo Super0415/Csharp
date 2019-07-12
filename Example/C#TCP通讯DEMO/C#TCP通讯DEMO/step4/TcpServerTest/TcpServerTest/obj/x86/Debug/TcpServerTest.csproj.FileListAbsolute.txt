@@ -1,0 +1,13 @@
+D:\c#\TcpServerTest\TcpServerTest\bin\Debug\TcpServerTest.exe.config
+D:\c#\TcpServerTest\TcpServerTest\bin\Debug\TcpServerTest.exe
+D:\c#\TcpServerTest\TcpServerTest\bin\Debug\TcpServerTest.pdb
+D:\c#\TcpServerTest\TcpServerTest\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\c#\TcpServerTest\TcpServerTest\obj\x86\Debug\TcpServerTest.Properties.Resources.resources
+D:\c#\TcpServerTest\TcpServerTest\obj\x86\Debug\TcpServerTest.TcpServerForm.resources
+D:\c#\TcpServerTest\TcpServerTest\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\c#\TcpServerTest\TcpServerTest\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\c#\TcpServerTest\TcpServerTest\obj\x86\Debug\TcpServerTest.exe
+D:\c#\TcpServerTest\TcpServerTest\obj\x86\Debug\TcpServerTest.pdb
+C:\Users\Fengzc\Desktop\C#TCP通讯DEMO\C#TCP通讯DEMO\step4\TcpServerTest\TcpServerTest\bin\Debug\TcpServerTest.exe.config
+C:\Users\Fengzc\Desktop\C#TCP通讯DEMO\C#TCP通讯DEMO\step4\TcpServerTest\TcpServerTest\obj\x86\Debug\TcpServerTest.exe
+C:\Users\Fengzc\Desktop\C#TCP通讯DEMO\C#TCP通讯DEMO\step4\TcpServerTest\TcpServerTest\obj\x86\Debug\TcpServerTest.pdb

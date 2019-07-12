@@ -1,0 +1,11 @@
+D:\c#\TcpClientTest\TcpClientTest\bin\Debug\TcpClientTest.exe
+D:\c#\TcpClientTest\TcpClientTest\bin\Debug\TcpClientTest.pdb
+D:\c#\TcpClientTest\TcpClientTest\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\c#\TcpClientTest\TcpClientTest\obj\x86\Debug\TcpClientTest.Properties.Resources.resources
+D:\c#\TcpClientTest\TcpClientTest\obj\x86\Debug\TcpClientTest.TcpClientForm.resources
+D:\c#\TcpClientTest\TcpClientTest\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\c#\TcpClientTest\TcpClientTest\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\c#\TcpClientTest\TcpClientTest\obj\x86\Debug\TcpClientTest.exe
+D:\c#\TcpClientTest\TcpClientTest\obj\x86\Debug\TcpClientTest.pdb
+C:\Users\Fengzc\Desktop\C#TCP通讯DEMO\C#TCP通讯DEMO\step3\TcpClientTest\TcpClientTest\obj\x86\Debug\TcpClientTest.exe
+C:\Users\Fengzc\Desktop\C#TCP通讯DEMO\C#TCP通讯DEMO\step3\TcpClientTest\TcpClientTest\obj\x86\Debug\TcpClientTest.pdb

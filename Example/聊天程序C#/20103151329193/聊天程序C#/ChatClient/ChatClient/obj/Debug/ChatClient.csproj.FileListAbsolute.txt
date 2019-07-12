@@ -1,0 +1,2 @@
+C:\Users\Fengzc\Desktop\聊天程序C#\20103151329193\聊天程序C#\ChatClient\ChatClient\obj\Debug\ChatClient.exe
+C:\Users\Fengzc\Desktop\聊天程序C#\20103151329193\聊天程序C#\ChatClient\ChatClient\obj\Debug\ChatClient.pdb

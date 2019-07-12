@@ -38,7 +38,7 @@ namespace MyTest00
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.textBox3.Height = 100;                 //数据接收区的高度
+            this.textBox3.Height = 230;                 //数据接收区的高度
             this.textBox3.Width = 700;                  //数据接收区的宽度
             this.textBox1.Text = "192.168.1.100";       //设置IP显示默认值
         }
@@ -82,19 +82,6 @@ namespace MyTest00
                 SoftConnectstate = 0;
             }
         }
-
-        ////获取所有网络端口信息
-        //public void GetTcpConnections()
-        //{
-        //    IPGlobalProperties properties = IPGlobalProperties.GetIPGlobalProperties();
-
-        //    TcpConnectionInformation[] connections = properties.GetActiveTcpConnections();  
-        //    foreach (TcpConnectionInformation t in connections)
-        //    {
-        //        this.textBox3.AppendText("Local endpoint: " + t.LocalEndPoint.ToString() + "\r\n");
-        //        this.textBox3.AppendText("Remote endpoint:" + t.RemoteEndPoint.ToString() + "\r\n");
-        //    }
-        //}
 
         //获取指定IP端口物理状态
         public void GetTcpPOPnnections()
@@ -141,12 +128,20 @@ namespace MyTest00
 
                     try
                     {
-                        string sendData = textBox2.Text.Trim();         //获取要发送的数据
-                        byte[] buffer = Encoding.Default.GetBytes(sendData); //将数据存入缓存
+                        string sendData = textBox2.Text.Trim() + "\n";         //获取要发送的数据
+                        byte[] buffer = Encoding.UTF8.GetBytes(sendData); //将数据存入缓存
                         Stream.Write(buffer, 0, buffer.Length);
+
+                        textBox3.AppendText("发送数据" + " " + sendData + " 发送长度");
+                        textBox3.AppendText(buffer.Length + "\r\n");
+
 
                         int length = Stream.Read(data, 0, data.Length); //读取要接收的数据
                         string receiveMsg = Encoding.UTF8.GetString(data, 0, length);
+
+                        textBox3.AppendText("接收长度" + " ");
+                        textBox3.AppendText(length + " ");
+
                         textBox3.AppendText(DateTime.Now.ToString() + " ");
                         textBox3.AppendText(receiveMsg + "\r\n");
 
