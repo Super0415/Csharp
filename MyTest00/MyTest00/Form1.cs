@@ -31,7 +31,48 @@ namespace MyTest00
             public UInt16 NetWorkHardConnectstate;              //记录硬件端口连接状态
             public UInt16 NetWorkSoftConnectstate;              //记录socket连接状态
             public UInt16 COMHardConnectstate;                  //记录硬件串口连接状态
-            public UInt16 COMSoftConnectstate;                  //记录串口通讯连接状态
+        //    public UInt16 COMSoftConnectstate;                  //记录串口通讯连接状态
+        }
+        //结构体 电机控制状态
+        struct EngineData
+        {
+            public int Axle;                //轴号
+            public int Distence;            //距离
+            public int StartSpeed;          //起始速度
+            public int RunSpeed;            //运行速度
+            public int Acceleration;        //加速度
+            public int Location;            //当前位置
+            //回原点参数
+            public int SecondSpeed;         //第二速度
+            //运动模式
+            public int RunMode;             //运动模式
+            //轴IO
+            public UInt16 SignEnLimit;         //极限使能信号
+            public UInt16 SignEnOrigin;        //原点使能信号
+            public UInt16 SignReversalLimit;   //反转极限信号
+            public UInt16 SignReversalOrigin;  //反转原点信号
+            //主板-IO控制-输入
+            public UInt16 MInput00;         //主板输入X0
+            public UInt16 MInput01;         //主板输入X1
+            public UInt16 MInput02;         //主板输入X2
+            public UInt16 MInput03;         //主板输入X3
+            public UInt16 MInput04;         //主板输入X4
+            public UInt16 MInput05;         //主板输入X5
+            public UInt16 MInput06;         //主板输入X6
+            public UInt16 MInput07;         //主板输入X7
+            //主板-IO控制-输出
+            public UInt16 MOutput00;        //主板输出Y0
+            public UInt16 MOutput01;        //主板输出Y1
+            public UInt16 MOutput02;        //主板输出Y2
+            public UInt16 MOutput03;        //主板输出Y3
+            public UInt16 MOutput04;        //主板输出Y4
+            public UInt16 MOutput05;        //主板输出Y5
+            public UInt16 MOutput06;        //主板输出Y6
+            public UInt16 MOutput07;        //主板输出Y7
+            //演示模式
+            public UInt16 ShowMode;         //演示模式
+
+
         }
 
         private TcpClient client;                               //创建一个客户端
@@ -266,8 +307,9 @@ namespace MyTest00
             textBox3.AppendText(DateTime.Now.ToString() + "接收数据:" + str + "\r\n");
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
 
-
-
+        }
     }
 }
