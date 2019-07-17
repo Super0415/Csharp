@@ -69,8 +69,8 @@ namespace MyTest00
                 comboBox4.SelectedIndex = i;
 
             }
-            comboBox1.SelectedItem = comboBox1.Items[1];    //默认为列表第二个变量 
-            comboBox2.SelectedItem = comboBox2.Items[1];    //默认为列表第二个变量 
+            comboBox1.SelectedItem = comboBox1.Items[0];    //默认为列表第二个变量 
+            comboBox2.SelectedItem = comboBox2.Items[0];    //默认为列表第二个变量 
             comboBox3.SelectedItem = comboBox3.Items[0];    //默认为列表第一个变量
             comboBox4.SelectedItem = comboBox4.Items[0];    //默认为列表第一个变量 
         }

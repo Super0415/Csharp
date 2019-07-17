@@ -16,3 +16,4 @@ E:\GITData\Csharp\MyTest00\MyTest00\obj\Debug\MyTest00.Properties.Resources.reso
 E:\GITData\Csharp\MyTest00\MyTest00\obj\Debug\MyTest00.csproj.GenerateResource.Cache
 E:\GITData\Csharp\MyTest00\MyTest00\obj\Debug\MyTest00.Form1.resources
 E:\GITData\Csharp\MyTest00\MyTest00\obj\Debug\MyTest00.Form2.resources
+E:\GITData\Csharp\MyTest00\MyTest00\obj\Debug\MyTest00.csprojResolveAssemblyReference.cache
