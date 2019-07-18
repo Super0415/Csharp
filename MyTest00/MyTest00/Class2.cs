@@ -8,6 +8,111 @@ namespace MyTest00
 {
     public partial class CMD : Form1
     {
+
+        enum CMDTopNum
+        {
+           //主板指令头
+            move = 0,
+            moveto,
+            stop,
+            home,
+            getst,
+            getpos,
+            setout,
+            getout,
+            getin,
+            setpos,
+            getds,
+            H,
+            getver,
+            getsn,
+            getaio,
+            setaio,
+            setlmt,
+            getname,
+            //扩展板指令头
+            nmove,
+            nmoveto,
+            nstop,
+            nhome,
+            ngetst,
+            ngetpos,
+            nsetout,
+            ngetout,
+            ngetin,
+            nsetpos,
+            ngetds,
+            nH,
+            ngetver,
+            ngetsn,
+            ngetaio,
+            nsetaio,
+            nsetlmt,
+            ngetname
+        }
+        public static string[] CMDTop = 
+        {
+            //主板指令头
+            "move",
+            "moveto",
+            "stop",
+            "home",
+            "getst",
+            "getpos",
+            "setout",
+            "getout",
+            "getin",
+            "setpos",
+            "getds",
+            "H",
+            "getver",
+            "getsn",
+            "getaio",
+            "setaio",
+            "setlmt",
+            "getname",
+            //扩展板指令头
+            "nmove",
+            "nmoveto",
+            "nstop",
+            "nhome",
+            "ngetst",
+            "ngetpos",
+            "nsetout",
+            "ngetout",
+            "ngetin",
+            "nsetpos",
+            "ngetds",
+            "H",
+            "ngetver",
+            "ngetsn",
+            "ngetaio",
+            "nsetaio",
+            "nsetlmt",
+            "ngetname"
+        };
+        enum CMDStateNum
+        {   
+            OK = 0,
+            BUSY,
+            ERROR,
+            Invalide,
+        }
+        public static string[] CMDStateEN =
+        {
+            "OK",
+            "BUSY",
+            "ERROR",
+            "Invalide paramters!",
+        };
+        public static string[] CMDStateCN =
+{
+            "操作成功",
+            "正忙",
+            "操作失败",
+            "无效参数",
+        };
+
         /// <summary>
         /// 1-相对移动
         /// </summary>
@@ -25,8 +130,24 @@ namespace MyTest00
             if (Data.Direction == 1) Distence = Data.Distence;          //确定移动方向
             else Distence = -Data.Distence;                    
 
-            string SendData = string.Format("move {0},{1},{2},{3},{4},{5}", Axle, Distence, StartSpeed, RunSpeed, Acceleration, Deceleration);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.move] + " {0},{1},{2},{3},{4},{5}", Axle, Distence, StartSpeed, RunSpeed, Acceleration, Deceleration);
             return SendData;
+        }
+        /// <summary>
+        /// 返回数据处理-1-相对移动
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns>数据状态</returns>
+        public static int HandleCmd_RelativeMovement(string cmddata)
+        {
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                        return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
         }
 
         /// <summary>
@@ -43,10 +164,25 @@ namespace MyTest00
             int Acceleration     = (int)((RunSpeed - StartSpeed) / Data.Acceleration /1000);                //加速度
             int Deceleration     = Acceleration;                //减速度 -同加速度
 
-            string SendData = string.Format("moveto {0},{1},{2},{3},{4},{5}", Axle, Targetlocation, StartSpeed, RunSpeed, Acceleration, Deceleration);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.moveto] + " {0},{1},{2},{3},{4},{5}", Axle, Targetlocation, StartSpeed, RunSpeed, Acceleration, Deceleration);
             return SendData;
         }
-
+        /// <summary>
+        /// 返回数据处理-2-绝对移动
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns>数据状态</returns>
+        public static int HandleCmd_AbsoluteMovement(string cmddata)
+        {
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
         /// <summary>
         /// 3-停止
         /// </summary>
@@ -57,8 +193,24 @@ namespace MyTest00
             ushort Axle             = Data.Axle;                        //轴编号
             double StopRunMode      = Data.StopRunMode;                 //停止模式
 
-            string SendData = string.Format("stop {0},{1}", Axle, StopRunMode);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.stop] + " {0},{1}", Axle, StopRunMode);
             return SendData;
+        }
+        /// <summary>
+        /// 返回数据处理-3-停止
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns>数据状态</returns>
+        public static int HandleCmd_StopRun(string cmddata)
+        {
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
         }
         /// <summary>
         /// 4-回原点
@@ -77,10 +229,25 @@ namespace MyTest00
             int SecondSpeed      = Data.SecondSpeed;                 //回原点第二速度
             int offset           = Data.Reserve0;                    //预留参数
 
-            string SendData = string.Format("home {0},{1},{2},{3},{4},{5},{6},{7},{8}", Axle, StartSpeed, RunSpeed, Acceleration, Deceleration, homeMode, homeDir, SecondSpeed, offset);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.home] + " {0},{1},{2},{3},{4},{5},{6},{7},{8}", Axle, StartSpeed, RunSpeed, Acceleration, Deceleration, homeMode, homeDir, SecondSpeed, offset);
             return SendData;
         }
-
+        /// <summary>
+        /// 返回数据处理-4-回原点
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns>数据状态</returns>
+        public static int HandleCmd_GoHome(string cmddata)
+        {
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
         /// <summary>
         /// 5-获取轴状态
         /// </summary>
@@ -89,8 +256,41 @@ namespace MyTest00
         public static string ControlCmd_GetAxleState(EngineData Data)
         {
             ushort Axle = Data.Axle;                                    //轴编号
-            string SendData = string.Format("getst {0}", Axle);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getst] + " {0}", Axle);
             return SendData;
+        }
+        /// <summary>
+        /// 返回数据处理-5-获取轴状态
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns>数据状态</returns>
+        //public ushort LightError;           //灯光-错误
+        //public ushort LightAlarm;           //灯光-报警
+        //public ushort LightPositiveLimit;   //灯光-正极限
+        //public ushort LightHome;            //灯光-原点
+        //public ushort LightNegativeLimit;   //灯光-负极限
+        //public ushort LightBusy;            //灯光-正忙
+        //public ushort LightComeHome;        //灯光-回原点
+        //public ushort LightPulse;           //灯光-脉冲
+        //public ushort LightDirection;       //灯光-方向
+        public static int HandleCmd_GetAxleState(string cmddata, EngineData Data)
+        {
+            System.Text.RegularExpressions.Regex rex = new System.Text.RegularExpressions.Regex(@"^\d+$");
+            if (rex.IsMatch(cmddata))
+            {
+                Data.LightState = int.Parse(cmddata);
+                return 0;
+            }
+
+
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
         }
         /// <summary>
         /// 6-获取轴位置
@@ -100,7 +300,7 @@ namespace MyTest00
         public static string ControlCmd_GetAxlePos(EngineData Data)
         {
             ushort Axle = Data.Axle;                                    //轴编号
-            string SendData = string.Format("getpos {0}", Axle);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getpos] + " {0}", Axle);
             return SendData;
         }
         /// <summary>
@@ -111,7 +311,7 @@ namespace MyTest00
         public static string ControlCmd_SetMOutput(EngineData Data)
         {
             int Output = Data.MOutput;                                  //主板输出                       
-            string SendData = string.Format("setout {0}", Output);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.setout] + " {0}", Output);
             return SendData;
         }
         /// <summary>
@@ -120,7 +320,7 @@ namespace MyTest00
         /// <returns>控制命令</returns>
         public static string ControlCmd_GetMOutput()
         {
-            string SendData = string.Format("getout");
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getout]);
             return SendData;
         }
         /// <summary>
@@ -129,7 +329,7 @@ namespace MyTest00
         /// <returns>控制命令</returns>
         public static string ControlCmd_GetMInput()
         {
-            string SendData = string.Format("getin");
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getin]);
             return SendData;
         }
         /// <summary>
@@ -141,7 +341,7 @@ namespace MyTest00
         {
             ushort Axle = Data.Axle;                                //轴编号
             int Targetlocation = Data.Targetlocation;            //目标位置
-            string SendData = string.Format("setpos {0},{1}", Axle, Targetlocation);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.setpos] + " {0},{1}", Axle, Targetlocation);
             return SendData;
         }
         /// <summary>
@@ -150,7 +350,7 @@ namespace MyTest00
         /// <returns>控制命令</returns>
         public static string ControlCmd_StateCodingswitch()
         {
-            string SendData = string.Format("getds");
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getds]);
             return SendData;
         }
         /// <summary>
@@ -159,7 +359,7 @@ namespace MyTest00
         /// <returns>控制命令</returns>
         public static string ControlCmd_Heart()
         {
-            string SendData = string.Format("H");
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.H]);
             return SendData;
         }
 
@@ -169,7 +369,7 @@ namespace MyTest00
         /// <returns>控制命令</returns>
         public static string ControlCmd_GetVersion()
         {
-            string SendData = string.Format("getver");
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getver]);
             return SendData;
         }
         /// <summary>
@@ -178,7 +378,7 @@ namespace MyTest00
         /// <returns>控制命令</returns>
         public static string ControlCmd_GetSerial()
         {
-            string SendData = string.Format("getsn");
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getsn]);
             return SendData;
         }
         /// <summary>
@@ -187,7 +387,7 @@ namespace MyTest00
         /// <returns>控制命令</returns>
         public static string ControlCmd_GetIOIndex(int chose)
         {
-            string SendData = string.Format("getaio {0}", chose);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getaio] + " {0}", chose);
             return SendData;
         }
 
@@ -197,7 +397,7 @@ namespace MyTest00
         /// <returns>控制命令</returns>
         public static string ControlCmd_SetIOIndex(int chose)
         {
-            string SendData = string.Format("setaio {0},ioState", chose);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.setaio] + " {0},ioState", chose);
             return SendData;
         }
 
@@ -209,7 +409,7 @@ namespace MyTest00
         public static string ControlCmd_SetGrade(EngineData Data)
         {
             ushort Axle = Data.Axle;                                //轴编号
-            string SendData = string.Format("setlmt {0},{1},{2},{3},{4}", Axle);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.setlmt] + " {0},{1},{2},{3},{4}", Axle);
             return SendData;
         }
         /// <summary>
@@ -218,7 +418,7 @@ namespace MyTest00
         /// <returns>控制命令</returns>
         public static string ControlCmd_GetName()
         {
-            string SendData = string.Format("getname");
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getname]);
             return SendData;
         }
 
@@ -238,7 +438,7 @@ namespace MyTest00
             int Acceleration = (int)((RunSpeed - StartSpeed) / Data.Acceleration / 1000);                //加速度
             int Deceleration = Acceleration;                //减速度 -同加速度
 
-            string SendData = string.Format("nmove {0},{1},{2},{3},{4},{5},{6}", boardIP, Axle, Distence, StartSpeed, RunSpeed, Acceleration, Deceleration);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.nmove] + " {0},{1},{2},{3},{4},{5},{6}", boardIP, Axle, Distence, StartSpeed, RunSpeed, Acceleration, Deceleration);
             return SendData;
         }
 
@@ -257,7 +457,7 @@ namespace MyTest00
             int Acceleration = (int)((RunSpeed - StartSpeed) / Data.Acceleration / 1000);                //加速度
             int Deceleration = Acceleration;                //减速度 -同加速度
 
-            string SendData = string.Format("nmoveto {0},{1},{2},{3},{4},{5},{6}", boardIP, Axle, Targetlocation, StartSpeed, RunSpeed, Acceleration, Deceleration);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.nmoveto] + " {0},{1},{2},{3},{4},{5},{6}", boardIP, Axle, Targetlocation, StartSpeed, RunSpeed, Acceleration, Deceleration);
             return SendData;
         }
 
@@ -272,7 +472,7 @@ namespace MyTest00
             ushort Axle = Data.Axle;                                //轴编号
             int StopRunMode = Data.StopRunMode;                  //停止模式
 
-            string SendData = string.Format("nstop {0},{1},{2}", boardIP, Axle, StopRunMode);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.nstop] + " {0},{1},{2}", boardIP, Axle, StopRunMode);
             return SendData;
         }
         /// <summary>
@@ -293,7 +493,7 @@ namespace MyTest00
             int SecondSpeed = Data.SecondSpeed;                 //回原点第二速度
             int offset = Data.Reserve0;                    //预留参数
 
-            string SendData = string.Format("nhome {0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", boardIP, Axle, StartSpeed, RunSpeed, Acceleration, Deceleration, homeMode, homeDir, SecondSpeed, offset);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.nhome] + " {0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", boardIP, Axle, StartSpeed, RunSpeed, Acceleration, Deceleration, homeMode, homeDir, SecondSpeed, offset);
             return SendData;
         }
 
@@ -306,7 +506,7 @@ namespace MyTest00
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
             ushort Axle = Data.Axle;                                    //轴编号
-            string SendData = string.Format("ngetst {0},{1}", boardIP, Axle);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.ngetst] + " {0},{1}", boardIP, Axle);
             return SendData;
         }
         /// <summary>
@@ -318,7 +518,7 @@ namespace MyTest00
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
             ushort Axle = Data.Axle;                                    //轴编号
-            string SendData = string.Format("ngetpos {0},{1}", boardIP, Axle);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.ngetpos] + " {0},{1}", boardIP, Axle);
             return SendData;
         }
         /// <summary>
@@ -330,7 +530,7 @@ namespace MyTest00
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
             int Output = Data.MOutput;                               //位号0~8
-            string SendData = string.Format("nsetout {0},{1}", boardIP, Output);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.nsetout] + " {0},{1}", boardIP, Output);
             return SendData;
         }
         /// <summary>
@@ -340,7 +540,7 @@ namespace MyTest00
         public static string ControlCmd_GetMOutputExtern(EngineData Data)
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("ngetout {0}", boardIP);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.ngetout] + " {0}", boardIP);
             return SendData;
         }
         /// <summary>
@@ -350,7 +550,7 @@ namespace MyTest00
         public static string ControlCmd_GetMInputExtern(EngineData Data)
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("ngetin {0}", boardIP);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.ngetin] + " {0}", boardIP);
             return SendData;
         }
         /// <summary>
@@ -363,7 +563,7 @@ namespace MyTest00
             ushort Axle = Data.Axle;                                //轴编号
             ushort boardIP = Data.boardIP;                          //扩展卡编号
             int Targetlocation = Data.Targetlocation;            //目标位置
-            string SendData = string.Format("nsetpos {0},{1},{2}", boardIP ,Axle, Targetlocation);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.nsetpos] + " {0},{1},{2}", boardIP ,Axle, Targetlocation);
             return SendData;
         }
         /// <summary>
@@ -373,7 +573,7 @@ namespace MyTest00
         public static string ControlCmd_StateCodingswitchExtern(EngineData Data)
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("ngetds {0}", boardIP);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.ngetds] + " {0}", boardIP);
             return SendData;
         }
         /// <summary>
@@ -383,7 +583,7 @@ namespace MyTest00
         public static string ControlCmd_HeartExtern(EngineData Data)
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("H");
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.nH]);
             return SendData;
         }
 
@@ -394,7 +594,7 @@ namespace MyTest00
         public static string ControlCmd_GetVersionExtern(EngineData Data)
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("ngetver {0}", boardIP);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.ngetver] + " {0}", boardIP);
             return SendData;
         }
         /// <summary>
@@ -404,7 +604,7 @@ namespace MyTest00
         public static string ControlCmd_GetSerialExtern(EngineData Data)
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("ngetsn {0}", boardIP);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.ngetsn] + " {0}", boardIP);
             return SendData;
         }
         /// <summary>
@@ -414,7 +614,7 @@ namespace MyTest00
         public static string ControlCmd_GetIOIndexExtern(EngineData Data, int chose)
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("ngetaio {0},{1}", boardIP, chose);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.ngetaio] + " {0},{1}", boardIP, chose);
             return SendData;
         }
 
@@ -425,7 +625,7 @@ namespace MyTest00
         public static string ControlCmd_SetIOIndexExtern(EngineData Data, int chose)
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("nsetaio {0},{1},ioState", boardIP, chose);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.nsetaio] + " {0},{1},ioState", boardIP, chose);
             return SendData;
         }
 
@@ -438,7 +638,7 @@ namespace MyTest00
         {
             ushort Axle = Data.Axle;                                //轴编号
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("nsetlmt {0},{1},{2},{3},{4},{5}", boardIP,Axle);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.nsetlmt] + " {0},{1},{2},{3},{4},{5}", boardIP,Axle);
             return SendData;
         }
         /// <summary>
@@ -448,8 +648,117 @@ namespace MyTest00
         public static string ControlCmd_GetNameExtern(EngineData Data)
         {
             ushort boardIP = Data.boardIP;                          //扩展卡编号
-            string SendData = string.Format("ngetname {0}", boardIP);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.ngetname] + " {0}", boardIP);
             return SendData;
+        }
+
+        public static int GetInfo_CmdNum(string cmdd)
+        {
+
+            for (int i = 0; i < CMDTop.Length; i++)
+            {
+                if (string.Equals(cmdd, CMDTop[i]))
+                {
+                    return i;
+                }
+            }
+            return 0xFF;
+        }
+
+        public static int Group_CmdData(string cmddata, int cmdnum, EngineData Data)
+        {
+            int result = 0;
+            switch (cmdnum)
+            {
+                case 0: //相对移动
+                    result = HandleCmd_RelativeMovement(cmddata);
+                    break;
+                case 1: //绝对移动
+                    result = HandleCmd_AbsoluteMovement(cmddata);
+                    break;
+                case 2: //停止
+                    result = HandleCmd_StopRun(cmddata);
+                    break;
+                case 3:
+                    result = HandleCmd_GoHome(cmddata);
+                    break;
+                case 4:
+                    result = HandleCmd_GetAxleState(cmddata, Data);
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    break;
+                case 11:
+                    break;
+                case 12:
+                    break;
+                case 13:
+                    break;
+                case 14:
+                    break;
+                case 15:
+                    break;
+                case 16:
+                    break;
+                case 17:
+                    break;
+                case 18:
+                    break;
+                case 19:
+                    break;
+                case 20:
+                    break;
+                case 21:
+                    break;
+                case 22:
+                    break;
+                case 23:
+                    break;
+                case 24:
+                    break;
+                case 25:
+                    break;
+                case 26:
+                    break;
+                case 27:
+                    break;
+                case 28:
+                    break;
+                case 29:
+                    break;
+                case 30:
+                    break;
+                case 31:
+                    break;
+                case 32:
+                    break;
+                case 33:
+                    break;
+                case 34:
+                    break;
+                case 35:
+                    break;
+                case 36:
+                    break;
+                case 37:
+                    break;
+                case 38:
+                    break;
+                default:
+                    break;
+
+            }
+            return result;
+
         }
 
     }
