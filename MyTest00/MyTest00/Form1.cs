@@ -262,8 +262,12 @@ namespace MyTest00
             comboBox2.SelectedItem = comboBox2.Items[1];    //默认为列表第二个变量 - 115200
 
             string[] ports = SerialPort.GetPortNames();
-            comboBox1.Items.AddRange(ports);
-            comboBox1.SelectedItem = comboBox1.Items[0];
+            if (ports.Length != 0)
+            {
+                comboBox1.Items.AddRange(ports);
+                comboBox1.SelectedItem = comboBox1.Items[0];
+            }
+            
         }
 
         //事件API - 点击按钮，连接串口
@@ -297,7 +301,7 @@ namespace MyTest00
             }
             catch
             {
-                MessageBox.Show("串口被占用！", "提示", 0, MessageBoxIcon.Exclamation);
+                MessageBox.Show("串口打开失败！", "提示", 0, MessageBoxIcon.Exclamation);
             }
         }
 
