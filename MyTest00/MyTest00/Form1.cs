@@ -37,6 +37,8 @@ namespace MyTest00
         //结构体 电机控制状态
         public struct EngineData
         {
+            public string Name;                     //主板名称
+            public int  SN;                     //串口信息
             public ushort boardIP;              //扩展卡编号
             /// <summary>
             /// 轴号
@@ -58,8 +60,11 @@ namespace MyTest00
 
             public ushort StateCodingswitch;    //编码开关状态
 
+            public ushort SetDirection;    //设置运动方向
+
             //回原点参数
             public int SecondSpeed;          //第二速度
+            public int ReturnDirection;            //回原点运动方向
             //运动模式
             public int RunMode;                 //运动模式  0-点对点 1-连续 2-原点
             public int StopRunMode;             //停止运动模式 0-立即停 1-减速停
@@ -85,16 +90,22 @@ namespace MyTest00
             public int MInput;         //主板输入
 
             //主板-IO控制-输出
-            public ushort MOutputClickNum;  //点击输出口编号
             public int MOutput;        //主板输出
+
+            //主板-PWM控制-输入输出控制
+            public int PWMStatequery;    //PWM控制输入输出查询码
+            public int PWMState;         //PWM控制输入输出状态
 
 
             //演示模式
             public ushort ShowMode;         //演示模式
+            
 
             //通讯状态
             public ushort StatePOP;         //通讯状态 0-OK
-     
+            public ushort HeartCount;       //心跳计数
+            public int CMDID;       //发送命令ID
+
         }
         /// <summary>
         /// 0：OK-正常   1：BUSY-正忙     2：ERROR-错误    3：Invalide paramters-无效数据
@@ -115,7 +126,19 @@ namespace MyTest00
         /// <summary>
         /// 运行数据集
         /// </summary>
-        EngineData engineData = new EngineData();
+        public static EngineData engineData = new EngineData();
+        /// <summary>
+        /// 记录灯光状态
+        /// bit0-报警状态
+        /// bit1:忙状态
+        /// bit2:错误状态
+        /// bit3:正极限信号
+        /// bit4:原点信号
+        /// bit5:负极限信号
+        /// bit6:回原点状态中
+        /// </summary>
+        public static int LightState = 0;   
+
 
         //static Semaphore sema = new Semaphore(1, 1); //申请信号量
 
@@ -151,6 +174,7 @@ namespace MyTest00
                     button1.Text = "已连接";
                     communicationstate.NetWorkSoftConnectstate = 1;
                     communicationstate.NetWorkHardConnectstate = 1;
+                    timer2.Enabled = true;
                 }
                 else
                 {
@@ -158,6 +182,7 @@ namespace MyTest00
                     button1.Text = "未连接";
                     communicationstate.NetWorkSoftConnectstate = 0;
                     communicationstate.NetWorkHardConnectstate = 0;
+                    timer2.Enabled = false;
                 }
             }
             else
@@ -209,7 +234,7 @@ namespace MyTest00
                     byte[] buffer = Encoding.UTF8.GetBytes(sendData); //将数据存入缓存
                     Stream.Write(buffer, 0, buffer.Length);
 
-                    textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "发送长度 " + buffer.Length + "发送数据：" + " " + sendData);
+                    textBox3.AppendText(DateTime.Now.ToString("\r\nyyyy/MM/dd HH:mm:ss fff") + "发送长度 " + buffer.Length + "发送数据：" + " " + sendData);
 
                     int length = Stream.Read(data, 0, data.Length); //读取要接收的数据
                     string receiveMsg = Encoding.UTF8.GetString(data, 0, length);
@@ -235,6 +260,27 @@ namespace MyTest00
                 string source = sArray[0];
                 string Target = sArray[1];
                 textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "片切0：" + source + "片切1：" + Target + "\r\n");
+
+
+                if (sArray.Length > 1)
+                {
+                    if (DealReceiData(sArray[0], sArray[1]))
+                    {
+                        WindosShowLight();
+                        WindosShowData();
+
+                        if (sArray.Length > 5)//提取版本号
+                        {
+                            NetIP = sArray[2];
+                            CardName = sArray[3];
+                            UDSV = sArray[4];
+                            SPT = sArray[5];
+
+                        }
+
+                    }
+                }
+
 
 
             }
@@ -284,6 +330,7 @@ namespace MyTest00
                     com.ReceivedBytesThreshold = 1;
 
                     Btn1.Text = "关闭串口";
+                    timer2.Enabled = true;
                     textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "打开串口" + "\r\n");
                 }
                 else
@@ -292,6 +339,7 @@ namespace MyTest00
                     com.DataReceived -= COM_DataReceived;
                     communicationstate.COMHardConnectstate = 0;
                     Btn1.Text = "打开串口";
+                    timer2.Enabled = false;
                     textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "关闭串口" + "\r\n");
                 }
             }
@@ -310,13 +358,17 @@ namespace MyTest00
         //    string str = System.Text.Encoding.Default.GetString(bytes); //xx="中文";
         //    textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "接收数据:" + str + "\r\n");
         //}
-        
+
 
         /// <summary>
         /// 数据接收事件（不完善，暂时只能处理20ms间隔下的指令，只能发一组，处理一组）
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        string NetIP = null;
+        string CardName = null;
+        string UDSV = null;
+        string SPT = null;
         public void COM_DataReceived(object sender, SerialDataReceivedEventArgs e)   //数据接收事件，读到数据的长度赋值给count，就申请一个byte类型的buff数组，s句柄来读数据
         {
             int len = com.BytesToRead;
@@ -331,30 +383,24 @@ namespace MyTest00
             {
                 if (DealReceiData(strArray[0], strArray[1]))
                 {
-                    //灯光变化
-                    if ((engineData.LightState >> 1 & 0x1) == 0) label17.BackColor = Color.FromArgb(28, 66, 28);    //灯光-忙
-                    else label17.BackColor = Color.FromArgb(44, 255, 44);
-                    if ((engineData.LightState >> 3 & 0x1) == 0) label13.BackColor = Color.FromArgb(28, 66, 28);    //灯光-正极限
-                    else label13.BackColor = Color.FromArgb(44, 255, 44);
-                    if ((engineData.LightState >> 4 & 0x1) == 0) label15.BackColor = Color.FromArgb(28, 66, 28);    //灯光-原点
-                    else label15.BackColor = Color.FromArgb(44, 255, 44);
-                    if ((engineData.LightState >> 5 & 0x1) == 0) label14.BackColor = Color.FromArgb(28, 66, 28);    //灯光-负极限
-                    else label14.BackColor = Color.FromArgb(44, 255, 44);
-                    if ((engineData.LightState >> 6 & 0x1) == 0) label16.BackColor = Color.FromArgb(28, 66, 28);    //灯光-回原点
-                    else label16.BackColor = Color.FromArgb(44, 255, 44);
-                    //if (true) label18.BackColor = Color.FromArgb(28, 66, 28);    //灯光-脉冲
-                    //else label18.BackColor = Color.FromArgb(44, 255, 44);
-                    //if (true) label26.BackColor = Color.FromArgb(28, 66, 28);    //灯光-方向
-                    //else label26.BackColor = Color.FromArgb(44, 255, 44);
+                    WindosShowLight();
+                    WindosShowData();
 
+                    if (strArray.Length > 5)//提取版本号
+                    {
+                        NetIP = strArray[2];
+                        CardName = strArray[3];
+                        UDSV = strArray[4];
+                        SPT = strArray[5];
 
+                    }
+                    for (int i = 0; i < strArray.Length; i++)
+                    {
+
+                    }
 
                 }
 
-                //for (int i = 0; i < strArray.Length; i++)
-                //{
-                //    textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "切片数据" + i + ":" + strArray[i] + "\r\n");
-                //}
                 ReceiBuff = null;
             } 
         }
@@ -371,15 +417,18 @@ namespace MyTest00
             string[] ReceiData = Recei.Split(new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             CMDnum = CMD.GetInfo_CmdNum(SendData[0]);   //获取指令序号
+            if(CMDnum == 12)    //获取版本信息
+                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "软件版本为：" + Recei + NetIP + CardName + UDSV + SPT + "\r\n");
             textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "命令序号：" + CMDnum + "\r\n");
 
             if (CMDnum == 0xFF) return false;
             else
             {
-                int num = CMD.Group_CmdData(ReceiData[0], CMDnum, engineData);
+                int num = CMD.Group_CmdReceivedData(ReceiData[0], CMDnum);
+                if(num == 0) engineData.HeartCount = 0;
+                //engineData.LightState = LightState;
 
-                //if (num == 2) engineData.LightState |= 0x2;         //忙碌状态
-                //else 
+
 
                 //for (int i = 0; i < SendData.Length; i++)
                 //{
@@ -389,8 +438,8 @@ namespace MyTest00
                 {
                     textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "接收数据" + i + ":" + ReceiData[i] + "\r\n");
                 }
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "处理结果:" + CMD.CMDStateCN[num] + "\r\n"); 
-
+                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "处理结果:" + CMD.CMDStateCN[num] + "\r\n");
+                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "灯光:" + engineData.LightState + "\r\n");
 
             }
 
@@ -446,7 +495,7 @@ namespace MyTest00
         void Tool_ChangeAxleFont(ushort num)
         {
             engineData.Axle = num;
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + num + "\r\n");
+            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 轴号" + num + "\r\n");
             if (engineData.Axle == 0)
                 button5.Font = new Font("宋体", 9, FontStyle.Bold);
             else
@@ -460,9 +509,6 @@ namespace MyTest00
             else
                 button7.Font = new Font("宋体", 9, FontStyle.Regular);
 
-            //TESTZC
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + " 运动模式 " + engineData.RunMode + "\r\n"); 
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + " 演示模式 " + engineData.ShowMode + "\r\n");
         }
         //获取输出口的值
         int GetterValue(int Value, ushort bit)
@@ -477,6 +523,102 @@ namespace MyTest00
             return Value;
         }
 
+        /// <summary>
+        /// 窗口灯光变化
+        /// </summary>
+        void WindosShowLight()
+        {
+            if ((engineData.LightState >> 1 & 0x1) == 0) label17.BackColor = Color.FromArgb(28, 66, 28);    //灯光-忙
+            else label17.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.LightState >> 3 & 0x1) == 0) label13.BackColor = Color.FromArgb(28, 66, 28);    //灯光-正极限
+            else label13.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.LightState >> 4 & 0x1) == 0) label15.BackColor = Color.FromArgb(28, 66, 28);    //灯光-原点
+            else label15.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.LightState >> 5 & 0x1) == 0) label14.BackColor = Color.FromArgb(28, 66, 28);    //灯光-负极限
+            else label14.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.LightState >> 6 & 0x1) == 0) label16.BackColor = Color.FromArgb(28, 66, 28);    //灯光-回原点
+            else label16.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.PWMState & 0x15) == 0) label18.BackColor = Color.FromArgb(28, 66, 28);    //灯光-脉冲
+            else label18.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.PWMState & 0x2A) == 0) label26.BackColor = Color.FromArgb(28, 66, 28);    //灯光-方向
+            else label26.BackColor = Color.FromArgb(44, 255, 44);
+            //开关量输出
+            if ((engineData.MOutput >> 0 & 0x1) == 0) button15.BackColor = Color.FromArgb(28, 66, 28);    //灯光-Y0
+            else button15.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MOutput >> 1 & 0x1) == 0) button17.BackColor = Color.FromArgb(28, 66, 28);    //灯光-Y1
+            else button17.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MOutput >> 2 & 0x1) == 0) button21.BackColor = Color.FromArgb(28, 66, 28);    //灯光-Y2
+            else button21.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MOutput >> 3 & 0x1) == 0) button19.BackColor = Color.FromArgb(28, 66, 28);    //灯光-Y3
+            else button19.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MOutput >> 4 & 0x1) == 0) button23.BackColor = Color.FromArgb(28, 66, 28);    //灯光-Y4
+            else button23.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MOutput >> 5 & 0x1) == 0) button25.BackColor = Color.FromArgb(28, 66, 28);    //灯光-Y5
+            else button25.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MOutput >> 6 & 0x1) == 0) button27.BackColor = Color.FromArgb(28, 66, 28);    //灯光-Y6
+            else button27.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MOutput >> 7 & 0x1) == 0) button29.BackColor = Color.FromArgb(28, 66, 28);    //灯光-Y7
+            else button29.BackColor = Color.FromArgb(44, 255, 44);
+            //开关量输入
+            if ((engineData.MInput >> 0 & 0x1) == 0) label5.BackColor = Color.FromArgb(28, 66, 28);    //灯光-X0
+            else label5.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MInput >> 1 & 0x1) == 0) label6.BackColor = Color.FromArgb(28, 66, 28);    //灯光-X1
+            else label6.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MInput >> 2 & 0x1) == 0) label7.BackColor = Color.FromArgb(28, 66, 28);    //灯光-X2
+            else label7.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MInput >> 3 & 0x1) == 0) label8.BackColor = Color.FromArgb(28, 66, 28);    //灯光-X3
+            else label8.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MInput >> 4 & 0x1) == 0) label9.BackColor = Color.FromArgb(28, 66, 28);    //灯光-X4
+            else label9.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MInput >> 5 & 0x1) == 0) label10.BackColor = Color.FromArgb(28, 66, 28);    //灯光-X5
+            else label10.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MInput >> 6 & 0x1) == 0) label11.BackColor = Color.FromArgb(28, 66, 28);    //灯光-X6
+            else label11.BackColor = Color.FromArgb(44, 255, 44);
+            if ((engineData.MInput >> 7 & 0x1) == 0) label12.BackColor = Color.FromArgb(28, 66, 28);    //灯光-X7
+            else label12.BackColor = Color.FromArgb(44, 255, 44);
+
+
+        }
+        /// <summary>
+        /// 窗口数据变化
+        /// </summary>
+        void WindosShowData()
+        {
+            textBox4.Text = engineData.Location.ToString();
+        }
+
+        /// <summary>
+        /// 窗口数据变化
+        /// </summary>
+
+        void StateCheckHeart()
+        {
+            if(engineData.HeartCount >10)
+            {
+                if (com.IsOpen)    //判断串口是否打开
+                {
+                    com.Close();
+                    com.DataReceived -= COM_DataReceived;
+                    communicationstate.COMHardConnectstate = 0;
+                    button2.Text = "打开串口";
+                    timer2.Enabled = false;
+                    textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "关闭串口" + "\r\n");
+                    engineData.HeartCount = 0;
+                }
+
+                if (communicationstate.NetWorkSoftConnectstate == 1)
+                {
+                    textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "网口断开链接" + "\r\n");
+                    button1.Text = "未连接";
+                    communicationstate.NetWorkSoftConnectstate = 0;
+                    communicationstate.NetWorkHardConnectstate = 0;
+                    engineData.HeartCount = 0;
+                }
+            }
+
+        }
+
+
         //为窗口2准备的函数接口 SignEnLimit;         //极限使能信号
         public string SetSignEnLimit{set{engineData.SignEnLimit = ushort.Parse(value);}}
         //为窗口2准备的函数接口 SignEnOrigin;        //原点使能信号
@@ -485,7 +627,11 @@ namespace MyTest00
         public string SetSignReversalLimit { set { engineData.SignReversalLimit = ushort.Parse(value); } }
         //为窗口2准备的函数接口 SignReversalOrigin;  //反转原点信号
         public string SetSignReversalOrigin { set { engineData.SignReversalOrigin = ushort.Parse(value); } }
-
+        //为窗口2准备的函数接口 SignReversalOrigin;  //发送极限设置
+        public void SetSignSendFirm()
+        {
+            engineData.CMDID = (int)CMD.CMDTopNum.setlmt;
+        }
         //****************************************** Myself Code ***********************************************
 
 
@@ -503,6 +649,7 @@ namespace MyTest00
             textBox7.Text = "100";                  //起始速度
             textBox8.Text = "10000";                //运行速度
             textBox9.Text = "1000";                 //第二速度
+            textBox10.Text= "0";                    //目标位置
 
 
             //端口显示控件 波特率显示控件
@@ -555,11 +702,6 @@ namespace MyTest00
         {
             if (communicationstate.COMHardConnectstate == 1 && communicationstate.NetWorkHardConnectstate == 0)
             {
-                //Encoding gb = System.Text.Encoding.GetEncoding("gb2312");
-                //String str = textBox2.Text.Trim() + "\r\n";
-                //byte[] bytes = gb.GetBytes(str);
-                //com.Write(bytes, 0, bytes.Length);
-
                 COM_DataSend(textBox2.Text.Trim(), "utf-8");
             }
             else if (communicationstate.COMHardConnectstate == 0 && communicationstate.NetWorkHardConnectstate == 1)
@@ -618,7 +760,9 @@ namespace MyTest00
             engineData.StartSpeed   = int.Parse(textBox7.Text.Trim());          //起始速度
             engineData.RunSpeed     = int.Parse(textBox8.Text.Trim());          //运行速度
             engineData.SecondSpeed  = int.Parse(textBox9.Text.Trim());          //第二速度
-
+            engineData.Targetlocation = int.Parse(textBox10.Text.Trim());          //第二速度
+            if (engineData.Location>=0) engineData.ReturnDirection = 0;
+            else engineData.ReturnDirection = 1;
             engineData.RunMode = comboBox3.SelectedIndex;
         }
         /// <summary>
@@ -652,13 +796,12 @@ namespace MyTest00
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            engineData.ShowMode = 0;        //演示模式正方向
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            engineData.ShowMode = 1;        //演示模式反方向
         }
+     
 
 
         /// <summary>
@@ -668,13 +811,10 @@ namespace MyTest00
         /// <param name="e"></param>
         private void button15_Click(object sender, EventArgs e)
         {
-            if (GetterValue(engineData.MOutput,0) == 0)
-                engineData.MOutput = SetterValue(engineData.MOutput, 0,0);
-            else
-                engineData.MOutput = SetterValue(engineData.MOutput, 0, 1);
+            if((engineData.MOutput >> 0 & 0x1) ==0) engineData.MOutput |= 1 << 0;
+            else engineData.MOutput &= (1 << 0) ^ (0xFFFF);
 
-            if (GetterValue(engineData.MOutput, 0) == 0) button15.BackColor = Color.FromArgb(28,66,28);
-            else button15.BackColor = Color.FromArgb(44,255,44);
+            engineData.CMDID = (int)CMD.CMDTopNum.setout;
         }
 
         /// <summary>
@@ -684,13 +824,10 @@ namespace MyTest00
         /// <param name="e"></param>
         private void button17_Click(object sender, EventArgs e)
         {
-            if (GetterValue(engineData.MOutput, 1) == 0)
-                engineData.MOutput = SetterValue(engineData.MOutput, 1, 0);
-            else
-                engineData.MOutput = SetterValue(engineData.MOutput, 1, 1);
+            if ((engineData.MOutput >> 1 & 0x1) == 0) engineData.MOutput |= 1 << 1;
+            else engineData.MOutput &= (1 << 1) ^ (0xFFFF);
 
-            if (GetterValue(engineData.MOutput, 1) == 0) button17.BackColor = Color.FromArgb(28, 66, 28);
-            else button17.BackColor = Color.FromArgb(44, 255, 44);
+            engineData.CMDID = (int)CMD.CMDTopNum.setout;
         }
 
         /// <summary>
@@ -700,13 +837,10 @@ namespace MyTest00
         /// <param name="e"></param>
         private void button21_Click(object sender, EventArgs e)
         {
-            if (GetterValue(engineData.MOutput, 2) == 0)
-                engineData.MOutput = SetterValue(engineData.MOutput, 2, 0);
-            else
-                engineData.MOutput = SetterValue(engineData.MOutput, 2, 1);
+            if ((engineData.MOutput >> 2 & 0x1) == 0) engineData.MOutput |= 1 << 2;
+            else engineData.MOutput &= (1 << 2) ^ (0xFFFF);
 
-            if (GetterValue(engineData.MOutput, 2) == 0) button21.BackColor = Color.FromArgb(28, 66, 28);
-            else button21.BackColor = Color.FromArgb(44, 255, 44);
+            engineData.CMDID = (int)CMD.CMDTopNum.setout;
         }
 
         /// <summary>
@@ -716,13 +850,10 @@ namespace MyTest00
         /// <param name="e"></param>
         private void button19_Click(object sender, EventArgs e)
         {
-            if (GetterValue(engineData.MOutput, 3) == 0)
-                engineData.MOutput = SetterValue(engineData.MOutput, 3, 0);
-            else
-                engineData.MOutput = SetterValue(engineData.MOutput, 3, 1);
+            if ((engineData.MOutput >> 3 & 0x1) == 0) engineData.MOutput |= 1 << 3;
+            else engineData.MOutput &= (1 << 3) ^ (0xFFFF);
 
-            if (GetterValue(engineData.MOutput, 3) == 0) button19.BackColor = Color.FromArgb(28, 66, 28);
-            else button19.BackColor = Color.FromArgb(44, 255, 44);
+            engineData.CMDID = (int)CMD.CMDTopNum.setout;
         }
 
         /// <summary>
@@ -732,13 +863,10 @@ namespace MyTest00
         /// <param name="e"></param>
         private void button23_Click(object sender, EventArgs e)
         {
-            if (GetterValue(engineData.MOutput, 4) == 0)
-                engineData.MOutput = SetterValue(engineData.MOutput, 4, 0);
-            else
-                engineData.MOutput = SetterValue(engineData.MOutput, 4, 1);
+            if ((engineData.MOutput >> 4 & 0x1) == 0) engineData.MOutput |= 1 << 4;
+            else engineData.MOutput &= (1 << 4) ^ (0xFFFF);
 
-            if (GetterValue(engineData.MOutput, 4) == 0) button23.BackColor = Color.FromArgb(28, 66, 28);
-            else button23.BackColor = Color.FromArgb(44, 255, 44);
+            engineData.CMDID = (int)CMD.CMDTopNum.setout;
         }
 
         /// <summary>
@@ -748,13 +876,10 @@ namespace MyTest00
         /// <param name="e"></param>
         private void button25_Click(object sender, EventArgs e)
         {
-            if (GetterValue(engineData.MOutput, 5) == 0)
-                engineData.MOutput = SetterValue(engineData.MOutput, 5, 0);
-            else
-                engineData.MOutput = SetterValue(engineData.MOutput, 5, 1);
+            if ((engineData.MOutput >> 5 & 0x1) == 0) engineData.MOutput |= 1 << 5;
+            else engineData.MOutput &= (1 << 5) ^ (0xFFFF);
 
-            if (GetterValue(engineData.MOutput, 5) == 0) button25.BackColor = Color.FromArgb(28, 66, 28);
-            else button25.BackColor = Color.FromArgb(44, 255, 44);
+            engineData.CMDID = (int)CMD.CMDTopNum.setout;
         }
 
         /// <summary>
@@ -764,13 +889,10 @@ namespace MyTest00
         /// <param name="e"></param>
         private void button27_Click(object sender, EventArgs e)
         {
-            if (GetterValue(engineData.MOutput, 6) == 0)
-                engineData.MOutput = SetterValue(engineData.MOutput, 6, 0);
-            else
-                engineData.MOutput = SetterValue(engineData.MOutput, 6, 1);
+            if ((engineData.MOutput >> 6 & 0x1) == 0) engineData.MOutput |= 1 << 6;
+            else engineData.MOutput &= (1 << 6) ^ (0xFFFF);
 
-            if (GetterValue(engineData.MOutput, 6) == 0) button27.BackColor = Color.FromArgb(28, 66, 28);
-            else button27.BackColor = Color.FromArgb(44, 255, 44);
+            engineData.CMDID = (int)CMD.CMDTopNum.setout;
         }
 
         /// <summary>
@@ -780,59 +902,34 @@ namespace MyTest00
         /// <param name="e"></param>
         private void button29_Click(object sender, EventArgs e)
         {
-            if (GetterValue(engineData.MOutput, 7) == 0)
-                engineData.MOutput = SetterValue(engineData.MOutput, 7, 0);
-            else
-                engineData.MOutput = SetterValue(engineData.MOutput, 7, 1);
+            if ((engineData.MOutput >> 7 & 0x1) == 0) engineData.MOutput |= 1 << 7;
+            else engineData.MOutput &= (1 << 7) ^ (0xFFFF);
 
-            if (GetterValue(engineData.MOutput, 7) == 0) button29.BackColor = Color.FromArgb(28, 66, 28);
-            else button29.BackColor = Color.FromArgb(44, 255, 44);
+            engineData.CMDID = (int)CMD.CMDTopNum.setout;
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            engineData.Direction = 0;
-            string CMDData = CMD.ControlCmd_RelativeMovement(engineData);
-            if (communicationstate.COMHardConnectstate == 1 && communicationstate.NetWorkHardConnectstate == 0)
-            {
-                COM_DataSend(CMDData, "utf-8");
-            }
-            else if (communicationstate.COMHardConnectstate == 0 && communicationstate.NetWorkHardConnectstate == 1)
-            {
-                //NetWorkSendReceived(textBox2.Text);           //网络通讯发送接收数据处理
-                NetWorkSendReceived(CMDData);           //网络通讯发送接收数据处理
-            }
-            else if (communicationstate.COMHardConnectstate == 1 && communicationstate.NetWorkHardConnectstate == 1)
-            {
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "网口通讯与串口通讯不能同时发送！\r\n");
-            }
-            else
-            {
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "网口通讯与串口通讯未连接！\r\n");
-            }
+            engineData.SetDirection = 0;
+            if (engineData.RunMode == 0)  //点对点
+                engineData.CMDID = (int)CMD.CMDTopNum.moveto;
+            else if (engineData.RunMode == 1)  //连续
+                engineData.CMDID = (int)CMD.CMDTopNum.move;
+            else if (engineData.RunMode == 2)  //原点
+                engineData.CMDID = (int)CMD.CMDTopNum.home;
+
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            engineData.Direction = 1;
-            string CMDData = CMD.ControlCmd_RelativeMovement(engineData);
-            if (communicationstate.COMHardConnectstate == 1 && communicationstate.NetWorkHardConnectstate == 0)
-            {
-                COM_DataSend(CMDData, "utf-8");
-            }
-            else if (communicationstate.COMHardConnectstate == 0 && communicationstate.NetWorkHardConnectstate == 1)
-            {
-                //NetWorkSendReceived(textBox2.Text);           //网络通讯发送接收数据处理
-                NetWorkSendReceived(CMDData);           //网络通讯发送接收数据处理
-            }
-            else if (communicationstate.COMHardConnectstate == 1 && communicationstate.NetWorkHardConnectstate == 1)
-            {
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "网口通讯与串口通讯不能同时打开！\r\n");
-            }
-            else
-            {
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "网口通讯与串口通讯未打开！\r\n");
-            }
+            engineData.SetDirection = 1;
+            if(engineData.RunMode==0)  //点对点
+                engineData.CMDID = (int)CMD.CMDTopNum.moveto;
+            else if (engineData.RunMode == 1)  //连续
+                engineData.CMDID = (int)CMD.CMDTopNum.move;
+            else if (engineData.RunMode == 2)  //原点
+                engineData.CMDID = (int)CMD.CMDTopNum.home;
+
         }
 
 
@@ -841,59 +938,69 @@ namespace MyTest00
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        int Timenum = 0;
+        uint TimeState = 0;
         private void timer2_Tick(object sender, EventArgs e)
         {
             string CMDData = "";
-            if (Timenum == 0)
-            {
-                Timenum = 1;
-                CMDData = CMD.ControlCmd_Heart();                           //心跳测试
-            }
-            else if (Timenum == 1)
-            {
-                Timenum = 2;
-                CMDData = CMD.ControlCmd_GetAxlePos(engineData);            //获取轴位置
-            }
-            else if (Timenum == 2)
-            {
-                Timenum = 3;
-                CMDData = CMD.ControlCmd_GetAxleState(engineData);          //获取轴状态
-            }
-            else if (Timenum == 3)
-            {
-                Timenum = 4;
-                CMDData = CMD.ControlCmd_GetIOIndex((engineData.Axle * 2));          //获取轴IO - PUL
-            }
-            else if (Timenum == 4)
-            {
-                Timenum = 5;
-                CMDData = CMD.ControlCmd_GetIOIndex((engineData.Axle * 2 + 1));          //获取轴IO - DIR
-            }
-            else if (Timenum == 5)
-            {
-                Timenum = 6;
-                CMDData = CMD.ControlCmd_GetMInput();          //获取主板输入端口值
-            }
-            else if (Timenum == 6)
-            {
-                Timenum = 0;
-                CMDData = CMD.ControlCmd_GetMOutput();          //获取主板输出端口值
-            }
-            else Timenum = 0;
+            CMDData = CMD.Group_CmdSendData(engineData.CMDID);
 
-
-          
 
 
             if (communicationstate.COMHardConnectstate == 1 && communicationstate.NetWorkHardConnectstate == 0)
             {
+                TimeState=0;
                 COM_DataSend(CMDData, "utf-8");
             }
             else if (communicationstate.COMHardConnectstate == 0 && communicationstate.NetWorkHardConnectstate == 1)
             {
+                TimeState=0;
                 NetWorkSendReceived(CMDData);           //网络通讯发送接收数据处理
             }
+            else if (TimeState == 0 && communicationstate.COMHardConnectstate == 1 && communicationstate.NetWorkHardConnectstate == 1)
+            {
+                TimeState++;
+                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "网口通讯与串口通讯不能同时打开！\r\n");
+            }
+            else if (TimeState > 20 && communicationstate.COMHardConnectstate == 0 && communicationstate.NetWorkHardConnectstate == 0)
+            {
+                TimeState = 0;
+                //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "网口通讯与串口通讯未打开！\r\n");
+            }
+
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            engineData.StopRunMode = 1;
+            engineData.CMDID = (int)CMD.CMDTopNum.stop;
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            engineData.StopRunMode = 0;
+            engineData.CMDID = (int)CMD.CMDTopNum.stop;
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+
+            if(this.radioButton1.Checked == true)
+                engineData.SetDirection = 0;        //演示模式正方向
+            else
+                engineData.SetDirection = 1;        //演示模式负方向
+
+            if (engineData.ShowMode == 0)
+            {
+                engineData.ShowMode = 1;    //开始演示
+                button14.Text = "停止";
+            }
+            else
+            {
+                engineData.ShowMode = 0;   //停止演示
+                button14.Text = "开始";
+
+            }
+                
         }
     }
 }

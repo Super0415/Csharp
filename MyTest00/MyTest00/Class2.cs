@@ -9,7 +9,7 @@ namespace MyTest00
     public partial class CMD : Form1
     {
 
-        enum CMDTopNum
+        public enum CMDTopNum
         {
            //主板指令头
             move = 0,
@@ -48,7 +48,9 @@ namespace MyTest00
             ngetaio,
             nsetaio,
             nsetlmt,
-            ngetname
+            ngetname,
+            TEST0,
+            TEST1
         }
         public static string[] CMDTop = 
         {
@@ -89,7 +91,9 @@ namespace MyTest00
             "ngetaio",
             "nsetaio",
             "nsetlmt",
-            "ngetname"
+            "ngetname",
+            "TEST0",
+            "TEST1"
         };
         enum CMDStateNum
         {   
@@ -127,7 +131,7 @@ namespace MyTest00
             int Acceleration        = (int)((RunSpeed- StartSpeed)/Data.Acceleration/1000);                //加速度 ms
             int Deceleration        = Acceleration;                //减速度 -同加速度
 
-            if (Data.Direction == 1) Distence = Data.Distence;          //确定移动方向
+            if (Data.SetDirection == 1) Distence = Data.Distence;          //确定移动方向
             else Distence = -Data.Distence;                    
 
             string SendData = string.Format(CMDTop[(int)CMDTopNum.move] + " {0},{1},{2},{3},{4},{5}", Axle, Distence, StartSpeed, RunSpeed, Acceleration, Deceleration);
@@ -144,7 +148,7 @@ namespace MyTest00
             {
                 if (string.Equals(cmddata, CMDStateEN[i]))
                 {
-                        return i;
+                    return i;
                 }
             }
             return (int)CMDStateNum.Invalide;       //返回无效数据状态
@@ -225,7 +229,7 @@ namespace MyTest00
             int Acceleration     = (int)((RunSpeed - StartSpeed) / Data.Acceleration / 1000);                //加速度
             int Deceleration     = Acceleration;                //减速度 -同加速度
             int homeMode         = Data.Reserve0;                    //预留参数
-            int homeDir          = Data.Direction;                   //回原点方向
+            int homeDir          = Data.ReturnDirection;                   //回原点方向
             int SecondSpeed      = Data.SecondSpeed;                 //回原点第二速度
             int offset           = Data.Reserve0;                    //预留参数
 
@@ -264,24 +268,14 @@ namespace MyTest00
         /// </summary>
         /// <param name="cmddata">返回数据</param>
         /// <returns>数据状态</returns>
-        //public ushort LightError;           //灯光-错误
-        //public ushort LightAlarm;           //灯光-报警
-        //public ushort LightPositiveLimit;   //灯光-正极限
-        //public ushort LightHome;            //灯光-原点
-        //public ushort LightNegativeLimit;   //灯光-负极限
-        //public ushort LightBusy;            //灯光-正忙
-        //public ushort LightComeHome;        //灯光-回原点
-        //public ushort LightPulse;           //灯光-脉冲
-        //public ushort LightDirection;       //灯光-方向
-        public static int HandleCmd_GetAxleState(string cmddata, EngineData Data)
+        public static int HandleCmd_GetAxleState(string cmddata)
         {
             System.Text.RegularExpressions.Regex rex = new System.Text.RegularExpressions.Regex(@"^\d+$");
             if (rex.IsMatch(cmddata))
             {
-                Data.LightState = int.Parse(cmddata);
+                engineData.LightState = int.Parse(cmddata);
                 return 0;
             }
-
 
             for (int i = 0; i < CMDStateEN.Length; i++)
             {
@@ -304,6 +298,29 @@ namespace MyTest00
             return SendData;
         }
         /// <summary>
+        /// 返回数据处理-6-获取轴位置
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_GetAxlePos(string cmddata)
+        {
+            System.Text.RegularExpressions.Regex rex = new System.Text.RegularExpressions.Regex(@"^(\-|\+)?\d+$");
+            if (rex.IsMatch(cmddata))
+            {
+                engineData.Location = int.Parse(cmddata);
+                return 0;
+            }
+
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
+        /// <summary>
         /// 7-设置主板输出端口
         /// </summary>
         /// <param name="Data">数据集</param>
@@ -315,6 +332,29 @@ namespace MyTest00
             return SendData;
         }
         /// <summary>
+        /// 返回数据处理-7-设置主板输出端口
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_SetMOutput(string cmddata)
+        {
+            System.Text.RegularExpressions.Regex rex = new System.Text.RegularExpressions.Regex(@"^\d+$");
+            if (rex.IsMatch(cmddata))
+            {
+                engineData.MOutput = int.Parse(cmddata);
+                return 0;
+            }
+
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
+        /// <summary>
         /// 8-获取主板输出端口值
         /// </summary>
         /// <returns>控制命令</returns>
@@ -324,6 +364,29 @@ namespace MyTest00
             return SendData;
         }
         /// <summary>
+        /// 返回数据处理-8-获取主板输出端口值
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_GetMOutput(string cmddata)
+        {
+            System.Text.RegularExpressions.Regex rex = new System.Text.RegularExpressions.Regex(@"^\d+$");
+            if (rex.IsMatch(cmddata))
+            {
+                engineData.MOutput = int.Parse(cmddata);
+                return 0;
+            }
+
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
+        /// <summary>
         /// 9-获取主板输入端口值
         /// </summary>
         /// <returns>控制命令</returns>
@@ -331,6 +394,29 @@ namespace MyTest00
         {
             string SendData = string.Format(CMDTop[(int)CMDTopNum.getin]);
             return SendData;
+        }
+        /// <summary>
+        /// 返回数据处理-9-获取主板输入端口值
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_GetMInput(string cmddata)
+        {
+            System.Text.RegularExpressions.Regex rex = new System.Text.RegularExpressions.Regex(@"^\d+$");
+            if (rex.IsMatch(cmddata))
+            {
+                engineData.MInput = int.Parse(cmddata);
+                return 0;
+            }
+
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
         }
         /// <summary>
         /// 10-设置目标位置
@@ -345,6 +431,22 @@ namespace MyTest00
             return SendData;
         }
         /// <summary>
+        /// 返回数据处理-10-设置目标位置
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_SetTargetlocation(string cmddata)
+        {
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
+        /// <summary>
         /// 11-获取编码开关状态
         /// </summary>
         /// <returns>控制命令</returns>
@@ -352,6 +454,29 @@ namespace MyTest00
         {
             string SendData = string.Format(CMDTop[(int)CMDTopNum.getds]);
             return SendData;
+        }
+        /// <summary>
+        /// 返回数据处理-11-获取编码开关状态
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_StateCodingswitch(string cmddata)
+        {
+            System.Text.RegularExpressions.Regex rex = new System.Text.RegularExpressions.Regex(@"^\d+$");
+            if (rex.IsMatch(cmddata))
+            {
+                engineData.StateCodingswitch = ushort.Parse(cmddata);
+                return 0;
+            }
+
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
         }
         /// <summary>
         /// 12-心跳测试
@@ -362,7 +487,26 @@ namespace MyTest00
             string SendData = string.Format(CMDTop[(int)CMDTopNum.H]);
             return SendData;
         }
-
+        /// <summary>
+        /// 返回数据处理-12-心跳测试
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_Heart(string cmddata)
+        {
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    if (i == 0)
+                    {
+                        engineData.HeartCount = 0;
+                    }
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
         /// <summary>
         /// 13-获取版本
         /// </summary>
@@ -382,25 +526,86 @@ namespace MyTest00
             return SendData;
         }
         /// <summary>
+        /// 返回数据处理-14-获取串口号
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_GetSerial(string cmddata)
+        {
+            System.Text.RegularExpressions.Regex rex = new System.Text.RegularExpressions.Regex(@"^\d+$");
+            if (rex.IsMatch(cmddata))
+            {
+                engineData.SN = int.Parse(cmddata);
+                return 0;
+            }
+
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
+
+        /// <summary>
         /// 15-获取轴IO
         /// </summary>
         /// <returns>控制命令</returns>
-        public static string ControlCmd_GetIOIndex(int chose)
+        public static string ControlCmd_GetIOIndex()
         {
-            string SendData = string.Format(CMDTop[(int)CMDTopNum.getaio] + " {0}", chose);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.getaio] + " {0}", 15);
             return SendData;
         }
+        /// <summary>
+        /// 返回数据处理-15-获取轴IO
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_GetIOIndex(string cmddata)
+        {
+            System.Text.RegularExpressions.Regex rex = new System.Text.RegularExpressions.Regex(@"^\d+$");
+            if (rex.IsMatch(cmddata))
+            {
+                engineData.PWMState = int.Parse(cmddata);
+                return 0;
+            }
 
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
         /// <summary>
         /// 16-设置轴IO
         /// </summary>
         /// <returns>控制命令</returns>
-        public static string ControlCmd_SetIOIndex(int chose)
+        public static string ControlCmd_SetIOIndex()
         {
-            string SendData = string.Format(CMDTop[(int)CMDTopNum.setaio] + " {0},ioState", chose);
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.setaio] + " {0},ioState");
             return SendData;
         }
-
+        /// <summary>
+        /// 返回数据处理-16-设置轴IO
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_SetIOIndex(string cmddata)
+        {
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
+        }
         /// <summary>
         /// 17-权限设置
         /// </summary>
@@ -409,8 +614,29 @@ namespace MyTest00
         public static string ControlCmd_SetGrade(EngineData Data)
         {
             ushort Axle = Data.Axle;                                //轴编号
-            string SendData = string.Format(CMDTop[(int)CMDTopNum.setlmt] + " {0},{1},{2},{3},{4}", Axle);
+            ushort EnLimit = Data.SignEnLimit;
+            ushort EnOrigin = Data.SignEnOrigin;
+            ushort ReversalLimit = Data.SignReversalLimit;
+            ushort ReversalOrigin = Data.SignReversalOrigin;
+
+            string SendData = string.Format(CMDTop[(int)CMDTopNum.setlmt] + " {0},{1},{2},{3},{4}", Axle, EnLimit, EnOrigin, ReversalLimit, ReversalOrigin);
             return SendData;
+        }
+        /// <summary>
+        /// 返回数据处理-17-权限设置
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_SetGrade(string cmddata)
+        {
+            for (int i = 0; i < CMDStateEN.Length; i++)
+            {
+                if (string.Equals(cmddata, CMDStateEN[i]))
+                {
+                    return i;
+                }
+            }
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
         }
         /// <summary>
         /// 18-获取卡名称
@@ -420,6 +646,20 @@ namespace MyTest00
         {
             string SendData = string.Format(CMDTop[(int)CMDTopNum.getname]);
             return SendData;
+        }
+        /// <summary>
+        /// 返回数据处理-18-获取卡名称
+        /// </summary>
+        /// <param name="cmddata">返回数据</param>
+        /// <returns></returns>
+        public static int HandleCmd_GetName(string cmddata)
+        {
+            if (cmddata != null)
+            {
+                engineData.Name = cmddata;
+                return (int)CMDStateNum.OK;       //返回数据正常
+            }     
+            return (int)CMDStateNum.Invalide;       //返回无效数据状态
         }
 
         //**************************** 扩展卡 **********************************************
@@ -489,7 +729,7 @@ namespace MyTest00
             int Acceleration = (int)((RunSpeed - StartSpeed) / Data.Acceleration / 1000);                //加速度
             int Deceleration = Acceleration;                //减速度 -同加速度
             int homeMode = Data.Reserve0;                    //预留参数
-            int homeDir = Data.Direction;                   //回原点方向
+            int homeDir = Data.ReturnDirection;                   //回原点方向
             int SecondSpeed = Data.SecondSpeed;                 //回原点第二速度
             int offset = Data.Reserve0;                    //预留参数
 
@@ -665,7 +905,7 @@ namespace MyTest00
             return 0xFF;
         }
 
-        public static int Group_CmdData(string cmddata, int cmdnum, EngineData Data)
+        public static int Group_CmdReceivedData(string cmddata, int cmdnum)
         {
             int result = 0;
             switch (cmdnum)
@@ -679,37 +919,49 @@ namespace MyTest00
                 case 2: //停止
                     result = HandleCmd_StopRun(cmddata);
                     break;
-                case 3:
+                case 3: //回原点
                     result = HandleCmd_GoHome(cmddata);
                     break;
-                case 4:
-                    result = HandleCmd_GetAxleState(cmddata, Data);
+                case 4://获取轴状态
+                    result = HandleCmd_GetAxleState(cmddata);
                     break;
-                case 5:
+                case 5: //获取轴位置
+                    result = HandleCmd_GetAxlePos(cmddata);
                     break;
-                case 6:
+                case 6: //设置主板输出端口
+                    result = HandleCmd_SetMOutput(cmddata);
                     break;
-                case 7:
+                case 7: //获取主板输出端口值
+                    result = HandleCmd_GetMOutput(cmddata);
                     break;
-                case 8:
+                case 8: //获取主板输入端口值
+                    result = HandleCmd_GetMInput(cmddata);
                     break;
-                case 9:
+                case 9: //设置目标位置
+                    result = HandleCmd_SetTargetlocation(cmddata);
                     break;
-                case 10:
+                case 10://获取编码开关状态
+                    result = HandleCmd_StateCodingswitch(cmddata);
                     break;
-                case 11:
+                case 11://心跳测试
+                    result = HandleCmd_Heart(cmddata);
                     break;
                 case 12:
                     break;
-                case 13:
+                case 13://获取串口号
+                    result = HandleCmd_GetSerial(cmddata);
                     break;
                 case 14:
+                    result = HandleCmd_GetIOIndex(cmddata);
                     break;
                 case 15:
+                    result = HandleCmd_SetIOIndex(cmddata);
                     break;
                 case 16:
+                    result = HandleCmd_SetGrade(cmddata);
                     break;
                 case 17:
+                    result = HandleCmd_GetName(cmddata);
                     break;
                 case 18:
                     break;
@@ -759,6 +1011,99 @@ namespace MyTest00
             }
             return result;
 
+        }
+
+        public static string Group_CmdSendData(int cmdnum)
+        {
+            string result = null;
+            switch (cmdnum)
+            {
+                case 0: //相对移动
+                    result = ControlCmd_RelativeMovement(engineData);
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 1: //绝对移动
+                    result = ControlCmd_AbsoluteMovement(engineData);
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 2: //停止
+                    result = ControlCmd_StopRun(engineData);
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 3: //回原点
+                    result = ControlCmd_GoHome(engineData);
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 4: //获取轴状态
+                    result = ControlCmd_GetAxleState(engineData);
+                    engineData.CMDID = (int)CMDTopNum.getaio;   //获取轴IO
+                    break;
+                case 5: //获取轴位置
+                    result = ControlCmd_GetAxlePos(engineData);
+                    engineData.CMDID = (int)CMDTopNum.getst;    //获取轴状态
+                    break;
+                case 6: //设置主板输出端口
+                    result = ControlCmd_SetMOutput(engineData);
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 7: //获取主板输出端口值
+                    result = ControlCmd_GetMOutput();
+                    if (engineData.ShowMode == 1)
+                    {
+                        engineData.CMDID = (int)CMDTopNum.move;
+                        if (engineData.SetDirection == 1)
+                            engineData.SetDirection = 0;
+                        else
+                            engineData.SetDirection = 1; 
+                    }
+                    else engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 8: //获取主板输入端口值
+                    result = ControlCmd_GetMInput();
+                    engineData.CMDID = (int)CMDTopNum.getout;   //获取主板输出端口值
+                    break;
+                case 9: //设置目标位置
+                    result = ControlCmd_SetTargetlocation(engineData);
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 10: //获取编码开关状态
+                    result = ControlCmd_StateCodingswitch();
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 11: //心跳测试
+                    result = ControlCmd_Heart();
+                    engineData.CMDID = (int)CMDTopNum.getpos;   //获取轴位置
+                    break;
+                case 12: //获取版本
+                    result = ControlCmd_GetVersion();
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 13: //获取串口号
+                    result = ControlCmd_GetSerial();
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 14: //获取轴IO
+                    result = ControlCmd_GetIOIndex();
+                    engineData.CMDID = (int)CMDTopNum.getin;    //获取主板输入端口值
+                    break;
+                case 15: //设置轴IO       //暂不完善
+                    result = ControlCmd_SetIOIndex();
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 16: //权限设置
+                    result = ControlCmd_SetGrade(engineData);
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                case 17: //获取卡名称
+                    result = ControlCmd_GetName();
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+                default:    //错误码
+                    engineData.CMDID = (int)CMDTopNum.H;
+                    break;
+
+            }
+            return result;
         }
 
     }

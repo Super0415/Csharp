@@ -32,7 +32,7 @@ namespace MyTest00
             lForm1.SetSignEnOrigin          = comboBox2.SelectedIndex.ToString();       //原点使能信号
             lForm1.SetSignReversalLimit     = comboBox3.SelectedIndex.ToString();       //反转极限信号
             lForm1.SetSignReversalOrigin    = comboBox4.SelectedIndex.ToString();       //反转原点信号
-
+            lForm1.SetSignSendFirm();
             this.Close();
         }
         /// <summary>
