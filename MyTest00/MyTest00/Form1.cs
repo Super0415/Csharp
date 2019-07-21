@@ -121,7 +121,7 @@ namespace MyTest00
 
         SerialPort com = new SerialPort();
         CommunicationState communicationstate = new CommunicationState();   //创建一个记录通讯状态的信息区
-        string ReceiBuff = "";
+        string ReceiBuff = null;
 
         /// <summary>
         /// 运行数据集
@@ -139,10 +139,8 @@ namespace MyTest00
         /// </summary>
         public static int LightState = 0;   
 
-
-        //static Semaphore sema = new Semaphore(1, 1); //申请信号量
-
         public static Semaphore sema = new Semaphore(0, 1);
+
 
         //****************************************** Myself Code ***********************************************
         // ************************* 网络通讯 *************************
@@ -161,7 +159,7 @@ namespace MyTest00
         {
             if (endPoint.Ip == string.Empty)     //确保不会误操作导致IP为空
             {
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " ");
+                //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " ");
                 textBox3.AppendText("IP为空" + "\r\n");
                 return;
             }
@@ -234,14 +232,14 @@ namespace MyTest00
                     byte[] buffer = Encoding.UTF8.GetBytes(sendData); //将数据存入缓存
                     Stream.Write(buffer, 0, buffer.Length);
 
-                    textBox3.AppendText(DateTime.Now.ToString("\r\nyyyy/MM/dd HH:mm:ss fff") + "发送长度 " + buffer.Length + "发送数据：" + " " + sendData);
+                    //textBox3.AppendText(DateTime.Now.ToString("\r\nyyyy/MM/dd HH:mm:ss fff") + "发送长度 " + buffer.Length + "发送数据：" + " " + sendData);
 
                     int length = Stream.Read(data, 0, data.Length); //读取要接收的数据
                     string receiveMsg = Encoding.UTF8.GetString(data, 0, length);
 
                     NetWorkDealAcceptdata(receiveMsg);
 
-                    textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "接收长度 " + length + "接收数据：" + receiveMsg + "\r\n");
+                    //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "接收长度 " + length + "接收数据：" + receiveMsg + "\r\n");
                 }
                 catch
                 {
@@ -259,12 +257,10 @@ namespace MyTest00
                 string[] sArray = Regex.Split(data, "\n", RegexOptions.IgnoreCase);
                 string source = sArray[0];
                 string Target = sArray[1];
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "片切0：" + source + "片切1：" + Target + "\r\n");
-
-
+                //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "片切0：" + source + "片切1：" + Target + "\r\n");
                 if (sArray.Length > 1)
                 {
-                    if (DealReceiData(sArray[0], sArray[1]))
+                    if (DealReceiData(sArray[0], sArray[1]) != 0xFF)
                     {
                         WindosShowLight();
                         WindosShowData();
@@ -275,25 +271,15 @@ namespace MyTest00
                             CardName = sArray[3];
                             UDSV = sArray[4];
                             SPT = sArray[5];
-
                         }
-
                     }
                 }
-
-
-
             }
             catch
             {
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "片切数据异常" + "\r\n");
+                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "数据异常" + "\r\n");
             }
-
-
-
         }
-
-
 
         // ************************* 串口通讯 *************************
         //串口通讯 - 配置-端口号、波特率
@@ -373,6 +359,7 @@ namespace MyTest00
         string CardName = null;
         string UDSV = null;
         string SPT = null;
+
         public void COM_DataReceived(object sender, SerialDataReceivedEventArgs e)   //数据接收事件，读到数据的长度赋值给count，就申请一个byte类型的buff数组，s句柄来读数据
         {
             int len = com.BytesToRead;
@@ -380,74 +367,145 @@ namespace MyTest00
             com.Read(bytes, 0, len);
             string str = System.Text.Encoding.Default.GetString(bytes); //xx="中文";
             ReceiBuff += str;
-
-            string[] strArray = ReceiBuff.Split(new Char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (strArray.Length > 1)
-            {
-                if (DealReceiData(strArray[0], strArray[1]))
-                {
-                    WindosShowLight();
-                    WindosShowData();
-
-                    if (strArray.Length > 5)//提取版本号
-                    {
-                        NetIP = strArray[2];
-                        CardName = strArray[3];
-                        UDSV = strArray[4];
-                        SPT = strArray[5];
-
-                    }
-                    for (int i = 0; i < strArray.Length; i++)
-                    {
-
-                    }
-
-                }
-
-                ReceiBuff = null;
-            } 
         }
+
+        //串口接收数据保存处理
+        public void COM_DataReceivedSplit()      // "gb2312"  move 0,-1000,100,1000,100,100
+        {
+            string testzc = null;
+            string[] strArray = null;
+            do
+            {
+                if (ReceiBuff != null)
+                {
+                    strArray = ReceiBuff.Split(new Char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (strArray.Length > 1 && (DealReceiData(strArray[0], strArray[1]) != 0xFF))
+                    {
+                        WindosShowLight();
+                        WindosShowData();
+
+                        if (strArray.Length > 5)//提取版本号
+                        {
+                            NetIP = strArray[2];
+                            CardName = strArray[3];
+                            UDSV = strArray[4];
+                            SPT = strArray[5];
+
+                        }
+                        testzc = ReceiBuff;
+                        ReceiBuff = null;
+                        for (int i = 0; i < strArray.Length; i++)
+                        {
+                            if (i == 0)
+                                continue;
+                            else if (i == 1)
+                                continue;
+                            ReceiBuff += strArray[i] + '\n';
+                        }
+                    }
+                    else if (strArray.Length > 2 && (DealReceiData(strArray[0] + strArray[1], strArray[2]) != 0xFF))
+                    {
+                        WindosShowLight();
+                        WindosShowData();
+
+                        if (strArray.Length > 5)//提取版本号
+                        {
+                            NetIP = strArray[2];
+                            CardName = strArray[3];
+                            UDSV = strArray[4];
+                            SPT = strArray[5];
+                        }
+                        testzc = ReceiBuff;
+                        ReceiBuff = null;
+                        for (int i = 0; i < strArray.Length; i++)
+                        {
+                            if (i == 0)
+                                continue;
+                            else if (i == 1)
+                                continue;
+                            else if (i == 2)
+                                continue;
+                            ReceiBuff += strArray[i] + '\n';
+                        }
+                    }
+                    else if (strArray.Length > 2 && (DealReceiData(strArray[0], strArray[1] + strArray[2]) != 0xFF))
+                    {
+                        WindosShowLight();
+                        WindosShowData();
+
+                        if (strArray.Length > 5)//提取版本号
+                        {
+                            NetIP = strArray[2];
+                            CardName = strArray[3];
+                            UDSV = strArray[4];
+                            SPT = strArray[5];
+                        }
+                        testzc = ReceiBuff;
+                        ReceiBuff = null;
+                        for (int i = 0; i < strArray.Length; i++)
+                        {
+                            if (i == 0)
+                                continue;
+                            else if (i == 1)
+                                continue;
+                            else if (i == 2)
+                                continue;
+                            ReceiBuff += strArray[i] + '\n';
+                        }
+                    }
+                    else
+                    {
+                        ReceiBuff = null;
+                        for (int i = 0; i < strArray.Length; i++)
+                        {
+                            if (i == 0)
+                                continue;
+                            ReceiBuff += strArray[i] + '\n';
+                        }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            } while (strArray.Length - 2 > 1);
+        }
+
+
+
         /// <summary>
         /// 解析响应数据，解析完成，返回true，否则返回false
         /// </summary>
         /// <param name="Send"></param>
         /// <param name="Recei"></param>
         /// <returns></returns>
-        public bool DealReceiData(string Send, string Recei)
+        public int DealReceiData(string Send, string Recei)
         {
             int CMDnum = 0;
             string[] SendData = Send.Split(new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             string[] ReceiData = Recei.Split(new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             CMDnum = CMD.GetInfo_CmdNum(SendData[0]);   //获取指令序号
-            if(CMDnum == 12)    //获取版本信息
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "软件版本为：" + Recei + NetIP + CardName + UDSV + SPT + "\r\n");
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "命令序号：" + CMDnum + "\r\n");
+            //if(CMDnum == 12)    //获取版本信息
+                //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "软件版本为：" + Recei + NetIP + CardName + UDSV + SPT + "\r\n");
+            //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "命令序号：" + CMDnum + "\r\n");
 
-            if (CMDnum == 0xFF) return false;
-            else
+            if (CMDnum != 0xFF)
             {
                 int num = CMD.Group_CmdReceivedData(ReceiData[0], CMDnum);
                 if(num == 0) engineData.HeartCount = 0;
-                //engineData.LightState = LightState;
 
 
-
-                //for (int i = 0; i < SendData.Length; i++)
+                //for (int i = 0; i < ReceiData.Length; i++)
                 //{
-                //    textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "切片命令数据" + i + ":" + SendData[i] + "\r\n");
+                //    textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "接收数据" + i + ":" + ReceiData[i] + "\r\n");
                 //}
-                for (int i = 0; i < ReceiData.Length; i++)
-                {
-                    textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "接收数据" + i + ":" + ReceiData[i] + "\r\n");
-                }
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "处理结果:" + CMD.CMDStateCN[num] + "\r\n");
-                textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "灯光:" + engineData.LightState + "\r\n");
+                //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "处理结果:" + CMD.CMDStateCN[num] + "\r\n");
+                //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "灯光:" + engineData.LightState + "\r\n");
 
             }
 
-            return true;
+            return CMDnum;
         }
         //串口发送数据 - 输出控件
         public void COM_DataSend(string sendata, string encoding)      // "gb2312"  move 0,-1000,100,1000,100,100
@@ -457,9 +515,12 @@ namespace MyTest00
             string str = sendata.Trim() + "\r\n";
             byte[] bytes = gb.GetBytes(str);
             com.Write(bytes, 0, bytes.Length);
-            textBox3.AppendText(DateTime.Now.ToString("\r\nyyyy/MM/dd HH:mm:ss fff") + "发送数据:" + str);
+            //textBox3.AppendText(DateTime.Now.ToString("\r\nyyyy/MM/dd HH:mm:ss fff") + "发送数据:" + str);
             sema.Release();
         }
+
+
+
 
         //********************** 组件配置 *************************************
         //配置运动模式
@@ -499,7 +560,7 @@ namespace MyTest00
         void Tool_ChangeAxleFont(ushort num)
         {
             engineData.Axle = num;
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 轴号" + num + "\r\n");
+            //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 轴号" + num + "\r\n");
             if (engineData.Axle == 0)
                 button5.Font = new Font("宋体", 9, FontStyle.Bold);
             else
@@ -655,7 +716,7 @@ namespace MyTest00
             textBox9.Text = "1000";                 //第二速度
             textBox10.Text= "0";                    //目标位置
 
-
+            engineData.CMDID = (int)CMD.CMDTopNum.H;
             //端口显示控件 波特率显示控件
             COMInit();
             //控件配置-下拉列表3
@@ -742,12 +803,12 @@ namespace MyTest00
             Form2 IForm = new Form2();
             IForm.Owner = this;
             IForm.Show();
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 极限使能信号 " + engineData.SignEnLimit + "\r\n");
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 原点使能信号 " + engineData.SignEnOrigin + "\r\n");
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 反转极限信号 " + engineData.SignReversalLimit + "\r\n");
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 反转原点信号 " + engineData.SignReversalOrigin + "\r\n");
-            String str = CMD.ControlCmd_AbsoluteMovement(engineData);
-            textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + str + "\r\n");
+            //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 极限使能信号 " + engineData.SignEnLimit + "\r\n");
+            //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 原点使能信号 " + engineData.SignEnOrigin + "\r\n");
+            //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 反转极限信号 " + engineData.SignReversalLimit + "\r\n");
+            //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " 反转原点信号 " + engineData.SignReversalOrigin + "\r\n");
+            //String str = CMD.ControlCmd_AbsoluteMovement(engineData);
+            //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + str + "\r\n");
 
         }
 
@@ -945,19 +1006,19 @@ namespace MyTest00
         uint TimeState = 0;
         private void timer2_Tick(object sender, EventArgs e)
         {
-            string CMDData = "";
+            string CMDData = null;
             CMDData = CMD.Group_CmdSendData(engineData.CMDID);
 
-
+            COM_DataReceivedSplit();
 
             if (communicationstate.COMHardConnectstate == 1 && communicationstate.NetWorkHardConnectstate == 0)
             {
-                TimeState=0;
+                TimeState = 0;
                 COM_DataSend(CMDData, "utf-8");
             }
             else if (communicationstate.COMHardConnectstate == 0 && communicationstate.NetWorkHardConnectstate == 1)
             {
-                TimeState=0;
+                TimeState = 0;
                 NetWorkSendReceived(CMDData);           //网络通讯发送接收数据处理
             }
             else if (TimeState == 0 && communicationstate.COMHardConnectstate == 1 && communicationstate.NetWorkHardConnectstate == 1)
@@ -970,6 +1031,7 @@ namespace MyTest00
                 TimeState = 0;
                 //textBox3.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + "网口通讯与串口通讯未打开！\r\n");
             }
+
 
         }
 

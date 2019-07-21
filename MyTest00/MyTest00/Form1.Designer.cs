@@ -334,30 +334,36 @@
             // 
             // button3
             // 
+            this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(326, 409);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 14;
             this.button3.Text = "关闭心跳";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
+            this.button4.Enabled = false;
             this.button4.Location = new System.Drawing.Point(615, 409);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 15;
             this.button4.Text = "测试发送";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // textBox2
             // 
+            this.textBox2.Enabled = false;
             this.textBox2.Location = new System.Drawing.Point(387, 409);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(246, 21);
             this.textBox2.TabIndex = 16;
+            this.textBox2.Visible = false;
             // 
             // button5
             // 
@@ -1181,7 +1187,7 @@
             // 
             // timer2
             // 
-            this.timer2.Interval = 30;
+            this.timer2.Interval = 40;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // Form1
