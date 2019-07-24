@@ -235,10 +235,11 @@ namespace MyTest00
             {
                 if (datadeal.GetCOMHard() == 0)    //判断串口是否打开
                 {
-
-                    YKS2Com.Port = (int)(comboBox1.SelectedIndex);
+                    string port = (string)comboBox1.SelectedItem;
+                    string[] port1 = port.Split('M');
+                    YKS2Com.Port = Convert.ToInt32(port1[1]);
                     YKS2Com.BaudRate = Convert.ToInt32(comboBox2.SelectedItem.ToString());
-                    YKS2Com.Timeout = 1000;
+                    YKS2Com.Timeout = 300;
                     YKS2Com.Open();
 
                     button2.Text = "关闭串口";
@@ -264,10 +265,11 @@ namespace MyTest00
 
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 YKS2Com.Close();
-                MessageBox.Show("串口打开失败！", "提示", 0, MessageBoxIcon.Exclamation);
+                //MessageBox.Show("串口打开失败！", "提示", 0, MessageBoxIcon.Exclamation); 
+                    MessageBox.Show(ex.Message);
             }
         }
         /// <summary>
@@ -1026,11 +1028,12 @@ namespace MyTest00
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //退出线程
-            if(thread.IsAlive)
-                thread.Abort();
-            if(thread2.IsAlive)
-                thread2.Abort();
+            ////退出线程
+            //if(thread.IsAlive)
+            //    thread.Abort();
+            //if(thread2.IsAlive)
+            //    thread2.Abort();
+            System.Environment.Exit(0);
 
             //e.Cancel = false;
             //this.Close();

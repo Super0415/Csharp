@@ -18,6 +18,7 @@ namespace Yungku.Common.IOCard.DataDeal
             public string Name;                     //主板名称
             public int SN;                     //串口信息
             public ushort boardIP;              //扩展卡编号
+            public int StateCodingswitch;    //编码开关状态
             /// <summary>
             /// 轴号
             /// </summary>
@@ -40,7 +41,7 @@ namespace Yungku.Common.IOCard.DataDeal
             public int Targetlocation;      
             public int Direction;            //运动方向
 
-            public int StateCodingswitch;    //编码开关状态
+            
 
 
             //回原点参数

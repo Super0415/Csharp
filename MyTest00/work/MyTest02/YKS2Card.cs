@@ -120,25 +120,35 @@ namespace Yungku.Common.IOCard
 		{
 			lock (syncRoot)
 			{
-                sport.WriteLine(cmd);
+                try
+                {
+                    sport.WriteLine(cmd);
 
-				string ret = sport.ReadLine();
-				if (ret.Equals(cmd))
-				{
-					ret = sport.ReadLine();
-					return ret.Trim().ToUpper();
-				}
-				else
-				{
-					return string.Empty;
-				}
-			}
+                    string ret = sport.ReadLine();
+                    if (ret.Equals(cmd))
+                    {
+                        ret = sport.ReadLine();
+                        return ret.Trim().ToUpper();
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+            }
+                catch
+            {
+                return string.Empty;
+            }
+
+        }
 		}
 
 		protected int GetIntegerValue(string cmd)
 		{
 			string ret = ExecuteCommand(cmd);
+            if (ret == "") return 0;
             return int.Parse(ret);  
+            
         }
 
         protected bool ExecuteAndCheckOk(string cmd)

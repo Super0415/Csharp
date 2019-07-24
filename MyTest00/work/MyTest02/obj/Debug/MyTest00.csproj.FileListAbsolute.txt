@@ -55,3 +55,13 @@ E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.Form1.resources
 E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.Form2.resources
 E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.Properties.Resources.resources
 E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.csproj.GenerateResource.Cache
+E:\GitHub\Csharp\MyTest00\work\MyTest02\bin\Debug\MyTest00.exe.config
+E:\GitHub\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.exe
+E:\GitHub\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.pdb
+E:\GitHub\Csharp\MyTest00\work\MyTest02\bin\Debug\MyTest00.exe
+E:\GitHub\Csharp\MyTest00\work\MyTest02\bin\Debug\MyTest00.pdb
+E:\GitHub\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.csprojResolveAssemblyReference.cache
+E:\GitHub\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.Form1.resources
+E:\GitHub\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.Form2.resources
+E:\GitHub\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.Properties.Resources.resources
+E:\GitHub\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.csproj.GenerateResource.Cache
