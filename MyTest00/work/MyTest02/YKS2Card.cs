@@ -120,15 +120,7 @@ namespace Yungku.Common.IOCard
 		{
 			lock (syncRoot)
 			{
-                try
-                {
-                    sport.WriteLine(cmd);
-                }
-                catch
-                {
-                    return string.Empty;
-                }
-                
+                sport.WriteLine(cmd);
 
 				string ret = sport.ReadLine();
 				if (ret.Equals(cmd))
@@ -146,8 +138,7 @@ namespace Yungku.Common.IOCard
 		protected int GetIntegerValue(string cmd)
 		{
 			string ret = ExecuteCommand(cmd);
-            //return int.Parse(ret);  
-            return Convert.ToInt32(ret);
+            return int.Parse(ret);  
         }
 
         protected bool ExecuteAndCheckOk(string cmd)

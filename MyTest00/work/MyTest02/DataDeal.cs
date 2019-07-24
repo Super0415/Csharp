@@ -39,15 +39,9 @@ namespace Yungku.Common.IOCard.DataDeal
             /// </summary>
             public int Targetlocation;      
             public int Direction;            //运动方向
-            public int Reserve0;             //预留参数0
-            public int Reserve1;             //预留参数1
-            public int Reserve2;             //预留参数2
-            public int Reserve3;             //预留参数3
-            public int Reserve4;             //预留参数4
 
             public int StateCodingswitch;    //编码开关状态
 
-            public int SetDirection;    //设置运动方向
 
             //回原点参数
             public int SecondSpeed;          //第二速度
@@ -99,9 +93,7 @@ namespace Yungku.Common.IOCard.DataDeal
 
 
             //通讯状态
-            public int StatePOP;         //通讯状态 0-OK
             public int HeartCount;       //心跳计数
-            public int CMDID;       //发送命令ID
 
         }
         //结构体 通讯状态
@@ -172,10 +164,6 @@ namespace Yungku.Common.IOCard.DataDeal
             return Comm.NetSoftCon;
         }
 
-        public int GetCMDID()
-        {
-            return enginedata.CMDID;
-        }
         /// <summary>
         /// 记录心跳断开次数
         /// </summary>

@@ -45,3 +45,13 @@ E:\GITData\Csharp\MyTest00\work\MyTest01\obj\Debug\MyTest00.Properties.Resources
 E:\GITData\Csharp\MyTest00\work\MyTest01\obj\Debug\MyTest00.csproj.GenerateResource.Cache
 E:\GITData\Csharp\MyTest00\work\MyTest01\obj\Debug\MyTest00.exe
 E:\GITData\Csharp\MyTest00\work\MyTest01\obj\Debug\MyTest00.pdb
+E:\GITData\Csharp\MyTest00\work\MyTest02\bin\Debug\MyTest00.exe.config
+E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.exe
+E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.pdb
+E:\GITData\Csharp\MyTest00\work\MyTest02\bin\Debug\MyTest00.exe
+E:\GITData\Csharp\MyTest00\work\MyTest02\bin\Debug\MyTest00.pdb
+E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.csprojResolveAssemblyReference.cache
+E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.Form1.resources
+E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.Form2.resources
+E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.Properties.Resources.resources
+E:\GITData\Csharp\MyTest00\work\MyTest02\obj\Debug\MyTest00.csproj.GenerateResource.Cache
