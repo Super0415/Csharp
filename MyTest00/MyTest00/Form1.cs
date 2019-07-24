@@ -215,9 +215,10 @@ namespace MyTest00
             {
                 client.Connect(endPoint.Ip, int.Parse(endPoint.Port));  //端口需与服务端开启的端口一致，否则无法与服务端建立链接    注：未链接服务器此处阻塞
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("未连接服务器！", "提示", 0, MessageBoxIcon.Exclamation);
+                //MessageBox.Show("未连接服务器！", "提示", 0, MessageBoxIcon.Exclamation);
+                MessageBox.Show(ex.Message);
                 return;
             }
             Stream = client.GetStream();
