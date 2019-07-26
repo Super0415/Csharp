@@ -7,8 +7,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;       //正则
-using System.Windows.Forms;
-using System.Threading;
+using System.Windows.Forms;     //弹出消息框
+using System.Threading;     //用于延时
+using System.Diagnostics;   //测试响应时间
 
 /// <summary>
 /// 基于LWIP协议编制，查询一次，connect连接一次
@@ -65,6 +66,34 @@ namespace Yungku.Common.IOCard.Net
         {
             get { return timeout; }
             set { timeout = value; }
+        }
+
+        public int Testnum = 0;
+        public double TestTBuf = new double();
+        public double TestTSum = new double();
+        /// <summary>
+        /// 测试通讯响应时间-计数
+        /// </summary>
+        public int Gettestnum()
+        {
+            return Testnum;
+
+        }
+        /// <summary>
+        /// 测试通讯响应时间-计时
+        /// </summary>
+        public double GettestTBuf()
+        {
+            return TestTBuf;
+      
+        }
+        /// <summary>
+        /// 测试通讯响应时间-计平均时
+        /// </summary>
+        public double GettestTSum()
+        {
+            return TestTSum; 
+
         }
 
         /// <summary>
@@ -156,14 +185,25 @@ namespace Yungku.Common.IOCard.Net
              
                 if (Open())
                 {
+                    Stopwatch stopwatch = new Stopwatch();
                     try
                     {
                         string sendata = cmd.Trim()+ "\r\n";
                         byte[] Sentbuff = Encoding.UTF8.GetBytes(sendata);              //将数据存入缓存
                         Stream.Write(Sentbuff, 0, Sentbuff.Length);                 //写入
+                        stopwatch.Start(); //  开始监视代码运行时间
 
                         byte[] Recbuff = new byte[1024];                            //创建数据读取缓存区
                         int length = Stream.Read(Recbuff, 0, Recbuff.Length);       //读取要接收的数据
+
+                        stopwatch.Stop(); //  停止监视
+                        TimeSpan timespan = stopwatch.Elapsed; //  获取当前实例测量得出的总时间
+                        double milliseconds = timespan.TotalMilliseconds;  //  总毫秒数
+
+                        TestTBuf += milliseconds;
+                        Testnum++;
+                        TestTSum = TestTBuf / Testnum;
+
                         string msg = Encoding.UTF8.GetString(Recbuff, 0, length);
                         string[] cmdmsg = Regex.Split(msg, "\n", RegexOptions.IgnoreCase);
                         Thread.Sleep(1);
@@ -236,8 +276,14 @@ namespace Yungku.Common.IOCard.Net
         protected int GetIntegerValue(string cmd)
         {
             string ret = ExecuteCommand(cmd);
-            if(!ret.Equals("")) return int.Parse(ret);
-            return 0;
+            try
+            {
+                return int.Parse(ret);
+            }
+            catch
+            {
+                return 0;
+            }
         }
         /// <summary>
         /// 获取返回字符串
@@ -287,12 +333,9 @@ namespace Yungku.Common.IOCard.Net
             return ExecuteAndCheckOk("setaio " + chanel.ToString() + "," + (val ? "1" : "0"));
         }
 
-        public int GetInputs(int id)
+        public int GetInputs()
         {
-            if (id == 1)
-                return GetIntegerValue("ngetin");
-            else
-                return GetIntegerValue("getin");
+            return GetIntegerValue("getin");
         }
 
         public int GetInputsEx()
@@ -300,12 +343,9 @@ namespace Yungku.Common.IOCard.Net
             return GetIntegerValue("getinex");
         }
 
-        public int GetOutputs(int id)
+        public int GetOutputs()
         {
-            if (id == 1)
-                return GetIntegerValue("ngetout");
-            else
-                return GetIntegerValue("getout");
+            return GetIntegerValue("getout");
         }
 
         public int GetOutputsEx()
@@ -327,12 +367,9 @@ namespace Yungku.Common.IOCard.Net
             return GetIntegerValue("getdsex");
         }
 
-        public bool SetOutputs(byte val,int id)
+        public bool SetOutputs(byte val)
         {
-            if (id == 1)
-                return ExecuteAndCheckOk("nsetout " + val.ToString());
-            else
-                return ExecuteAndCheckOk("setout " + val.ToString());
+            return ExecuteAndCheckOk("setout " + val.ToString());
         }
 
         public bool SetOutput(int chanel, bool val)

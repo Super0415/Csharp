@@ -111,12 +111,28 @@ namespace Yungku.Common.IOCard
 			}
 		}
 
-		/// <summary>
-		/// 执行一个命令并返回一个结果
+        /// <summary>
+		/// 清空输入输出缓存区
 		/// </summary>
-		/// <param name="cmd"></param>
-		/// <returns></returns>
-		protected string ExecuteCommand(string cmd)
+		public void Clear()
+        {
+            lock (syncRoot)
+            {
+                if (sport.IsOpen)
+                {
+                    sport.DiscardInBuffer();//清理输入缓冲区
+                    sport.DiscardOutBuffer();//清理输出缓冲区
+                }
+                    
+            }
+        }
+
+        /// <summary>
+        /// 执行一个命令并返回一个结果
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        protected string ExecuteCommand(string cmd)
 		{
 			lock (syncRoot)
 			{
@@ -137,7 +153,8 @@ namespace Yungku.Common.IOCard
                 }
                 catch
                 {
-                return string.Empty;
+                    Clear();
+                    return string.Empty;
                 }
 
             }
@@ -182,9 +199,14 @@ namespace Yungku.Common.IOCard
         protected int GetIntegerValue(string cmd)
 		{
 			string ret = ExecuteCommand(cmd);
-            if (ret == "") return 0;
-            return int.Parse(ret);  
-            
+            try
+            {
+                return int.Parse(ret);
+            }
+            catch
+            {
+                return 0;
+            }   
         }
         /// <summary>
         /// 获取返回字符串
@@ -230,12 +252,9 @@ namespace Yungku.Common.IOCard
 			return ExecuteAndCheckOk("setaio " + chanel.ToString() + "," + (val ? "1" : "0"));
 		}
 
-		public int GetInputs(int id)
+		public int GetInputs()
 		{
-            if (id == 1)
-                return GetIntegerValue("ngetin");
-            else
-                return GetIntegerValue("getin");
+            return GetIntegerValue("getin");
 		}
 
 		public int GetInputsEx()
@@ -243,12 +262,9 @@ namespace Yungku.Common.IOCard
 			return GetIntegerValue("getinex");
 		}
 
-		public int GetOutputs(int id)
+		public int GetOutputs()
 		{
-            if (id == 1)
-                return GetIntegerValue("ngetout");
-            else
-                return GetIntegerValue("getout");
+            return GetIntegerValue("getout");
 		}
 
 		public int GetOutputsEx()
@@ -266,12 +282,9 @@ namespace Yungku.Common.IOCard
 			return GetIntegerValue("getdsex");
 		}
 
-		public bool SetOutputs(byte val, int id)
+		public bool SetOutputs(byte val)
 		{
-            if(id == 1)
-			    return ExecuteAndCheckOk("nsetout " + val.ToString());
-            else
-                return ExecuteAndCheckOk("setout " + val.ToString());
+            return ExecuteAndCheckOk("setout " + val.ToString());
         }
 
 		public bool SetOutput(int chanel, bool val)

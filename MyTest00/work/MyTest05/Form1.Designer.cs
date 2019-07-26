@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -244,6 +245,7 @@
             this.button30 = new System.Windows.Forms.Button();
             this.button31 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
+            this.网口响应测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -270,12 +272,14 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.SystemColors.Control;
+            this.button1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.Location = new System.Drawing.Point(478, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(88, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "网口未连接";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
@@ -424,7 +428,8 @@
             // 帮助ToolStripMenuItem
             // 
             this.帮助ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsmiVers});
+            this.TsmiVers,
+            this.网口响应测试ToolStripMenuItem});
             this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
             this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.帮助ToolStripMenuItem.Text = "帮助";
@@ -432,7 +437,7 @@
             // TsmiVers
             // 
             this.TsmiVers.Name = "TsmiVers";
-            this.TsmiVers.Size = new System.Drawing.Size(124, 22);
+            this.TsmiVers.Size = new System.Drawing.Size(152, 22);
             this.TsmiVers.Text = "产品信息";
             this.TsmiVers.Click += new System.EventHandler(this.TsmiVers_Click);
             // 
@@ -752,9 +757,9 @@
             this.label48.AutoSize = true;
             this.label48.Location = new System.Drawing.Point(90, 33);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(41, 12);
+            this.label48.Size = new System.Drawing.Size(35, 12);
             this.label48.TabIndex = 87;
-            this.label48.Text = "原点值";
+            this.label48.Text = " 原点";
             // 
             // label51
             // 
@@ -770,9 +775,9 @@
             this.label52.AutoSize = true;
             this.label52.Location = new System.Drawing.Point(170, 33);
             this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(41, 12);
+            this.label52.Size = new System.Drawing.Size(35, 12);
             this.label52.TabIndex = 91;
-            this.label52.Text = "正忙值";
+            this.label52.Text = " 正忙";
             // 
             // label55
             // 
@@ -2364,6 +2369,13 @@
             this.button32.UseVisualStyleBackColor = true;
             this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
+            // 网口响应测试ToolStripMenuItem
+            // 
+            this.网口响应测试ToolStripMenuItem.Name = "网口响应测试ToolStripMenuItem";
+            this.网口响应测试ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.网口响应测试ToolStripMenuItem.Text = "网口响应测试";
+            this.网口响应测试ToolStripMenuItem.Click += new System.EventHandler(this.网口响应测试ToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2376,8 +2388,10 @@
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "S2 Card Tool V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -2638,6 +2652,7 @@
         private System.Windows.Forms.Label label111;
         private System.Windows.Forms.Label label112;
         private System.Windows.Forms.Label label113;
+        private System.Windows.Forms.ToolStripMenuItem 网口响应测试ToolStripMenuItem;
     }
 }
 

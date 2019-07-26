@@ -117,6 +117,8 @@ namespace MyTest00
             while (true)
             {
                 Thread.Sleep(30);
+                if (datadeal.GetNetSoft() == 1)
+                    continue;
                 //心跳检测
                 if (!YKS2Com.IsExists())
                 {
@@ -163,10 +165,22 @@ namespace MyTest00
                 datadeal.SetLocation(YKS2Com.GetPosition(datadeal.GetAxle()));
                 //获取轴IO
                 datadeal.SetPWMIOState(YKS2Com.GetAIO());
-                //获取主板输入端口值 
-                datadeal.SetMInput(YKS2Com.GetInputs(datadeal.GetCardID()));
-                //获取主板输出端口值
-                datadeal.SetMOutput(YKS2Com.GetOutputs(datadeal.GetCardID()));
+
+                if (datadeal.GetCardID() == 1)
+                {
+                    //获取主板输入端口值 
+                    datadeal.SetMInput(YKS2Com.GetInputsEx());
+                    //获取主板输出端口值
+                    datadeal.SetMOutput(YKS2Com.GetOutputsEx());
+                }
+                else
+                {
+                    //获取主板输入端口值 
+                    datadeal.SetMInput(YKS2Com.GetInputs());
+                    //获取主板输出端口值
+                    datadeal.SetMOutput(YKS2Com.GetOutputs());
+                }
+
                 //获取轴状态
                 datadeal.SetPWMState(YKS2Com.GetAxisStatus(datadeal.GetAxle()));
                 if (datadeal.GetShowMode() == 1)
@@ -638,9 +652,23 @@ namespace MyTest00
             else MOutput &= (1 << outnum) ^ (0xFFFF);
 
             if ((datadeal.GetNetSoft() == 1))
-                YKS2net.SetOutputs((byte)MOutput,id);
+            {
+                if (datadeal.GetCardID() == 1)
+                {
+                    YKS2net.SetOutputEx(outnum, (MOutput >> outnum & 0x1) == 0 ? false : true);
+                }
+                else YKS2net.SetOutputs((byte)MOutput);
+
+            }
             else if ((datadeal.GetCOMSoft() == 1))
-                YKS2Com.SetOutputs((byte)MOutput,id);
+            {
+                if (datadeal.GetCardID() == 1)
+                {
+                    YKS2Com.SetOutputEx(outnum, (MOutput >> outnum & 0x1) == 0 ? false : true);
+                }
+                else YKS2Com.SetOutputs((byte)MOutput);
+            }
+
         }
         /// <summary>
         /// 开关量-输出口0
@@ -1289,6 +1317,12 @@ namespace MyTest00
             int sn = datadeal.GetSN();
 
             MessageBox.Show("公司名称：" + Ver_Co + "\n公司网址：" + Ver_Web + "\n产品名称：" + Ver_Card + "\n固件版本：" + Ver_UD + "\n硬件版本：" + Name + "\n产品编号：" + sn + "\n技术支持：" + Ver_SPT, "产品信息", 0);
+        }
+
+        private void 网口响应测试ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int num = YKS2net.Gettestnum();
+            MessageBox.Show("累计数：" + YKS2net.Gettestnum() + "\n累计时：" + YKS2net.GettestTBuf() + "\n单次时长："+ YKS2net.GettestTSum() , "产品信息", 0);
         }
     }
 }

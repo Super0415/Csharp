@@ -93,7 +93,7 @@ namespace Yungku.Common.IOCard.DataDeal
             /// <summary>
             /// 主板-IO控制-输入
             /// </summary>
-            public int MInput;
+            public int MInput; 
 
             /// <summary>
             /// 主板-IO控制-输出
@@ -727,14 +727,28 @@ namespace Yungku.Common.IOCard.DataDeal
                     //获取轴IO状态
                     axledata[enginedata.Axle].PWMIOState = YKS2net.GetAIO(); //PWM控制输入输出状态
 
-                    //获取主板输入端口值
-                    enginedata.MInput = YKS2net.GetInputs(enginedata.CardID);
 
-                    //获取主板输出端口值
-                    enginedata.MOutput = YKS2net.GetOutputs(enginedata.CardID);
+                    if (enginedata.CardID == 1)
+                    {
+                        //获取扩展板输入端口值
+                        enginedata.MInput = YKS2net.GetInputsEx();
+                        //获取扩展板输出端口值
+                        enginedata.MOutput = YKS2net.GetOutputsEx();
 
-                    //获取轴状态
-                    axledata[enginedata.Axle].PWMState = YKS2net.GetAxisStatus(enginedata.Axle);
+                    }
+                    else
+                    {
+                        //获取主板输入端口值
+                        enginedata.MInput = YKS2net.GetInputs();
+                        //获取主板输出端口值
+                        enginedata.MOutput = YKS2net.GetOutputs();
+                    }
+                    
+
+                     
+
+                   //获取轴状态
+                   axledata[enginedata.Axle].PWMState = YKS2net.GetAxisStatus(enginedata.Axle);
         
 
                     if (axledata[enginedata.Axle].ShowMode == 1) 
