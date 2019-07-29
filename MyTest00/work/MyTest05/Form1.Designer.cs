@@ -51,6 +51,7 @@
             this.toolStripTextBox4 = new System.Windows.Forms.ToolStripTextBox();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TsmiVers = new System.Windows.Forms.ToolStripMenuItem();
+            this.网口响应测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
@@ -245,7 +246,6 @@
             this.button30 = new System.Windows.Forms.Button();
             this.button31 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
-            this.网口响应测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -437,9 +437,16 @@
             // TsmiVers
             // 
             this.TsmiVers.Name = "TsmiVers";
-            this.TsmiVers.Size = new System.Drawing.Size(152, 22);
+            this.TsmiVers.Size = new System.Drawing.Size(148, 22);
             this.TsmiVers.Text = "产品信息";
             this.TsmiVers.Click += new System.EventHandler(this.TsmiVers_Click);
+            // 
+            // 网口响应测试ToolStripMenuItem
+            // 
+            this.网口响应测试ToolStripMenuItem.Name = "网口响应测试ToolStripMenuItem";
+            this.网口响应测试ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.网口响应测试ToolStripMenuItem.Text = "网口响应测试";
+            this.网口响应测试ToolStripMenuItem.Click += new System.EventHandler(this.网口响应测试ToolStripMenuItem_Click);
             // 
             // timer1
             // 
@@ -766,9 +773,9 @@
             this.label51.AutoSize = true;
             this.label51.Location = new System.Drawing.Point(210, 33);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(41, 12);
+            this.label51.Size = new System.Drawing.Size(35, 12);
             this.label51.TabIndex = 92;
-            this.label51.Text = "脉冲值";
+            this.label51.Text = " 脉冲";
             // 
             // label52
             // 
@@ -784,9 +791,9 @@
             this.label55.AutoSize = true;
             this.label55.Location = new System.Drawing.Point(250, 33);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(41, 12);
+            this.label55.Size = new System.Drawing.Size(35, 12);
             this.label55.TabIndex = 94;
-            this.label55.Text = "方向值";
+            this.label55.Text = " 方向";
             // 
             // comboBox3
             // 
@@ -1642,9 +1649,9 @@
             this.label63.AutoSize = true;
             this.label63.Location = new System.Drawing.Point(250, 33);
             this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(41, 12);
+            this.label63.Size = new System.Drawing.Size(35, 12);
             this.label63.TabIndex = 94;
-            this.label63.Text = "方向值";
+            this.label63.Text = " 方向";
             // 
             // label99
             // 
@@ -1660,9 +1667,9 @@
             this.label64.AutoSize = true;
             this.label64.Location = new System.Drawing.Point(210, 33);
             this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(41, 12);
+            this.label64.Size = new System.Drawing.Size(35, 12);
             this.label64.TabIndex = 92;
-            this.label64.Text = "脉冲值";
+            this.label64.Text = " 脉冲";
             // 
             // label100
             // 
@@ -1697,9 +1704,9 @@
             this.label66.AutoSize = true;
             this.label66.Location = new System.Drawing.Point(170, 33);
             this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(41, 12);
+            this.label66.Size = new System.Drawing.Size(35, 12);
             this.label66.TabIndex = 91;
-            this.label66.Text = "正忙值";
+            this.label66.Text = " 正忙";
             // 
             // label102
             // 
@@ -1714,9 +1721,9 @@
             this.label67.AutoSize = true;
             this.label67.Location = new System.Drawing.Point(90, 33);
             this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(41, 12);
+            this.label67.Size = new System.Drawing.Size(35, 12);
             this.label67.TabIndex = 87;
-            this.label67.Text = "原点值";
+            this.label67.Text = " 原点";
             // 
             // label103
             // 
@@ -2062,18 +2069,18 @@
             this.label84.AutoSize = true;
             this.label84.Location = new System.Drawing.Point(250, 33);
             this.label84.Name = "label84";
-            this.label84.Size = new System.Drawing.Size(41, 12);
+            this.label84.Size = new System.Drawing.Size(35, 12);
             this.label84.TabIndex = 94;
-            this.label84.Text = "方向值";
+            this.label84.Text = " 方向";
             // 
             // label85
             // 
             this.label85.AutoSize = true;
             this.label85.Location = new System.Drawing.Point(210, 33);
             this.label85.Name = "label85";
-            this.label85.Size = new System.Drawing.Size(41, 12);
+            this.label85.Size = new System.Drawing.Size(35, 12);
             this.label85.TabIndex = 92;
-            this.label85.Text = "脉冲值";
+            this.label85.Text = " 脉冲";
             // 
             // label86
             // 
@@ -2090,18 +2097,18 @@
             this.label87.AutoSize = true;
             this.label87.Location = new System.Drawing.Point(170, 33);
             this.label87.Name = "label87";
-            this.label87.Size = new System.Drawing.Size(41, 12);
+            this.label87.Size = new System.Drawing.Size(35, 12);
             this.label87.TabIndex = 91;
-            this.label87.Text = "正忙值";
+            this.label87.Text = " 正忙";
             // 
             // label88
             // 
             this.label88.AutoSize = true;
             this.label88.Location = new System.Drawing.Point(90, 33);
             this.label88.Name = "label88";
-            this.label88.Size = new System.Drawing.Size(41, 12);
+            this.label88.Size = new System.Drawing.Size(35, 12);
             this.label88.TabIndex = 87;
-            this.label88.Text = "原点值";
+            this.label88.Text = " 原点";
             // 
             // label89
             // 
@@ -2368,13 +2375,6 @@
             this.button32.Text = "<<";
             this.button32.UseVisualStyleBackColor = true;
             this.button32.Click += new System.EventHandler(this.button32_Click);
-            // 
-            // 网口响应测试ToolStripMenuItem
-            // 
-            this.网口响应测试ToolStripMenuItem.Name = "网口响应测试ToolStripMenuItem";
-            this.网口响应测试ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.网口响应测试ToolStripMenuItem.Text = "网口响应测试";
-            this.网口响应测试ToolStripMenuItem.Click += new System.EventHandler(this.网口响应测试ToolStripMenuItem_Click);
             // 
             // Form1
             // 

@@ -68,9 +68,9 @@ namespace Yungku.Common.IOCard.Net
             set { timeout = value; }
         }
 
-        public int Testnum = 0;
-        public double TestTBuf = new double();
-        public double TestTSum = new double();
+        private int Testnum = 0;
+        private double TestTBuf = new double();
+        private double TestTSum = new double();
         /// <summary>
         /// 测试通讯响应时间-计数
         /// </summary>

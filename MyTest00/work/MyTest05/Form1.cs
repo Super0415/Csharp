@@ -984,6 +984,8 @@ namespace MyTest00
         {
             WindosShowLight();
             WindosShowData();
+
+            datadeal.SetNetHeartCount(YKS2net.Gettestnum());
         }
 
         /// <summary>
