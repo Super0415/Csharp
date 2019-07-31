@@ -25,7 +25,7 @@ namespace S2Upper
     {     
         YKS2CardNet YKS2net = new YKS2CardNet();
         YKS2Card YKS2Com = new YKS2Card();
-        DataDeal datadeal = new DataDeal();
+        public DataDeal datadeal = new DataDeal();
         Thread thread = null;                   //线程句柄-处理通讯过程
         Thread thread2 = null;                  //创建线程
         
@@ -417,6 +417,7 @@ namespace S2Upper
             else if ((datadeal.GetCOMSoft() == 1))
                 YKS2Com.SetLimits(datadeal.GetAxle(), datadeal.GetSignEnLimit(), datadeal.GetSignEnOrigin(), datadeal.GetSignReLimit(), datadeal.GetSignReOrigin());
         }
+        //public DataDeal Dealdata { get { return datadeal; } }
         //****************************************** Myself Code ***********************************************
 
 
@@ -537,7 +538,7 @@ namespace S2Upper
         /// <param name="e"></param>
         private void button9_Click(object sender, EventArgs e)
         {
-            Form2 IForm = new Form2();
+            Form3 IForm = new Form3();
             IForm.Owner = this;
             IForm.Show();
         }
@@ -1082,6 +1083,14 @@ namespace S2Upper
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
+
+            //panel2.Controls.Clear();//移除所有控件
+            //Form3 form = new Form3();
+            //form.Owner = this;
+            //form.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小花，最大化，关闭等按钮）
+            //form.TopLevel = false; //指示子窗体非顶级窗体
+            //this.panel2.Controls.Add(form);//将子窗体载入panel
+            //form.Show();
         }
 
         /// <summary>
@@ -1164,14 +1173,14 @@ namespace S2Upper
 
         private void button18_Click(object sender, EventArgs e)
         {
-            Form2 IForm = new Form2();
+            Form3 IForm = new Form3();
             IForm.Owner = this;
             IForm.Show();
         }
 
         private void button30_Click(object sender, EventArgs e)
         {
-            Form2 IForm = new Form2();
+            Form3 IForm = new Form3();
             IForm.Owner = this;
             IForm.Show();
         }

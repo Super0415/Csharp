@@ -246,6 +246,7 @@
             this.button30 = new System.Windows.Forms.Button();
             this.button31 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -268,6 +269,7 @@
             this.groupBox13.SuspendLayout();
             this.groupBox14.SuspendLayout();
             this.groupBox15.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -294,7 +296,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(12, 360);
+            this.textBox3.Location = new System.Drawing.Point(4, 373);
             this.textBox3.MaximumSize = new System.Drawing.Size(677, 90);
             this.textBox3.MinimumSize = new System.Drawing.Size(677, 90);
             this.textBox3.Multiline = true;
@@ -332,7 +334,7 @@
             this.端口ToolStripMenuItem,
             this.读写超时ToolStripMenuItem1});
             this.iPToolStripMenuItem.Name = "iPToolStripMenuItem";
-            this.iPToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.iPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.iPToolStripMenuItem.Text = "网络配置";
             // 
             // iP地址ToolStripMenuItem
@@ -383,7 +385,7 @@
             this.波特率ToolStripMenuItem,
             this.读写超时ToolStripMenuItem});
             this.新窗体ToolStripMenuItem.Name = "新窗体ToolStripMenuItem";
-            this.新窗体ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.新窗体ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.新窗体ToolStripMenuItem.Text = "串口配置";
             // 
             // 端口ToolStripMenuItem1
@@ -1049,7 +1051,7 @@
             this.groupBox3.Controls.Add(this.label32);
             this.groupBox3.Controls.Add(this.label33);
             this.groupBox3.Controls.Add(this.button8);
-            this.groupBox3.Location = new System.Drawing.Point(572, 28);
+            this.groupBox3.Location = new System.Drawing.Point(559, 9);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(118, 327);
             this.groupBox3.TabIndex = 98;
@@ -1360,7 +1362,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 28);
+            this.tabControl1.Location = new System.Drawing.Point(3, 9);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(554, 327);
@@ -2376,17 +2378,26 @@
             this.button32.UseVisualStyleBackColor = true;
             this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox3);
+            this.panel1.Controls.Add(this.tabControl1);
+            this.panel1.Location = new System.Drawing.Point(4, 29);
+            this.panel1.Margin = new System.Windows.Forms.Padding(1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(682, 340);
+            this.panel1.TabIndex = 102;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(698, 457);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(698, 468);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.groupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -2430,6 +2441,7 @@
             this.groupBox14.ResumeLayout(false);
             this.groupBox15.ResumeLayout(false);
             this.groupBox15.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2653,6 +2665,7 @@
         private System.Windows.Forms.Label label112;
         private System.Windows.Forms.Label label113;
         private System.Windows.Forms.ToolStripMenuItem 网口响应测试ToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

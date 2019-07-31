@@ -1,0 +1,9 @@
+E:\GITData\Csharp\MyTest00\work2\YKUper\bin\Debug\YKUper.exe.config
+E:\GITData\Csharp\MyTest00\work2\YKUper\bin\Debug\YKUper.exe
+E:\GITData\Csharp\MyTest00\work2\YKUper\bin\Debug\YKUper.pdb
+E:\GITData\Csharp\MyTest00\work2\YKUper\obj\Debug\YKUper.csprojResolveAssemblyReference.cache
+E:\GITData\Csharp\MyTest00\work2\YKUper\obj\Debug\YKUper.Form1.resources
+E:\GITData\Csharp\MyTest00\work2\YKUper\obj\Debug\YKUper.Properties.Resources.resources
+E:\GITData\Csharp\MyTest00\work2\YKUper\obj\Debug\YKUper.csproj.GenerateResource.Cache
+E:\GITData\Csharp\MyTest00\work2\YKUper\obj\Debug\YKUper.exe
+E:\GITData\Csharp\MyTest00\work2\YKUper\obj\Debug\YKUper.pdb

@@ -9,7 +9,7 @@ using Yungku.Common.IOCard;
 
 namespace Yungku.Common.IOCard.DataDeal
 {
-    class DataDeal
+    public class DataDeal
     {
 
         public struct AxleData

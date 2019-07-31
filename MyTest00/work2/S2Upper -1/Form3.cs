@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Yungku.Common.IOCard.DataDeal;
 
 namespace S2Upper
 {
-    public partial class Form2 : Form
+    public partial class Form3 : Form
     {
-
-        public Form2()
+        DataDeal datadeal2 = null;
+        public Form3()
         {
             InitializeComponent();      
             Tool_Form2Combobox();       //配置下拉列表
@@ -78,6 +79,14 @@ namespace S2Upper
             comboBox3.SelectedIndex = lForm1.SetSignReversalLimit;       //反转极限信号
             comboBox4.SelectedIndex = lForm1.SetSignReversalOrigin;       //反转原点信号
 
+            datadeal2 = lForm1.datadeal;
+            
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            label5.Text = datadeal2.GetLocation().ToString();
         }
     }
 }
