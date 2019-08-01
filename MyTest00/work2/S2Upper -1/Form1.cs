@@ -1084,13 +1084,13 @@ namespace S2Upper
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
 
-            //panel2.Controls.Clear();//移除所有控件
-            //Form3 form = new Form3();
-            //form.Owner = this;
-            //form.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小花，最大化，关闭等按钮）
-            //form.TopLevel = false; //指示子窗体非顶级窗体
-            //this.panel2.Controls.Add(form);//将子窗体载入panel
-            //form.Show();
+            panel2.Controls.Clear();//移除所有控件
+            Form3 form = new Form3();
+            form.Owner = this;
+            form.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小花，最大化，关闭等按钮）
+            form.TopLevel = false; //指示子窗体非顶级窗体
+            this.panel2.Controls.Add(form);//将子窗体载入panel
+            form.Show();
         }
 
         /// <summary>

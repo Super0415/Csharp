@@ -247,6 +247,7 @@
             this.button31 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -313,7 +314,7 @@
             this.帮助ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(698, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1064, 25);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -439,14 +440,14 @@
             // TsmiVers
             // 
             this.TsmiVers.Name = "TsmiVers";
-            this.TsmiVers.Size = new System.Drawing.Size(148, 22);
+            this.TsmiVers.Size = new System.Drawing.Size(152, 22);
             this.TsmiVers.Text = "产品信息";
             this.TsmiVers.Click += new System.EventHandler(this.TsmiVers_Click);
             // 
             // 网口响应测试ToolStripMenuItem
             // 
             this.网口响应测试ToolStripMenuItem.Name = "网口响应测试ToolStripMenuItem";
-            this.网口响应测试ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.网口响应测试ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.网口响应测试ToolStripMenuItem.Text = "网口响应测试";
             this.网口响应测试ToolStripMenuItem.Click += new System.EventHandler(this.网口响应测试ToolStripMenuItem_Click);
             // 
@@ -2388,11 +2389,19 @@
             this.panel1.Size = new System.Drawing.Size(682, 340);
             this.panel1.TabIndex = 102;
             // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(724, 43);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(286, 385);
+            this.panel2.TabIndex = 103;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(698, 468);
+            this.ClientSize = new System.Drawing.Size(1064, 468);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button2);
@@ -2666,6 +2675,7 @@
         private System.Windows.Forms.Label label113;
         private System.Windows.Forms.ToolStripMenuItem 网口响应测试ToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 

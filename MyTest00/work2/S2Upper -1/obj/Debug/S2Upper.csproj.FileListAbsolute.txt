@@ -24,7 +24,6 @@ E:\gitdata\csharp\MyTest00\work2\S2Upper -1\obj\Debug\S2Upper.exe
 E:\gitdata\csharp\MyTest00\work2\S2Upper -1\obj\Debug\S2Upper.pdb
 E:\gitdata\csharp\MyTest00\work2\S2Upper -1\bin\Debug\S2Upper.exe
 E:\gitdata\csharp\MyTest00\work2\S2Upper -1\bin\Debug\S2Upper.pdb
-E:\gitdata\csharp\MyTest00\work2\S2Upper -1\obj\Debug\S2Upper.csprojResolveAssemblyReference.cache
 E:\gitdata\csharp\MyTest00\work2\S2Upper -1\obj\Debug\S2Upper.Form1.resources
 E:\gitdata\csharp\MyTest00\work2\S2Upper -1\obj\Debug\S2Upper.Properties.Resources.resources
 E:\gitdata\csharp\MyTest00\work2\S2Upper -1\obj\Debug\S2Upper.csproj.GenerateResource.Cache

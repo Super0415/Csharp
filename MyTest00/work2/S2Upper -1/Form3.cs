@@ -88,5 +88,10 @@ namespace S2Upper
         {
             label5.Text = datadeal2.GetLocation().ToString();
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
