@@ -11,6 +11,7 @@ using Yungku.Common.IOCard.DataDeal;
 using System.IO.Ports;
 using Yungku.Common.IOCardS1;
 using Yungku.Common.IOCardS2;
+using System.Threading;
 
 namespace YKUper
 {
@@ -24,12 +25,10 @@ namespace YKUper
         /// 串口实例
         /// </summary>
         public YKS1Card MainCom1 = new YKS1Card();
-
         /// <summary>
         /// 串口实例
         /// </summary>
         public YKS2Card MainCom2 = new YKS2Card();
-
         /// <summary>
         /// 创建窗体S1的句柄
         /// </summary>
@@ -39,6 +38,24 @@ namespace YKUper
         /// 创建窗体S2的句柄
         /// </summary>
         private FormS2 formS2 = null;
+
+        ///// <summary>
+        ///// 线程句柄-处理通讯过程
+        ///// </summary>
+        //private Thread thread = null;                  
+
+        /// <summary>
+        /// 定义委托
+        /// </summary>
+        public delegate void MyDelegate();
+        /// <summary>
+        /// 定义委托事件-版本1的串口打开
+        /// </summary>
+        public event MyDelegate MyEventCOMVer1;
+        /// <summary>
+        /// 定义委托时事件-版本2的串口打开
+        /// </summary>
+        public event MyDelegate MyEventCOMVer2;
 
         /// <summary>
         /// 窗体初始化
@@ -52,8 +69,7 @@ namespace YKUper
             tstbComtime.Text = "300";                    //串口通讯-timeout
             ComConf();
             UperConf();
-        }
-
+        }      
         /// <summary>
         /// 窗体控件载入过程
         /// </summary>
@@ -61,13 +77,22 @@ namespace YKUper
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            //ThreadStart threadStart = new ThreadStart(data.ThreadMain);//通过ThreadStart委托告诉子线程执行什么方法　　
+            //thread = new Thread(threadStart);
+            //thread.Start();//启动新线程     
         }
-
-
+        /// <summary>
+        /// 主窗体关闭过程
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Environment.Exit(0); //关闭主窗体时，关闭所有线程
+        }
         //*****************************************************************************
 
-        private void RecodeInfo(string info)
+        public void RecodeInfo(string info)
         {
             tbRecode.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff ") + " " + info + "\r\n");
         }
@@ -167,9 +192,18 @@ namespace YKUper
 
         //******************************************************************************
 
+        /// <summary>
+        /// 更新状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
-            data.SetLocation(data.GetLocation()+1);
+            if (data.COMHardCon == 0)
+            {
+                btnComt.Text = "串口未连接";
+                tscbVer.Enabled = true;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -252,22 +286,23 @@ namespace YKUper
             {
                 btnCheck.Enabled = true;
                 btnCheck.Visible = true;
-                if(formS1 != null) formS1.Close();  //Dispose
-                if(formS2 != null) formS2.Close();
+                if(formS1 != null) formS1.Hide();  //Dispose Hide
+                if(formS2 != null) formS2.Hide();
                 
             }
             else if (data.VerUper == 1)     //S1卡
             {
                 btnCheck.Enabled = false;
                 btnCheck.Visible = false;
-                if (formS2 != null) formS2.Close();
+
+                if (formS2 != null) formS2.Hide();
 
                 panel.Controls.Clear();//移除所有控件
-                formS1 = new FormS1();
-                formS1.Owner = this;
+                if (formS1 == null) formS1 = new FormS1();
+                formS1.Owner = this;    //标注父窗体
                 formS1.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小花，最大化，关闭等按钮）
                 formS1.TopLevel = false; //指示子窗体非顶级窗体
-                this.panel.Controls.Add(formS1);//将子窗体载入panel
+                panel.Controls.Add(formS1);//将子窗体载入panel
                 formS1.Show();
                 
             }
@@ -275,16 +310,44 @@ namespace YKUper
             {         
                 btnCheck.Enabled = false;
                 btnCheck.Visible = false;
-                if (formS1 != null) formS1.Close();
+
+                if (formS2 != null) formS1.Hide();
 
                 panel.Controls.Clear();//移除所有控件
-                formS2 = new FormS2();
-                formS2.Owner = this;
+                if (formS2 == null)
+                    formS2 = new FormS2();      //避免重复创建窗口，只创建一次，之后使用Hide()与Show()实现窗体的变化
+                formS2.Owner = this;        //标注父窗体
                 formS2.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小花，最大化，关闭等按钮）
                 formS2.TopLevel = false; //指示子窗体非顶级窗体
-                this.panel.Controls.Add(formS2);//将子窗体载入panel
+                panel.Controls.Add(formS2);//将子窗体载入panel
                 formS2.Show();
-                
+
+            }
+        }
+
+        /// <summary>
+        /// 串口连接状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnComt_Click(object sender, EventArgs e)
+        {
+            int ver = data.VerUper;
+
+            if (ver == 2)
+            {
+                if (MyEventCOMVer2 != null) MyEventCOMVer2();//引发事件
+            }
+
+            if (data.COMHardCon == 0)
+            {      
+                btnComt.Text = "串口未连接";
+                tscbVer.Enabled = true;
+            }
+            else
+            {
+                btnComt.Text = "串口已连接";
+                tscbVer.Enabled = false;
             }
         }
 

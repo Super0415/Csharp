@@ -30,12 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tabPageX = new System.Windows.Forms.TabPage();
             this.gbXMain = new System.Windows.Forms.GroupBox();
             this.gbXPara = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.tbXTarg = new System.Windows.Forms.TextBox();
             this.lbXTarg = new System.Windows.Forms.Label();
             this.tbXSpdsec = new System.Windows.Forms.TextBox();
@@ -253,9 +254,9 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             // 
-            // timer1
+            // timerRefresh
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
             // label2
             // 
@@ -277,6 +278,7 @@
             this.tcMain.Size = new System.Drawing.Size(554, 327);
             this.tcMain.TabIndex = 102;
             this.tcMain.Tag = "2";
+            this.tcMain.SelectedIndexChanged += new System.EventHandler(this.tcMain_SelectedIndexChanged);
             // 
             // tabPageX
             // 
@@ -302,6 +304,7 @@
             // 
             // gbXPara
             // 
+            this.gbXPara.Controls.Add(this.label3);
             this.gbXPara.Controls.Add(this.tbXTarg);
             this.gbXPara.Controls.Add(this.label1);
             this.gbXPara.Controls.Add(this.lbXTarg);
@@ -324,6 +327,15 @@
             this.gbXPara.TabIndex = 97;
             this.gbXPara.TabStop = false;
             this.gbXPara.Text = "参数配置";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(236, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 56;
+            this.label3.Text = "label3";
             // 
             // tbXTarg
             // 
@@ -551,6 +563,7 @@
             this.btnXLeft.TabIndex = 0;
             this.btnXLeft.Text = "<<";
             this.btnXLeft.UseVisualStyleBackColor = true;
+            this.btnXLeft.Click += new System.EventHandler(this.btnXLeft_Click);
             // 
             // gbXled
             // 
@@ -2182,7 +2195,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerRefresh;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TabControl tcMain;
         private System.Windows.Forms.TabPage tabPageX;
@@ -2374,5 +2387,6 @@
         private System.Windows.Forms.Label lbX2;
         private System.Windows.Forms.Label lbX3;
         private System.Windows.Forms.Button btnIO;
+        private System.Windows.Forms.Label label3;
     }
 }

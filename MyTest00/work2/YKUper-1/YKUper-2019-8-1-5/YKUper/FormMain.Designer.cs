@@ -60,7 +60,6 @@
             // 
             // panel
             // 
-            this.panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel.Location = new System.Drawing.Point(4, 27);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(680, 330);
@@ -243,6 +242,7 @@
             this.btnComt.TabIndex = 3;
             this.btnComt.Text = "串口未连接";
             this.btnComt.UseVisualStyleBackColor = true;
+            this.btnComt.Click += new System.EventHandler(this.btnComt_Click);
             // 
             // btnNett
             // 
@@ -275,6 +275,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

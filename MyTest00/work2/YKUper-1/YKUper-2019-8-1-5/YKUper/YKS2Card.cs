@@ -48,7 +48,7 @@ namespace Yungku.Common.IOCardS2
             set { baudRate = value; }
         }
 
-		private int timeout = 1000;
+	    private int timeout = 1000;
 		/// <summary>
 		/// 设置或获取读写超时时间
 		/// 修改此值后必须重新调用Open才会生效
@@ -84,15 +84,15 @@ namespace Yungku.Common.IOCardS2
 		{
 			lock (syncRoot)
 			{
-				if (sport.IsOpen)
-					sport.Close();
+                if (sport.IsOpen)
+                    sport.Close();
 
-				sport.PortName = "COM" + Port.ToString();
+                sport.PortName = "COM" + Port.ToString();
 				sport.BaudRate = BaudRate;
 				sport.StopBits = StopBits.One;
 				sport.DataBits = 8;
-
-				sport.ReadTimeout = Timeout;
+              
+                sport.ReadTimeout = Timeout;
 				sport.WriteTimeout = Timeout;
 				sport.Open();
                 sport.ReadExisting();

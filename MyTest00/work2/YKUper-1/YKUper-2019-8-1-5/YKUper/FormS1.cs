@@ -32,8 +32,9 @@ namespace YKUper
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
+            int axis = S1data.Axis;
             label2.Text = DateTime.Now.ToString();
-            label3.Text = S1data.GetLocation().ToString();
+            label3.Text = S1data.GetLocation(axis).ToString();
         }
 
         private void FormS1_FormClosing(object sender, FormClosingEventArgs e)

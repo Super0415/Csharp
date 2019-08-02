@@ -19,3 +19,13 @@ E:\GITData\Csharp\Project\S2Upper\obj\Debug\S2Upper.Form1.resources
 E:\GITData\Csharp\Project\S2Upper\obj\Debug\S2Upper.Form2.resources
 E:\GITData\Csharp\Project\S2Upper\obj\Debug\S2Upper.Properties.Resources.resources
 E:\GITData\Csharp\Project\S2Upper\obj\Debug\S2Upper.csproj.GenerateResource.Cache
+E:\GITData\Csharp\MyTest00\work2\S2Upper\bin\Debug\S2Upper.exe.config
+E:\GITData\Csharp\MyTest00\work2\S2Upper\bin\Debug\S2Upper.exe
+E:\GITData\Csharp\MyTest00\work2\S2Upper\bin\Debug\S2Upper.pdb
+E:\GITData\Csharp\MyTest00\work2\S2Upper\obj\Debug\S2Upper.csprojResolveAssemblyReference.cache
+E:\GITData\Csharp\MyTest00\work2\S2Upper\obj\Debug\S2Upper.Form1.resources
+E:\GITData\Csharp\MyTest00\work2\S2Upper\obj\Debug\S2Upper.Form2.resources
+E:\GITData\Csharp\MyTest00\work2\S2Upper\obj\Debug\S2Upper.Properties.Resources.resources
+E:\GITData\Csharp\MyTest00\work2\S2Upper\obj\Debug\S2Upper.csproj.GenerateResource.Cache
+E:\GITData\Csharp\MyTest00\work2\S2Upper\obj\Debug\S2Upper.exe
+E:\GITData\Csharp\MyTest00\work2\S2Upper\obj\Debug\S2Upper.pdb

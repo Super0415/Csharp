@@ -44,15 +44,15 @@ namespace Yungku.Common.IOCard.DataDeal
             public int VerUper;
 
         }
-        public struct AxleData
+        public struct AxisData
         {
             /// <summary>
             /// 移动距离
             /// </summary>
-            public int Distence;
+            public int Dist;
             public int StartSpeed;           //起始速度
             public int RunSpeed;             //运行速度
-            public double Acceleration;         //加速度
+            public double Acce;         //加速度
             public double Deceleration;         //减速度
             /// <summary>
             /// 当前位置
@@ -65,8 +65,8 @@ namespace Yungku.Common.IOCard.DataDeal
             public int Direction;            //运动方向
 
             //回原点参数
-            public int SecondSpeed;          //第二速度
-            public int ReturnDirection;            //回原点运动方向
+            public int SecSpd;          //第二速度
+            public int ReDire;            //回原点运动方向
             //运动模式
             /// <summary>
             /// 运动模式  0-点对点 1-连续 2-原点
@@ -140,7 +140,7 @@ namespace Yungku.Common.IOCard.DataDeal
 
         }
         //结构体 通讯状态
-        public class CommState
+        public class ComState
         {
             /// <summary>
             /// 记录硬件端口连接状态 0-未连接 1-连接
@@ -160,13 +160,13 @@ namespace Yungku.Common.IOCard.DataDeal
             public int COMSoftCon;
         }
         private ConfInfo Info = new ConfInfo();
-        private EngineData enginedata = new EngineData();
-        private AxleData[] axledata = new AxleData[3];
+        private EngineData endata = new EngineData();
+        private AxisData[] axisdata = new AxisData[3];
 
         //private YKS2CardNet YKS2net = new YKS2CardNet();
         //private YKS2Card YKS2Com = new YKS2Card();
 
-        public CommState Comm = new CommState();
+        public ComState Coms = new ComState();
 
 
         /// <summary>
@@ -234,45 +234,47 @@ namespace Yungku.Common.IOCard.DataDeal
             get { return Info.VerUper; }
         }
 
-        /// <summary>
-        /// 设置串口硬链接状态
-        /// </summary>
-        /// <param name="COMHard"></param>
-        public void SetCOMHard(int COMHard)
-        {
-            Comm.COMHardCon = COMHard;
-        }
+        ///// <summary>
+        ///// 设置串口硬链接状态
+        ///// </summary>
+        ///// <param name="COMHard"></param>
+        //public void SetCOMHard(int COMHard)
+        //{
+        //    Comm.COMHardCon = COMHard;
+        //}
         /// <summary>
         /// 获取串口硬链接状态
         /// </summary>
-        /// <returns></returns>
-        public int GetCOMHard()
+        public int COMHardCon
         {
-            return Comm.COMHardCon;
+            set { Coms.COMHardCon = value; }
+            get { return Coms.COMHardCon; }
         }
-        public void SetCOMSoft(int COMSoft)
+
+        /// <summary>
+        /// 获取串口软链接状态
+        /// </summary>
+        public int COMSoftCon
         {
-            Comm.COMSoftCon = COMSoft;
+            set { Coms.COMSoftCon = value; }
+            get { return Coms.COMSoftCon; }
         }
-        public int GetCOMSoft()
-        {
-            return Comm.COMSoftCon;
-        }
+
         public void SetNetHard(int NetHard)
         {
-            Comm.NetHardCon = NetHard;
+            Coms.NetHardCon = NetHard;
         }
         public int GetNetHard()
         {
-            return Comm.NetHardCon;
+            return Coms.NetHardCon;
         }
         public void SetNetSoft(int NetSoft)
         {
-            Comm.NetSoftCon = NetSoft;
+            Coms.NetSoftCon = NetSoft;
         }
         public int GetNetSoft()
         {
-            return Comm.NetSoftCon;
+            return Coms.NetSoftCon;
         }
 
         /// <summary>
@@ -281,7 +283,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Count"></param>
         public void SetHeartCount(int Count)
         {
-            enginedata.HeartCount = Count;
+            endata.HeartCount = Count;
         }
         /// <summary>
         /// 获取心跳断开次数
@@ -289,7 +291,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public int GetHeartCount()
         {
-            return enginedata.HeartCount;
+            return endata.HeartCount;
         }
         /// <summary>
         /// 记录串口心跳断开次数
@@ -297,7 +299,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Count"></param>
         public void SetComHeartCount(int Count)
         {
-            enginedata.ComHeartCount = Count;
+            endata.ComHeartCount = Count;
         }
         /// <summary>
         /// 获取串口心跳断开次数
@@ -305,7 +307,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public int GetComHeartCount()
         {
-            return enginedata.ComHeartCount;
+            return endata.ComHeartCount;
         }
         /// <summary>
         /// 记录网口心跳断开次数
@@ -313,7 +315,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Count"></param>
         public void SetNetHeartCount(int Count)
         {
-            enginedata.NetHeartCount = Count;
+            endata.NetHeartCount = Count;
         }
         /// <summary>
         /// 获取网口心跳断开次数
@@ -321,15 +323,17 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public int GetNetHeartCount()
         {
-            return enginedata.NetHeartCount;
+            return endata.NetHeartCount;
         }
-        public void SetLocation(int loc)
+
+
+        public void SetLocation(int axis,int loc)
         {
-            axledata[enginedata.Axis].Location = loc;
+            axisdata[axis].Location = loc;
         }
-        public int GetLocation()
+        public int GetLocation(int axis)
         {
-            return axledata[enginedata.Axis].Location;
+            return axisdata[axis].Location;
         }
 
         /// <summary>
@@ -338,7 +342,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="state"></param>
         public void SetPWMState(int state)
         {
-            axledata[enginedata.Axis].PWMState = state;
+            axisdata[endata.Axis].PWMState = state;
         }
         /// <summary>
         /// 获取轴状态
@@ -346,7 +350,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public int GetPWMState()
         {
-            return axledata[enginedata.Axis].PWMState;
+            return axisdata[endata.Axis].PWMState;
         }
         /// <summary>
         /// 设置轴IO
@@ -354,7 +358,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="state"></param>
         public void SetPWMIOState(int state)
         {
-            axledata[enginedata.Axis].PWMIOState = state;
+            axisdata[endata.Axis].PWMIOState = state;
         }
         /// <summary>
         /// 获取轴IO
@@ -362,7 +366,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public int GetPWMIOState()
         {
-            return axledata[enginedata.Axis].PWMIOState;
+            return axisdata[endata.Axis].PWMIOState;
         }
         /// <summary>
         /// 设置开关量输入口
@@ -370,7 +374,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="state"></param>
         public void SetMInput(int Input)
         {
-            enginedata.MInput = Input;
+            endata.MInput = Input;
         }
         /// <summary>
         /// 获取开关量输入口
@@ -378,7 +382,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public int GetMInput()
         {
-            return enginedata.MInput;
+            return endata.MInput;
         }
         /// <summary>
         /// 设置开关量输出口
@@ -386,7 +390,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public void SetMOutput(int Output)
         {
-            enginedata.MOutput = Output;
+            endata.MOutput = Output;
         }
         /// <summary>
         /// 获取开关量输出口
@@ -394,7 +398,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public int GetMOutput()
         {
-            return enginedata.MOutput;
+            return endata.MOutput;
         }
 
         /// <summary>
@@ -403,7 +407,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="EnLimit"></param>
         public void SetSignEnLimit(int EnLimit)
         {
-            axledata[enginedata.Axis].SignEnLimit = (EnLimit == 1 ? true : false);
+            axisdata[endata.Axis].SignEnLimit = (EnLimit == 1 ? true : false);
         }
         /// <summary>
         /// 获取极限使能信号
@@ -411,7 +415,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public bool GetSignEnLimit()
         {
-            return axledata[enginedata.Axis].SignEnLimit;
+            return axisdata[endata.Axis].SignEnLimit;
         }
         /// <summary>
         /// 设置原点使能信号
@@ -419,7 +423,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="EnOrigin"></param>
         public void SetSignEnOrigin(int EnOrigin)
         {
-            axledata[enginedata.Axis].SignEnOrigin = (EnOrigin == 1 ? true : false);
+            axisdata[endata.Axis].SignEnOrigin = (EnOrigin == 1 ? true : false);
         }
         /// <summary>
         /// 获取原点使能信号
@@ -427,7 +431,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public bool GetSignEnOrigin()
         {
-            return axledata[enginedata.Axis].SignEnOrigin;
+            return axisdata[endata.Axis].SignEnOrigin;
         }
         /// <summary>
         /// 设置反转极限信号
@@ -435,7 +439,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="ReLimit"></param>
         public void SetSignReLimit(int ReLimit)
         {
-            axledata[enginedata.Axis].SignReLimit = (ReLimit == 1 ? true : false);
+            axisdata[endata.Axis].SignReLimit = (ReLimit == 1 ? true : false);
         }
         /// <summary>
         /// 获取反转极限信号
@@ -443,7 +447,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public bool GetSignReLimit()
         {
-            return axledata[enginedata.Axis].SignReLimit;
+            return axisdata[endata.Axis].SignReLimit;
         }
         /// <summary>
         /// 设置反转原点信号
@@ -451,7 +455,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="ReOrigin"></param>
         public void SetSignReOrigin(int ReOrigin)
         {
-            axledata[enginedata.Axis].SignReOrigin = (ReOrigin == 1 ? true : false);
+            axisdata[endata.Axis].SignReOrigin = (ReOrigin == 1 ? true : false);
         }
         /// <summary>
         /// 获取反转原点信号
@@ -459,151 +463,159 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public bool GetSignReOrigin()
         {
-            return axledata[enginedata.Axis].SignReOrigin;
+            return axisdata[endata.Axis].SignReOrigin;
         }
-        /// <summary>
-        /// 设置轴号
-        /// </summary>
-        /// <param name="axle"></param>
-        public void SetAxle(int axle)
+
+        public int Axis
         {
-            enginedata.Axis = axle;
+            set { endata.Axis = value; }
+            get { return endata.Axis; }
         }
-        /// <summary>
-        /// 获取轴号
-        /// </summary>
-        /// <returns></returns>
-        public int GetAxle()
-        {
-            return enginedata.Axis;
-        }
+        ///// <summary>
+        ///// 设置轴号
+        ///// </summary>
+        ///// <param name="axle"></param>
+        //public void SetAxle(int axle)
+        //{
+        //    enginedata.Axis = axle;
+        //}
+        ///// <summary>
+        ///// 获取轴号
+        ///// </summary>
+        ///// <returns></returns>
+        //public int GetAxle()
+        //{
+        //    return enginedata.Axis;
+        //}
+
         /// <summary>
         /// 设置移动距离
         /// </summary>
         /// <param name="distence"></param>
-        public void SetDistence(int distence)
+        public void SetDistence(int axis,int distence)
         {
-            axledata[enginedata.Axis].Distence = distence;
+            axisdata[axis].Dist = distence;
         }
         /// <summary>
         /// 获取移动距离
         /// </summary>
         /// <returns></returns>
-        public int GetDistence()
+        public int GetDistence(int axis)
         {
-            return axledata[enginedata.Axis].Distence;
+            return axisdata[axis].Dist;
         }
+
         /// <summary>
         /// 设置目标位置
         /// </summary>
         /// <param name="Targetloca"></param>
-        public void SetTargetlocation(int Targetloca)
+        public void SetTargloca(int axis,int Targetloca)
         {
-            axledata[enginedata.Axis].Targetlocation = Targetloca;
+            axisdata[axis].Targetlocation = Targetloca;
         }
         /// <summary>
         /// 获取目标位置
         /// </summary>
         /// <returns></returns>
-        public int GetTargetlocation()
+        public int GetTargloca(int axis)
         {
-            return axledata[enginedata.Axis].Targetlocation;
+            return axisdata[axis].Targetlocation;
         }
         /// <summary>
         /// 设置起始速度
         /// </summary>
         /// <param name="speed"></param>
-        public void SetStartSpeed(int speed)
+        public void SetStartSpd(int axis,int speed)
         {
-            axledata[enginedata.Axis].StartSpeed = speed;
+            axisdata[axis].StartSpeed = speed;
         }
         /// <summary>
         /// 获取起始速度
         /// </summary>
         /// <returns></returns>
-        public int GetStartSpeed()
+        public int GetStartSpd(int axis)
         {
-            return axledata[enginedata.Axis].StartSpeed;
+            return axisdata[axis].StartSpeed;
         }
         /// <summary>
         /// 设置运行速度
         /// </summary>
         /// <param name="speed"></param>
-        public void SetRunSpeed(int speed)
+        public void SetRunSpd(int axis,int speed)
         {
-            axledata[enginedata.Axis].RunSpeed = speed;
+            axisdata[endata.Axis].RunSpeed = speed;
         }
         /// <summary>
         /// 获取运行速度
         /// </summary>
         /// <returns></returns>
-        public int GetRunSpeed()
+        public int GetRunSpd(int axis)
         {
-            return axledata[enginedata.Axis].RunSpeed;
+            return axisdata[endata.Axis].RunSpeed;
         }
         /// <summary>
         /// 设置第二速度
         /// </summary>
         /// <param name="speed"></param>
-        public void SetSecondSpeed(int speed)
+        public void SetSecSpd(int axis,int speed)
         {
-            axledata[enginedata.Axis].SecondSpeed = speed;
+            axisdata[axis].SecSpd = speed;
         }
         /// <summary>
         /// 获取第二速度
         /// </summary>
         /// <returns></returns>
-        public int GetSecondSpeed()
+        public int GetSecSpd(int axis)
         {
-            return axledata[enginedata.Axis].SecondSpeed;
+            return axisdata[axis].SecSpd;
         }
         /// <summary>
         /// 设置加速度
         /// </summary>
         /// <param name="aspd"></param>
-        public void SetAcceleration(double aspd)
+        public void SetAcce(int axis,double aspd)
         {
-            axledata[enginedata.Axis].Acceleration = aspd;
+            axisdata[axis].Acce = aspd;
         }
         /// <summary>
         /// 获取加速度
         /// </summary>
         /// <returns></returns>
-        public double GetAcceleration()
+        public double GetAcce(int axis)
         {
-            return axledata[enginedata.Axis].Acceleration;
+            return axisdata[axis].Acce;
         }
         /// <summary>
         /// 设置减速度
         /// </summary>
         /// <param name="aspd"></param>
-        public void SetDeceleration(double aspd)
+        public void SetDece(int axis,double aspd)
         {
-            axledata[enginedata.Axis].Deceleration = aspd;
+            axisdata[axis].Deceleration = aspd;
         }
         /// <summary>
         /// 获取减速度
         /// </summary>
         /// <returns></returns>
-        public double GetDeceleration()
+        public double GetDece(int axis)
         {
-            return axledata[enginedata.Axis].Deceleration;
+            return axisdata[axis].Deceleration;
         }
         /// <summary>
         /// 设置回原点方向
         /// </summary>
         /// <param name="Dir"></param>
-        public void SetReturnDirection(int Dir)
+        public void SetReturnDire(int axis,int Dir)
         {
-            axledata[enginedata.Axis].ReturnDirection = Dir;
+            axisdata[axis].ReDire = Dir;
         }
         /// <summary>
         /// 获取回原点方向
         /// </summary>
         /// <returns></returns>
-        public int GetReturnDirection()
+        public int GetReturnDire(int axis)
         {
-            return axledata[enginedata.Axis].ReturnDirection;
+            return axisdata[axis].ReDire;
         }
         /// <summary>
         /// 设置运动模式
@@ -611,7 +623,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Mode"></param>
         public void SetRunMode(int Mode)
         {
-            axledata[enginedata.Axis].RunMode = Mode;
+            axisdata[endata.Axis].RunMode = Mode;
         }
         /// <summary>
         /// 获取运动模式
@@ -619,23 +631,23 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Mode"></param>
         public int GetRunMode()
         {
-            return axledata[enginedata.Axis].RunMode;
+            return axisdata[endata.Axis].RunMode;
         }
         /// <summary>
         /// 设置运动方向
         /// </summary>
         /// <param name="Mode"></param>
-        public void SetDirection(int Dir)
+        public void SetDirection(int axis,int Dir)
         {
-            axledata[enginedata.Axis].Direction = Dir;
+            axisdata[axis].Direction = Dir;
         }
         /// <summary>
         /// 获取运动方向
         /// </summary>
         /// <param name="Mode"></param>
-        public int GetDirection()
+        public int GetDire(int axis)
         {
-            return axledata[enginedata.Axis].Direction;
+            return axisdata[axis].Direction;
         }
         /// <summary>
         /// 设置停止模式
@@ -643,7 +655,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Mode"></param>
         public void SetStopRunMode(int StopMode)
         {
-            axledata[enginedata.Axis].StopRunMode = StopMode;
+            axisdata[endata.Axis].StopRunMode = StopMode;
         }
         /// <summary>
         /// 获取停止模式
@@ -651,7 +663,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Mode"></param>
         public int GetStopRunMode()
         {
-            return axledata[enginedata.Axis].StopRunMode;
+            return axisdata[endata.Axis].StopRunMode;
         }
         /// <summary>
         /// 设置演习模式 0-停止 1-开始
@@ -659,7 +671,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Mode"></param>
         public void SetShowMode(int StopMode)
         {
-            axledata[enginedata.Axis].ShowMode = StopMode;
+            axisdata[endata.Axis].ShowMode = StopMode;
         }
         /// <summary>
         /// 获取演习模式 0-停止 1-开始
@@ -667,7 +679,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Mode"></param>
         public int GetShowMode()
         {
-            return axledata[enginedata.Axis].ShowMode;
+            return axisdata[endata.Axis].ShowMode;
         }
         /// <summary>
         /// 设置主板或者扩展卡
@@ -675,7 +687,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Mode"></param>
         public void SetCardID(int ID)
         {
-            enginedata.CardID = ID;
+            endata.CardID = ID;
         }
         /// <summary>
         /// 获取主板或者扩展卡
@@ -683,7 +695,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="Mode"></param>
         public int GetCardID()
         {
-            return enginedata.CardID;
+            return endata.CardID;
         }
         /// <summary>
         /// 设置固件信息读取次数
@@ -691,7 +703,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="num"></param>
         public void SetFirstNum(int num)
         {
-            enginedata.FirstNum = num;
+            endata.FirstNum = num;
         }
         /// <summary>
         /// 获取固件信息读取次数
@@ -699,7 +711,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param></param>
         public int GetFirstNum()
         {
-            return enginedata.FirstNum;
+            return endata.FirstNum;
         }
         /// <summary>
         /// 设置主板名称
@@ -707,7 +719,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="name"></param>
         public void SetName(string name)
         {
-            enginedata.Name = name;
+            endata.Name = name;
         }
 
         /// <summary>
@@ -716,7 +728,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public string GetName()
         {
-            return enginedata.Name;
+            return endata.Name;
         }
         /// <summary>
         /// 设置固件编号
@@ -724,7 +736,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="name"></param>
         public void SetSN(int sn)
         {
-            enginedata.SN = sn;
+            endata.SN = sn;
         }
 
         /// <summary>
@@ -733,7 +745,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public int GetSN()
         {
-            return enginedata.SN;
+            return endata.SN;
         }
         /// <summary>
         /// 设置编码开关状态
@@ -741,7 +753,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="name"></param>
         public void SetswitchID(int sn)
         {
-            enginedata.switchID = sn;
+            endata.switchID = sn;
         }
 
         /// <summary>
@@ -750,7 +762,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public int GetswitchID()
         {
-            return enginedata.switchID;
+            return endata.switchID;
         }
         /// <summary>
         /// 设置版本信息
@@ -758,7 +770,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <param name="name"></param>
         public void SetVer_Info(string info)
         {
-            enginedata.Ver_Info = info;
+            endata.Ver_Info = info;
         }
 
         /// <summary>
@@ -767,7 +779,7 @@ namespace Yungku.Common.IOCard.DataDeal
         /// <returns></returns>
         public string GetVer_Info()
         {
-            return enginedata.Ver_Info;
+            return endata.Ver_Info;
         }
 
 
@@ -776,101 +788,132 @@ namespace Yungku.Common.IOCard.DataDeal
         /// 线程处理
         /// </summary>
         public void ThreadMain()
-        { 
-            //while (true)
-            //{
+        {
+            while (true)
+            {
 
-            //    Thread.Sleep(30);
-            //    if (Comm.NetHardCon == 1 && Comm.NetSoftCon == 1)  //连接网络
-            //    {
-            //        //心跳检测
-            //        if (!YKS2net.IsExists())
-            //        {
-            //            //enginedata.HeartCount++;
-            //            //if (enginedata.HeartCount > 3)
-            //            //{
-            //            //    enginedata.HeartCount = 0;
-            //            //    Comm.NetSoftCon = 0;
-
-            //            //}
-            //            continue;
-            //        }
-            //        else
-            //        {
-            //            //enginedata.HeartCount = 0;
-            //            //enginedata.NetHeartCount = 0;
-
-            //        }
-
-            //        if (enginedata.FirstNum == 0)  //读取固件信息
-            //        {
-            //            enginedata.FirstNum = 1;
-
-            //            //获取主板名称
-            //            enginedata.Name = YKS2net.GetCardName();
-            //            //获取固件编号
-            //            enginedata.SN = YKS2net.GetSN();
-            //            //获取编码开关状态
-            //            enginedata.switchID = YKS2net.GetDipSwitch();
-           
-            //            ////获取版本信息
-            //            enginedata.Ver_Info = YKS2net.GetVerInfo();
-
-            //        }
+                    Thread.Sleep(30);
 
 
-            //        //获取轴当前位置
-            //        axledata[enginedata.Axle].Location = YKS2net.GetPosition(enginedata.Axle);
+                if (Info.VerUper == 2)
+                {
+                    if (Coms.COMHardCon == 1)
+                    {
 
-            //        //获取轴IO状态
-            //        axledata[enginedata.Axle].PWMIOState = YKS2net.GetAIO(); //PWM控制输入输出状态
 
 
-            //        if (enginedata.CardID == 1)
-            //        {
-            //            //获取扩展板输入端口值
-            //            enginedata.MInput = YKS2net.GetInputsEx();
-            //            //获取扩展板输出端口值
-            //            enginedata.MOutput = YKS2net.GetOutputsEx();
 
-            //        }
-            //        else
-            //        {
-            //            //获取主板输入端口值
-            //            enginedata.MInput = YKS2net.GetInputs();
-            //            //获取主板输出端口值
-            //            enginedata.MOutput = YKS2net.GetOutputs();
-            //        }
-                    
 
-                     
 
-            //       //获取轴状态
-            //       axledata[enginedata.Axle].PWMState = YKS2net.GetAxisStatus(enginedata.Axle);
-        
 
-            //        if (axledata[enginedata.Axle].ShowMode == 1) 
-            //        {
-            //            if ((axledata[enginedata.Axle].PWMState >> 1 & 0x1) == 0)
-            //            {
-            //                int Dis = axledata[enginedata.Axle].Direction > 0 ? axledata[enginedata.Axle].Distence : -axledata[enginedata.Axle].Distence;
-            //                YKS2net.RltMove(enginedata.Axle, Dis, axledata[enginedata.Axle].StartSpeed, axledata[enginedata.Axle].RunSpeed, axledata[enginedata.Axle].Acceleration, axledata[enginedata.Axle].Deceleration);
-            //                if (axledata[enginedata.Axle].Direction == 0)
-            //                {
-            //                    axledata[enginedata.Axle].Direction = 1;
-            //                }
-            //                else
-            //                {
-            //                    axledata[enginedata.Axle].Direction = 0;
-            //                }
-            //            }
-            //        }
-                  
-            //    }
-            //    else if (Comm.NetHardCon == 0 && Comm.NetSoftCon == 0)//断开网络
-            //    {
-            //    }
-            //}
+
+
+
+                    }
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+                //    if (Comm.NetHardCon == 1 && Comm.NetSoftCon == 1)  //连接网络
+                //    {
+                //        //心跳检测
+                //        if (!YKS2net.IsExists())
+                //        {
+                //            //enginedata.HeartCount++;
+                //            //if (enginedata.HeartCount > 3)
+                //            //{
+                //            //    enginedata.HeartCount = 0;
+                //            //    Comm.NetSoftCon = 0;
+
+                //            //}
+                //            continue;
+                //        }
+                //        else
+                //        {
+                //            //enginedata.HeartCount = 0;
+                //            //enginedata.NetHeartCount = 0;
+
+                //        }
+
+                //        if (enginedata.FirstNum == 0)  //读取固件信息
+                //        {
+                //            enginedata.FirstNum = 1;
+
+                //            //获取主板名称
+                //            enginedata.Name = YKS2net.GetCardName();
+                //            //获取固件编号
+                //            enginedata.SN = YKS2net.GetSN();
+                //            //获取编码开关状态
+                //            enginedata.switchID = YKS2net.GetDipSwitch();
+
+                //            ////获取版本信息
+                //            enginedata.Ver_Info = YKS2net.GetVerInfo();
+
+                //        }
+
+
+                //        //获取轴当前位置
+                //        axledata[enginedata.Axle].Location = YKS2net.GetPosition(enginedata.Axle);
+
+                //        //获取轴IO状态
+                //        axledata[enginedata.Axle].PWMIOState = YKS2net.GetAIO(); //PWM控制输入输出状态
+
+
+                //        if (enginedata.CardID == 1)
+                //        {
+                //            //获取扩展板输入端口值
+                //            enginedata.MInput = YKS2net.GetInputsEx();
+                //            //获取扩展板输出端口值
+                //            enginedata.MOutput = YKS2net.GetOutputsEx();
+
+                //        }
+                //        else
+                //        {
+                //            //获取主板输入端口值
+                //            enginedata.MInput = YKS2net.GetInputs();
+                //            //获取主板输出端口值
+                //            enginedata.MOutput = YKS2net.GetOutputs();
+                //        }
+
+
+
+
+                //       //获取轴状态
+                //       axledata[enginedata.Axle].PWMState = YKS2net.GetAxisStatus(enginedata.Axle);
+
+
+                //        if (axledata[enginedata.Axle].ShowMode == 1) 
+                //        {
+                //            if ((axledata[enginedata.Axle].PWMState >> 1 & 0x1) == 0)
+                //            {
+                //                int Dis = axledata[enginedata.Axle].Direction > 0 ? axledata[enginedata.Axle].Distence : -axledata[enginedata.Axle].Distence;
+                //                YKS2net.RltMove(enginedata.Axle, Dis, axledata[enginedata.Axle].StartSpeed, axledata[enginedata.Axle].RunSpeed, axledata[enginedata.Axle].Acceleration, axledata[enginedata.Axle].Deceleration);
+                //                if (axledata[enginedata.Axle].Direction == 0)
+                //                {
+                //                    axledata[enginedata.Axle].Direction = 1;
+                //                }
+                //                else
+                //                {
+                //                    axledata[enginedata.Axle].Direction = 0;
+                //                }
+                //            }
+                //        }
+
+                //    }
+                //    else if (Comm.NetHardCon == 0 && Comm.NetSoftCon == 0)//断开网络
+                //    {
+                //    }
+            }
         }
 
    }
