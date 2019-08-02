@@ -13,6 +13,9 @@ namespace YKUper
 {
     public partial class FormS2 : Form
     {
+        /// <summary>
+        /// 用于复制数据集
+        /// </summary>
         DataDeal S2data = null;
         public FormS2()
         {
@@ -30,5 +33,12 @@ namespace YKUper
         {
             label1.Text = S2data.GetLocation().ToString();
         }
+
+        private void FormS2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            timer1.Enabled = false;
+        }
+
+
     }
 }

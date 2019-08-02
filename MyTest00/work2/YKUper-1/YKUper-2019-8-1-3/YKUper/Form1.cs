@@ -31,11 +31,27 @@ namespace YKUper
         public YKS2Card MainCom2 = new YKS2Card();
 
         /// <summary>
+        /// 创建窗体S1的句柄
+        /// </summary>
+        private FormS1 formS1 = null;
+
+        /// <summary>
+        /// 创建窗体S2的句柄
+        /// </summary>
+        private FormS2 formS2 = null;
+
+        /// <summary>
         /// 窗体初始化
         /// </summary>
         public MainForm()
         {
             InitializeComponent();
+            tstbNetip.Text = "192.168.1.100";          //网络通讯-IP
+            tstbNetport.Text = "4000";                   //网络通讯-port
+            tstbNetime.Text = "300";                    //网络通讯-timeout
+            tstbComtime.Text = "300";                    //串口通讯-timeout
+            ComConf();
+            UperConf();
         }
 
         /// <summary>
@@ -45,12 +61,7 @@ namespace YKUper
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            tstbNetip.Text = "192.168.1.100";          //网络通讯-IP
-            tstbNetport.Text = "4000";                   //网络通讯-port
-            tstbNetime.Text = "300";                    //网络通讯-timeout
-            tstbComtime.Text = "300";                    //串口通讯-timeout
-            ComConf();
-            UperConf();
+
         }
 
 
@@ -165,17 +176,11 @@ namespace YKUper
         {
             if (CheckHeartTimes())
             {
-                RecodeInfo("上位机版本为：" + data.VerUper);
+                RecodeInfo("上位机版本为：S" + data.VerUper);
             }
             else { RecodeInfo("自动检测失败！"); }
 
-            panel.Controls.Clear();//移除所有控件
-            FormS2 formS2 = new FormS2();
-            formS2.Owner = this;
-            formS2.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小花，最大化，关闭等按钮）
-            formS2.TopLevel = false; //指示子窗体非顶级窗体
-            this.panel.Controls.Add(formS2);//将子窗体载入panel
-            formS2.Show();
+
         }
         /// <summary>
         /// 同步更新网络ip
@@ -233,29 +238,51 @@ namespace YKUper
         {
             data.Comtimeout = Convert.ToInt32(tstbComtime.Text);
         }
-
+     
+        /// <summary>
+        /// 切换上位机版本
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tscbVer_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {           
             data.VerUper = tscbVer.SelectedIndex;
 
             if (data.VerUper == 0)          //自动检测
             {
                 btnCheck.Enabled = true;
                 btnCheck.Visible = true;
-                //panel.Controls.Clear();   //移除所有控件
+                if(formS1 != null) formS1.Close();  //Dispose
+                if(formS2 != null) formS2.Close();
             }
             else if (data.VerUper == 1)     //S1卡
             {
                 btnCheck.Enabled = false;
                 btnCheck.Visible = false;
-                //panel.Controls.Clear();   //移除所有控件
+
+                panel.Controls.Clear();//移除所有控件
+                formS1 = new FormS1();
+                formS1.Owner = this;
+                formS1.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小花，最大化，关闭等按钮）
+                formS1.TopLevel = false; //指示子窗体非顶级窗体
+                this.panel.Controls.Add(formS1);//将子窗体载入panel
+                formS1.Show();
             }
             else if (data.VerUper == 2)     //S2卡
             {
                 btnCheck.Enabled = false;
                 btnCheck.Visible = false;
-                //panel.Controls.Clear();   //移除所有控件
+
+                panel.Controls.Clear();//移除所有控件
+                formS2 = new FormS2();
+                formS2.Owner = this;
+                formS2.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小花，最大化，关闭等按钮）
+                formS2.TopLevel = false; //指示子窗体非顶级窗体
+                this.panel.Controls.Add(formS2);//将子窗体载入panel
+                formS2.Show();
             }
         }
+
+
     }
 }
