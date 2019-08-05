@@ -17,6 +17,8 @@ namespace FirstTest
         public Form1()
         {
             InitializeComponent();
+            textBox1.Text = "0";
+            textBox2.Text = "0";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -68,6 +70,49 @@ namespace FirstTest
 
         }
 
+        private void fileSystemWatcher1_Changed(object sender, System.IO.FileSystemEventArgs e)
+        {
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //int high = 65535;
+            //int low = 65535;
+            //long num = high << 15 + low;
+            //label6.Text = num.ToString();
+
+            //if (num >> 31 == 0x1) // 值为负数
+            //{
+            //    label5.Text = ((int)num).ToString();
+            //}
+            //else label5.Text = "错误";
+            long high = 0;
+            long low = 0;
+            try
+            {
+                high = Convert.ToInt32(textBox1.Text);
+            }
+            catch
+            {
+                high = 0;
+            }
+            try
+            {
+                low = Convert.ToInt32(textBox2.Text);
+            }
+            catch
+            {
+                low = 0;
+            }
+            //long sum = high * 0x10000 + low;
+            //long sum1 = (high << 16) + low;
+            //label6.Text = ((int)sum1).ToString();
+            //label5.Text = sum1.ToString();
+            //textBox3.Text = sum.ToString();
+
+
+            
+        }
     }
 }
