@@ -43,7 +43,7 @@
             this.读写超时ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tstbNetime = new System.Windows.Forms.ToolStripTextBox();
             this.串口配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.端口ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCOMname = new System.Windows.Forms.ToolStripMenuItem();
             this.tscbComport = new System.Windows.Forms.ToolStripComboBox();
             this.波特率ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tscbCombaud = new System.Windows.Forms.ToolStripComboBox();
@@ -110,7 +110,7 @@
             this.tsmiNetport,
             this.读写超时ToolStripMenuItem});
             this.网络配置ToolStripMenuItem.Name = "网络配置ToolStripMenuItem";
-            this.网络配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.网络配置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.网络配置ToolStripMenuItem.Text = "网络配置";
             // 
             // iP地址ToolStripMenuItem
@@ -158,20 +158,21 @@
             // 串口配置ToolStripMenuItem
             // 
             this.串口配置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.端口ToolStripMenuItem1,
+            this.tsmiCOMname,
             this.波特率ToolStripMenuItem,
             this.读写超时ToolStripMenuItem1});
             this.串口配置ToolStripMenuItem.Name = "串口配置ToolStripMenuItem";
-            this.串口配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.串口配置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.串口配置ToolStripMenuItem.Text = "串口配置";
             // 
-            // 端口ToolStripMenuItem1
+            // tsmiCOMname
             // 
-            this.端口ToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiCOMname.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tscbComport});
-            this.端口ToolStripMenuItem1.Name = "端口ToolStripMenuItem1";
-            this.端口ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
-            this.端口ToolStripMenuItem1.Text = "端口";
+            this.tsmiCOMname.Name = "tsmiCOMname";
+            this.tsmiCOMname.Size = new System.Drawing.Size(152, 22);
+            this.tsmiCOMname.Text = "端口";
+            this.tsmiCOMname.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tsmiCOMname_MouseDown);
             // 
             // tscbComport
             // 
@@ -184,7 +185,7 @@
             this.波特率ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tscbCombaud});
             this.波特率ToolStripMenuItem.Name = "波特率ToolStripMenuItem";
-            this.波特率ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.波特率ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.波特率ToolStripMenuItem.Text = "波特率";
             // 
             // tscbCombaud
@@ -198,7 +199,7 @@
             this.读写超时ToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tstbComtime});
             this.读写超时ToolStripMenuItem1.Name = "读写超时ToolStripMenuItem1";
-            this.读写超时ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.读写超时ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.读写超时ToolStripMenuItem1.Text = "读写超时";
             // 
             // tstbComtime
@@ -212,7 +213,7 @@
             this.下位机版本ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tscbVer});
             this.下位机版本ToolStripMenuItem.Name = "下位机版本ToolStripMenuItem";
-            this.下位机版本ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.下位机版本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.下位机版本ToolStripMenuItem.Text = "下位机版本";
             // 
             // tscbVer
@@ -307,7 +308,7 @@
         private System.Windows.Forms.ToolStripTextBox tstbNetip;
         private System.Windows.Forms.ToolStripTextBox tstbNetport;
         private System.Windows.Forms.ToolStripTextBox tstbNetime;
-        private System.Windows.Forms.ToolStripMenuItem 端口ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCOMname;
         private System.Windows.Forms.ToolStripComboBox tscbComport;
         private System.Windows.Forms.ToolStripMenuItem 波特率ToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox tscbCombaud;

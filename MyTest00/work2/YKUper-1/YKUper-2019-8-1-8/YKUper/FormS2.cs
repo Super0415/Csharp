@@ -442,7 +442,7 @@ namespace YKUper
                         }
                     }
 
-                    if (S2data.COMSoftCon == 1)     //软链接成功
+                    if (S2data.COMSoftCon == 1 && S2data.NetHardCon == 0)     //软链接成功
                     {
 
                         if (S2data.GetFirstNum() == 0)    //读取固件信息

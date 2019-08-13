@@ -14,6 +14,8 @@ using Yungku.Common.IOCardS2;
 using Yungku.Common.IOCard.Net;
 using System.Threading;
 
+
+
 namespace YKUper
 {
     public partial class MainForm : Form
@@ -475,9 +477,11 @@ namespace YKUper
             }
         }
 
-
-
-
+        private void tsmiCOMname_MouseDown(object sender, MouseEventArgs e)
+        {
+            tscbComport.Items.Clear();
+            ComConf();
+        }
 
     }
 }
