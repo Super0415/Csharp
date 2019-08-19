@@ -109,7 +109,13 @@ namespace YKUper
         /// <param name="e"></param>
         private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            S2data.Axis = tcMain.SelectedIndex;        //选项卡索引
+            int axis = S2data.Axis;
+            if (S2data.GetShowMode(axis) == 1)
+            {
+                tcMain.SelectedIndex = axis;
+            }
+            else
+                S2data.Axis = tcMain.SelectedIndex;        //选项卡索引
         }
 
         /// <summary>
@@ -487,15 +493,17 @@ namespace YKUper
                             if ((S2data.GetPWMState(axis) >> 1 & 0x1) == 0)
                             {
                                 int Dis = S2data.GetDire(axis) > 0 ? S2data.GetDistence(axis) : -S2data.GetDistence(axis);
+
                                 Com.RltMove(S2data.Axis, Dis, S2data.GetStartSpd(axis), S2data.GetRunSpd(axis), S2data.GetAcce(axis), S2data.GetDece(axis));
                                 if (S2data.GetDire(axis) == 0)
                                 {
-                                    S2data.SetDire(axis,1);
+                                    S2data.SetDire(axis, 1);
                                 }
                                 else
                                 {
-                                    S2data.SetDire(axis,0);
+                                    S2data.SetDire(axis, 0);
                                 }
+
                             }
                         }
 
@@ -585,7 +593,7 @@ namespace YKUper
                             if ((S2data.GetPWMState(axis) >> 1 & 0x1) == 0)
                             {
                                 int Dis = S2data.GetDire(axis) > 0 ? S2data.GetDistence(axis) : -S2data.GetDistence(axis);
-                                Net.RltMove(S2data.Axis, Dis, S2data.GetStartSpd(axis), S2data.GetRunSpd(axis), S2data.GetAcce(axis), S2data.GetDece(axis));
+                                Net.RltMove(axis, Dis, S2data.GetStartSpd(axis), S2data.GetRunSpd(axis), S2data.GetAcce(axis), S2data.GetDece(axis));
                                 if (S2data.GetDire(axis) == 0)
                                 {
                                     S2data.SetDire(axis, 1);
