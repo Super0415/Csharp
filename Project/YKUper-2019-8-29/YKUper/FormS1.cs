@@ -48,6 +48,8 @@ namespace YKUper
             lForm.MyEventCOMVerS1 += new MainForm.MyDelegate(Main_Connet);//监听MainForm窗体事件
             S1data = lForm.data;
             timerRefresh.Enabled = true;
+
+            lForm.RecodeInfo("上位机版本为：S1上位机");
         }
 
         public void Comboboxn()

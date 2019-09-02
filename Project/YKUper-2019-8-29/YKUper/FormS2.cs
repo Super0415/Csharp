@@ -90,6 +90,8 @@ namespace YKUper
             lForm.MyEventNetVerS2 += new MainForm.MyDelegate(Net_Connet);//监听MainForm窗体事件
             S2data = lForm.data;
             timerRefresh.Enabled = true;
+
+            lForm.RecodeInfo("上位机版本为：S2上位机");
         }
         public void Comboboxn(ComboBox box)
         {
@@ -121,7 +123,7 @@ namespace YKUper
         /// <summary>
         /// 主窗体打开串口事件
         /// </summary>
-        void Com_Connet()
+        private void Com_Connet()
         {
             try
             {
@@ -1020,5 +1022,6 @@ namespace YKUper
         {
             Tool_ChangeCardIDFont();
         }
+
     }
 }

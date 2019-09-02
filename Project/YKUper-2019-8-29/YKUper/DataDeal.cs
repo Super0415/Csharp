@@ -34,6 +34,10 @@ namespace Yungku.Common.IOCard.DataDeal
             /// </summary>
             public int Comport;
             /// <summary>
+            /// 串口通讯地址
+            /// </summary>
+            public int Comaddr;
+            /// <summary>
             /// 串口连接超时
             /// </summary>
             public int Comtimeout;
@@ -158,10 +162,132 @@ namespace Yungku.Common.IOCard.DataDeal
             /// </summary>
             public int COMSoftCon;
         }
+
+        //结构体 负压表数据
+        public class GPData
+        {
+            /// <summary>
+            /// 传感器1的显示值
+            /// </summary>
+            public int SensorP1;
+            /// <summary>
+            /// 传感器2的显示值
+            /// </summary>
+            public int SensorP2;
+            /// <summary>
+            /// 传感器3的显示值
+            /// </summary>
+            public int SensorP3;
+            /// <summary>
+            /// 传感器4的显示值
+            /// </summary>
+            public int SensorP4;
+            /// <summary>
+            /// 输出状态
+            /// </summary>
+            public int GPOutput;
+            /// <summary>
+            /// 灯光状态
+            /// </summary>
+            public int GPLed;
+            /// <summary>
+            /// 系统状态
+            /// </summary>
+            public int GPState;
+            /// <summary>
+            /// 程序保存次数
+            /// </summary>
+            public int GPNumberBurn;
+            /// <summary>
+            /// 传感器1选用曲线
+            /// </summary>
+            public int GPSen1Selec;
+            /// <summary>
+            /// 传感器2选用曲线
+            /// </summary>
+            public int GPSen2Selec;
+            /// <summary>
+            /// 传感器3选用曲线
+            /// </summary>
+            public int GPSen3Selec;
+            /// <summary>
+            /// 传感器4选用曲线
+            /// </summary>
+            public int GPSen4Selec;
+            /// <summary>
+            /// 传感器1动作选项
+            /// </summary>
+            public int GPSenAct1;
+            /// <summary>
+            /// 传感器1动作延时
+            /// </summary>
+            public int GPSenDelay1;
+            /// <summary>
+            /// 传感器1低阈值
+            /// </summary>
+            public int GPSenMin1;
+            /// <summary>
+            /// 传感器1高阈值
+            /// </summary>
+            public int GPSenMax1;
+            /// <summary>
+            /// 传感器2动作选项
+            /// </summary>
+            public int GPSenAct2;
+            /// <summary>
+            /// 传感器2动作延时
+            /// </summary>
+            public int GPSenDelay2;
+            /// <summary>
+            /// 传感器2低阈值
+            /// </summary>
+            public int GPSenMin2;
+            /// <summary>
+            /// 传感器2高阈值
+            /// </summary>
+            public int GPSenMax2;
+            /// <summary>
+            /// 传感器3动作选项
+            /// </summary>
+            public int GPSenAct3;
+            /// <summary>
+            /// 传感器3动作延时
+            /// </summary>
+            public int GPSenDelay3;
+            /// <summary>
+            /// 传感器3低阈值
+            /// </summary>
+            public int GPSenMin3;
+            /// <summary>
+            /// 传感器3高阈值
+            /// </summary>
+            public int GPSenMax3;
+            /// <summary>
+            /// 传感器4动作选项
+            /// </summary>
+            public int GPSenAct4;
+            /// <summary>
+            /// 传感器4动作延时
+            /// </summary>
+            public int GPSenDelay4;
+            /// <summary>
+            /// 传感器4低阈值
+            /// </summary>
+            public int GPSenMin4;
+            /// <summary>
+            /// 传感器4高阈值
+            /// </summary>
+            public int GPSenMax4;
+            /// <summary>
+            /// 端口极性
+            /// </summary>
+            public int GPPolarity;
+            
+        }
         private ConfInfo Info = new ConfInfo();
         private EngineData endata = new EngineData();
         private AxisData[] axisdata = new AxisData[3];
-
+        private GPData gpdata = new GPData();
         //private YKS2CardNet YKS2net = new YKS2CardNet();
         private YKS1Card YKS1Com = new YKS1Card();
 
@@ -202,7 +328,15 @@ namespace Yungku.Common.IOCard.DataDeal
             set { Info.Comport = value; }
             get { return Info.Comport; }
         }
-
+        /// <summary>
+        /// 配置-串口端口
+        /// </summary>
+        public int Comaddr
+        {
+            set { Info.Comaddr = value; }
+            get { return Info.Comaddr; }
+        }
+        
         /// <summary>
         /// 配置-串口波特率
         /// </summary>
@@ -770,8 +904,240 @@ namespace Yungku.Common.IOCard.DataDeal
         {
             return endata.Ver_Info;
         }
+        /// <summary>
+        /// 传感器1显示值kpa
+        /// </summary>
+        public int SensorP1
+        {
+            set { gpdata.SensorP1 = value; }
+            get { return gpdata.SensorP1; }
+        }
+        /// <summary>
+        /// 传感器2显示值kpa
+        /// </summary>
+        public int SensorP2
+        {
+            set { gpdata.SensorP2 = value; }
+            get { return gpdata.SensorP2; }
+        }
+        /// <summary>
+        /// 传感器3显示值kpa
+        /// </summary>
+        public int SensorP3
+        {
+            set { gpdata.SensorP3 = value; }
+            get { return gpdata.SensorP3; }
+        }
+        /// <summary>
+        /// 传感器4显示值kpa
+        /// </summary>
+        public int SensorP4
+        {
+            set { gpdata.SensorP4 = value; }
+            get { return gpdata.SensorP4; }
+        }
+        /// <summary>
+        /// 传感器4显示值kpa
+        /// </summary>
+        public int GPOutput
+        {
+            set { gpdata.GPOutput = value; }
+            get { return gpdata.GPOutput; }
+        }
+        /// <summary>
+        /// 传感器4显示值kpa
+        /// </summary>
+        public int GPLed
+        {
+            set { gpdata.GPLed = value; }
+            get { return gpdata.GPLed; }
+        }
+        /// <summary>
+        /// 传感器4显示值kpa
+        /// </summary>
+        public int GPState
+        {
+            set { gpdata.GPState = value; }
+            get { return gpdata.GPState; }
+        }
 
-
+        /// <summary>
+        /// 程序保存次数
+        /// </summary>
+        public int GPNumberBurn
+        {
+            set { gpdata.GPNumberBurn = value; }
+            get { return gpdata.GPNumberBurn; }
+        }
+        /// <summary>
+        /// 传感器1选用曲线
+        /// </summary>
+        public int GPSen1Selec
+        {
+            set { gpdata.GPSen1Selec = value; }
+            get { return gpdata.GPSen1Selec; }
+        }
+        /// <summary>
+        /// 传感器2选用曲线
+        /// </summary>
+        public int GPSen2Selec
+        {
+            set { gpdata.GPSen2Selec = value; }
+            get { return gpdata.GPSen2Selec; }
+        }
+        /// <summary>
+        /// 传感器3选用曲线
+        /// </summary>
+        public int GPSen3Selec
+        {
+            set { gpdata.GPSen3Selec = value; }
+            get { return gpdata.GPSen3Selec; }
+        }
+        /// <summary>
+        /// 传感器4选用曲线
+        /// </summary>
+        public int GPSen4Selec
+        {
+            set { gpdata.GPSen4Selec = value; }
+            get { return gpdata.GPSen4Selec; }
+        }
+        /// <summary>
+        /// 传感器1动作选项
+        /// </summary>
+        public int GPSenAct1
+        {
+            set { gpdata.GPSenAct1 = value; }
+            get { return gpdata.GPSenAct1; }
+        }
+        /// <summary>
+        /// 传感器1动作延时
+        /// </summary>
+        public int GPSenDelay1
+        {
+            set { gpdata.GPSenDelay1 = value; }
+            get { return gpdata.GPSenDelay1; }
+        }
+        /// <summary>
+        /// 传感器1低阈值
+        /// </summary>
+        public int GPSenMin1
+        {
+            set { gpdata.GPSenMin1 = value; }
+            get { return gpdata.GPSenMin1; }
+        }
+        /// <summary>
+        /// 传感器1高阈值
+        /// </summary>
+        public int GPSenMax1
+        {
+            set { gpdata.GPSenMax1 = value; }
+            get { return gpdata.GPSenMax1; }
+        }
+        /// <summary>
+        /// 传感器2动作选项
+        /// </summary>
+        public int GPSenAct2
+        {
+            set { gpdata.GPSenAct2 = value; }
+            get { return gpdata.GPSenAct2; }
+        }
+        /// <summary>
+        /// 传感器2动作延时
+        /// </summary>
+        public int GPSenDelay2
+        {
+            set { gpdata.GPSenDelay2 = value; }
+            get { return gpdata.GPSenDelay2; }
+        }
+        /// <summary>
+        /// 传感器2低阈值
+        /// </summary>
+        public int GPSenMin2
+        {
+            set { gpdata.GPSenMin2 = value; }
+            get { return gpdata.GPSenMin2; }
+        }
+        /// <summary>
+        /// 传感器2高阈值
+        /// </summary>
+        public int GPSenMax2
+        {
+            set { gpdata.GPSenMax2 = value; }
+            get { return gpdata.GPSenMax2; }
+        }
+        /// <summary>
+        /// 传感器3动作选项
+        /// </summary>
+        public int GPSenAct3
+        {
+            set { gpdata.GPSenAct3 = value; }
+            get { return gpdata.GPSenAct3; }
+        }
+        /// <summary>
+        /// 传感器3动作延时
+        /// </summary>
+        public int GPSenDelay3
+        {
+            set { gpdata.GPSenDelay3 = value; }
+            get { return gpdata.GPSenDelay3; }
+        }
+        /// <summary>
+        /// 传感器3低阈值
+        /// </summary>
+        public int GPSenMin3
+        {
+            set { gpdata.GPSenMin3 = value; }
+            get { return gpdata.GPSenMin3; }
+        }
+        /// <summary>
+        /// 传感器3高阈值
+        /// </summary>
+        public int GPSenMax3
+        {
+            set { gpdata.GPSenMax3 = value; }
+            get { return gpdata.GPSenMax3; }
+        }
+        /// <summary>
+        /// 传感器4动作选项
+        /// </summary>
+        public int GPSenAct4
+        {
+            set { gpdata.GPSenAct4 = value; }
+            get { return gpdata.GPSenAct4; }
+        }
+        /// <summary>
+        /// 传感器4动作延时
+        /// </summary>
+        public int GPSenDelay4
+        {
+            set { gpdata.GPSenDelay4 = value; }
+            get { return gpdata.GPSenDelay4; }
+        }
+        /// <summary>
+        /// 传感器4低阈值
+        /// </summary>
+        public int GPSenMin4
+        {
+            set { gpdata.GPSenMin4 = value; }
+            get { return gpdata.GPSenMin4; }
+        }
+        /// <summary>
+        /// 传感器4高阈值
+        /// </summary>
+        public int GPSenMax4
+        {
+            set { gpdata.GPSenMax4 = value; }
+            get { return gpdata.GPSenMax4; }
+        }
+        /// <summary>
+        /// 端口极性
+        /// </summary>
+        public int GPPolarity
+        {
+            set { gpdata.GPPolarity = value; }
+            get { return gpdata.GPPolarity; }
+        }
+        
 
         /// <summary>
         /// 线程处理
@@ -780,130 +1146,16 @@ namespace Yungku.Common.IOCard.DataDeal
         {
             while (true)
             {
-
-                    Thread.Sleep(30);
-
-
+                Thread.Sleep(30);
                 if (Info.VerUper == 2)
                 {
                     if (Coms.COMHardCon == 1)
                     {
-
-
-
-
-
-
-
-
-
-
                     }
-
-
-
                 }
-
-
-
-
-
-
-
-
-
-
-                //    if (Comm.NetHardCon == 1 && Comm.NetSoftCon == 1)  //连接网络
-                //    {
-                //        //心跳检测
-                //        if (!YKS2net.IsExists())
-                //        {
-                //            //enginedata.HeartCount++;
-                //            //if (enginedata.HeartCount > 3)
-                //            //{
-                //            //    enginedata.HeartCount = 0;
-                //            //    Comm.NetSoftCon = 0;
-
-                //            //}
-                //            continue;
-                //        }
-                //        else
-                //        {
-                //            //enginedata.HeartCount = 0;
-                //            //enginedata.NetHeartCount = 0;
-
-                //        }
-
-                //        if (enginedata.FirstNum == 0)  //读取固件信息
-                //        {
-                //            enginedata.FirstNum = 1;
-
-                //            //获取主板名称
-                //            enginedata.Name = YKS2net.GetCardName();
-                //            //获取固件编号
-                //            enginedata.SN = YKS2net.GetSN();
-                //            //获取编码开关状态
-                //            enginedata.switchID = YKS2net.GetDipSwitch();
-
-                //            ////获取版本信息
-                //            enginedata.Ver_Info = YKS2net.GetVerInfo();
-
-                //        }
-
-
-                //        //获取轴当前位置
-                //        axledata[enginedata.Axle].Location = YKS2net.GetPosition(enginedata.Axle);
-
-                //        //获取轴IO状态
-                //        axledata[enginedata.Axle].PWMIOState = YKS2net.GetAIO(); //PWM控制输入输出状态
-
-
-                //        if (enginedata.CardID == 1)
-                //        {
-                //            //获取扩展板输入端口值
-                //            enginedata.MInput = YKS2net.GetInputsEx();
-                //            //获取扩展板输出端口值
-                //            enginedata.MOutput = YKS2net.GetOutputsEx();
-
-                //        }
-                //        else
-                //        {
-                //            //获取主板输入端口值
-                //            enginedata.MInput = YKS2net.GetInputs();
-                //            //获取主板输出端口值
-                //            enginedata.MOutput = YKS2net.GetOutputs();
-                //        }
-
-
-
-
-                //       //获取轴状态
-                //       axledata[enginedata.Axle].PWMState = YKS2net.GetAxisStatus(enginedata.Axle);
-
-
-                //        if (axledata[enginedata.Axle].ShowMode == 1) 
-                //        {
-                //            if ((axledata[enginedata.Axle].PWMState >> 1 & 0x1) == 0)
-                //            {
-                //                int Dis = axledata[enginedata.Axle].Direction > 0 ? axledata[enginedata.Axle].Distence : -axledata[enginedata.Axle].Distence;
-                //                YKS2net.RltMove(enginedata.Axle, Dis, axledata[enginedata.Axle].StartSpeed, axledata[enginedata.Axle].RunSpeed, axledata[enginedata.Axle].Acceleration, axledata[enginedata.Axle].Deceleration);
-                //                if (axledata[enginedata.Axle].Direction == 0)
-                //                {
-                //                    axledata[enginedata.Axle].Direction = 1;
-                //                }
-                //                else
-                //                {
-                //                    axledata[enginedata.Axle].Direction = 0;
-                //                }
-                //            }
-                //        }
-
-                //    }
-                //    else if (Comm.NetHardCon == 0 && Comm.NetSoftCon == 0)//断开网络
-                //    {
-                //    }
             }
         }
 
    }
 }
+

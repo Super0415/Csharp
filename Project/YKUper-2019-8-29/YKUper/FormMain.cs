@@ -61,18 +61,21 @@ namespace YKUper
         /// </summary>
         public delegate void MyDelegate();
         /// <summary>
-        /// 定义委托事件-版本1的串口打开
+        /// 定义委托事件-版本S1的串口打开
         /// </summary>
         public event MyDelegate MyEventCOMVerS1;
         /// <summary>
-        /// 定义委托事件-版本2的串口打开
+        /// 定义委托事件-版本S2的串口打开
         /// </summary>
         public event MyDelegate MyEventCOMVerS2;
         /// <summary>
-        /// 定义委托事件-版本2的网口打开
+        /// 定义委托事件-版本S2的网口打开
         /// </summary>
         public event MyDelegate MyEventNetVerS2;
-
+        /// <summary>
+        /// 定义委托事件-负压表的串口打开
+        /// </summary>
+        public event MyDelegate MyEventCOMVerGaugeP;
         /// <summary>
         /// 窗体初始化
         /// </summary>
@@ -92,10 +95,7 @@ namespace YKUper
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
-        {
-            //ThreadStart threadStart = new ThreadStart(data.ThreadMain);//通过ThreadStart委托告诉子线程执行什么方法　　
-            //thread = new Thread(threadStart);
-            //thread.Start();//启动新线程     
+        {    
         }
         /// <summary>
         /// 主窗体关闭过程
@@ -239,7 +239,6 @@ namespace YKUper
         {
             if (CheckComHeartTimes()|| CheckNetHeartTimes())
             {
-                RecodeInfo("上位机版本为：S" + data.VerUper);
             }
             else { RecodeInfo("自动检测失败！"); }
 
@@ -393,6 +392,10 @@ namespace YKUper
             else if (ver == 1)
             {
                 if (MyEventCOMVerS1 != null) MyEventCOMVerS1();//引发事件
+            }
+            else if (ver == 3)
+            {
+                if (MyEventCOMVerGaugeP != null) MyEventCOMVerGaugeP();//引发事件             
             }
 
             if (data.COMHardCon == 0)

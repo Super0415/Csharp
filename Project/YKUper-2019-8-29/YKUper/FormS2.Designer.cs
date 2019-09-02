@@ -373,12 +373,12 @@
             this.cmsMyself.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiClear});
             this.cmsMyself.Name = "cmsMyself";
-            this.cmsMyself.Size = new System.Drawing.Size(101, 26);
+            this.cmsMyself.Size = new System.Drawing.Size(153, 48);
             // 
             // tsmiClear
             // 
             this.tsmiClear.Name = "tsmiClear";
-            this.tsmiClear.Size = new System.Drawing.Size(100, 22);
+            this.tsmiClear.Size = new System.Drawing.Size(152, 22);
             this.tsmiClear.Text = "清零";
             this.tsmiClear.Click += new System.EventHandler(this.tsmiClear_Click);
             // 

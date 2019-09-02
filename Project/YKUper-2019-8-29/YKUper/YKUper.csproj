@@ -36,6 +36,14 @@
     <ApplicationIcon>yk.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HslCommunication, Version=7.0.1.0, Culture=neutral, PublicKeyToken=cdb2261fa039ed67, processorArchitecture=MSIL">
+      <HintPath>..\packages\HslCommunication.7.0.1\lib\net451\HslCommunication.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -68,6 +76,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPol.Designer.cs">
+      <DependentUpon>FormPol.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormS2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,8 +94,15 @@
     <Compile Include="FormS1.Designer.cs">
       <DependentUpon>FormS1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSen.Designer.cs">
+      <DependentUpon>FormSen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="YKGaugeP.cs" />
     <Compile Include="YKS1Card.cs" />
     <Compile Include="YKS2Card.cs" />
     <Compile Include="YKS2Cardnet.cs" />
@@ -94,11 +115,17 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormPol.resx">
+      <DependentUpon>FormPol.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormS1.resx">
       <DependentUpon>FormS1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormS2.resx">
       <DependentUpon>FormS2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSen.resx">
+      <DependentUpon>FormSen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -109,6 +136,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
