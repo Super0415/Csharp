@@ -282,7 +282,39 @@ namespace Yungku.Common.IOCard.DataDeal
             /// 端口极性
             /// </summary>
             public int GPPolarity;
-            
+
+            /// <summary>
+            /// 传感器1采集的电压值
+            /// </summary>
+            public float[] Sensor1Volt;
+            /// <summary>
+            /// 传感器1采集值对应的显示值
+            /// </summary>
+            public float[] Sensor1Show;
+            /// <summary>
+            /// 传感器2采集的电压值
+            /// </summary>
+            public float[] Sensor2Volt;
+            /// <summary>
+            /// 传感器2采集值对应的显示值
+            /// </summary>
+            public float[] Sensor2Show;
+            /// <summary>
+            /// 传感器3采集的电压值
+            /// </summary>
+            public float[] Sensor3Volt;
+            /// <summary>
+            /// 传感器3采集值对应的显示值
+            /// </summary>
+            public float[] Sensor3Show;
+            /// <summary>
+            /// 传感器4采集的电压值
+            /// </summary>
+            public float[] Sensor4Volt;
+            /// <summary>
+            /// 传感器4采集值对应的显示值
+            /// </summary>
+            public float[] Sensor4Show;
         }
         private ConfInfo Info = new ConfInfo();
         private EngineData endata = new EngineData();
@@ -1137,7 +1169,71 @@ namespace Yungku.Common.IOCard.DataDeal
             set { gpdata.GPPolarity = value; }
             get { return gpdata.GPPolarity; }
         }
-        
+
+        /// <summary>
+        /// 传感器1采集的电压值
+        /// </summary>
+        public float[] Sensor1Volt
+        {
+            set { gpdata.Sensor1Volt = value; }
+            get { return gpdata.Sensor1Volt; }
+        }
+        /// <summary>
+        /// 传感器1采集值对应的显示值
+        /// </summary>
+        public float[] Sensor1Show
+        {
+            set { gpdata.Sensor1Show = value; }
+            get { return gpdata.Sensor1Show; }
+        }
+        /// <summary>
+        /// 传感器2采集的电压值
+        /// </summary>
+        public float[] Sensor2Volt
+        {
+            set { gpdata.Sensor2Volt = value; }
+            get { return gpdata.Sensor2Volt; }
+        }
+        /// <summary>
+        /// 传感器2采集值对应的显示值
+        /// </summary>
+        public float[] Sensor2Show
+        {
+            set { gpdata.Sensor2Show = value; }
+            get { return gpdata.Sensor2Show; }
+        }
+        /// <summary>
+        /// 传感器3采集的电压值
+        /// </summary>
+        public float[] Sensor3Volt
+        {
+            set { gpdata.Sensor3Volt = value; }
+            get { return gpdata.Sensor3Volt; }
+        }
+        /// <summary>
+        /// 传感器3采集值对应的显示值
+        /// </summary>
+        public float[] Sensor3Show
+        {
+            set { gpdata.Sensor3Show = value; }
+            get { return gpdata.Sensor3Show; }
+        }
+        /// <summary>
+        /// 传感器4采集的电压值
+        /// </summary>
+        public float[] Sensor4Volt
+        {
+            set { gpdata.Sensor4Volt = value; }
+            get { return gpdata.Sensor4Volt; }
+        }
+        /// <summary>
+        /// 传感器4采集值对应的显示值
+        /// </summary>
+        public float[] Sensor4Show
+        {
+            set { gpdata.Sensor4Show = value; }
+            get { return gpdata.Sensor4Show; }
+        }
 
         /// <summary>
         /// 线程处理

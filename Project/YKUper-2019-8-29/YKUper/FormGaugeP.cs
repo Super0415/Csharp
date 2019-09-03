@@ -156,6 +156,12 @@ namespace YKUper
             WindosShowData();
             WindosShowLED();
             label1.Text = GPdata.GPPolarity.ToString();
+
+
+            float[] Volt = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            float[] Show = {10,20,30,40,50,60,70,80,90,100 };
+            GPdata.Sensor1Volt = Volt;
+            GPdata.Sensor1Show = Show;
         }
 
         /// <summary>
@@ -393,11 +399,50 @@ namespace YKUper
 
         }
 
+        /// <summary>
+        /// 跳转传感器界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
             FormSen IForm = new FormSen();
             IForm.Owner = this;
             IForm.Show();
+        }
+        public float[] GetSensorData(int index)
+        {
+            float[] temp = new float[10];
+            switch (index)
+            {
+                case 0:
+                    temp = GPdata.Sensor1Volt;
+                    break;
+                case 1:
+                    temp = GPdata.Sensor1Show;
+                    break;
+                case 2:
+                    temp = GPdata.Sensor2Volt;
+                    break;
+                case 3:
+                    temp = GPdata.Sensor2Show;
+                    break;
+                case 4:
+                    temp = GPdata.Sensor3Volt;
+                    break;
+                case 5:
+                    temp = GPdata.Sensor3Show;
+                    break;
+                case 6:
+                    temp = GPdata.Sensor4Volt;
+                    break;
+                case 7:
+                    temp = GPdata.Sensor4Show;
+                    break;
+                default:break;
+
+            }
+            return temp;
         }
     }
 }
