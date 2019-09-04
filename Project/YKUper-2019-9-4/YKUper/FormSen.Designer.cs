@@ -161,7 +161,7 @@
             // 
             // tbVolt0
             // 
-            this.tbVolt0.Location = new System.Drawing.Point(59, 20);
+            this.tbVolt0.Location = new System.Drawing.Point(47, 20);
             this.tbVolt0.Name = "tbVolt0";
             this.tbVolt0.Size = new System.Drawing.Size(66, 21);
             this.tbVolt0.TabIndex = 8;
@@ -170,24 +170,24 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 23);
+            this.label5.Location = new System.Drawing.Point(6, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 12);
+            this.label5.Size = new System.Drawing.Size(125, 12);
             this.label5.TabIndex = 9;
-            this.label5.Text = "电压0";
+            this.label5.Text = "电压0             mv";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 50);
+            this.label6.Location = new System.Drawing.Point(6, 50);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 12);
+            this.label6.Size = new System.Drawing.Size(125, 12);
             this.label6.TabIndex = 11;
-            this.label6.Text = "电压1";
+            this.label6.Text = "电压1             mv";
             // 
             // tbVolt1
             // 
-            this.tbVolt1.Location = new System.Drawing.Point(59, 47);
+            this.tbVolt1.Location = new System.Drawing.Point(47, 47);
             this.tbVolt1.Name = "tbVolt1";
             this.tbVolt1.Size = new System.Drawing.Size(66, 21);
             this.tbVolt1.TabIndex = 10;
@@ -196,15 +196,15 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(18, 77);
+            this.label7.Location = new System.Drawing.Point(6, 77);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 12);
+            this.label7.Size = new System.Drawing.Size(125, 12);
             this.label7.TabIndex = 13;
-            this.label7.Text = "电压2";
+            this.label7.Text = "电压2             mv";
             // 
             // tbVolt2
             // 
-            this.tbVolt2.Location = new System.Drawing.Point(59, 74);
+            this.tbVolt2.Location = new System.Drawing.Point(47, 74);
             this.tbVolt2.Name = "tbVolt2";
             this.tbVolt2.Size = new System.Drawing.Size(66, 21);
             this.tbVolt2.TabIndex = 12;
@@ -213,15 +213,15 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 104);
+            this.label8.Location = new System.Drawing.Point(6, 104);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(35, 12);
+            this.label8.Size = new System.Drawing.Size(125, 12);
             this.label8.TabIndex = 15;
-            this.label8.Text = "电压3";
+            this.label8.Text = "电压3             mv";
             // 
             // tbVolt3
             // 
-            this.tbVolt3.Location = new System.Drawing.Point(59, 101);
+            this.tbVolt3.Location = new System.Drawing.Point(47, 101);
             this.tbVolt3.Name = "tbVolt3";
             this.tbVolt3.Size = new System.Drawing.Size(66, 21);
             this.tbVolt3.TabIndex = 14;
@@ -230,15 +230,15 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(18, 131);
+            this.label9.Location = new System.Drawing.Point(6, 131);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 12);
+            this.label9.Size = new System.Drawing.Size(125, 12);
             this.label9.TabIndex = 17;
-            this.label9.Text = "电压4";
+            this.label9.Text = "电压4             mv";
             // 
             // tbVolt4
             // 
-            this.tbVolt4.Location = new System.Drawing.Point(59, 128);
+            this.tbVolt4.Location = new System.Drawing.Point(47, 128);
             this.tbVolt4.Name = "tbVolt4";
             this.tbVolt4.Size = new System.Drawing.Size(66, 21);
             this.tbVolt4.TabIndex = 16;
@@ -247,15 +247,15 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(18, 158);
+            this.label10.Location = new System.Drawing.Point(6, 158);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(35, 12);
+            this.label10.Size = new System.Drawing.Size(125, 12);
             this.label10.TabIndex = 19;
-            this.label10.Text = "电压5";
+            this.label10.Text = "电压5             mv";
             // 
             // tbVolt5
             // 
-            this.tbVolt5.Location = new System.Drawing.Point(59, 155);
+            this.tbVolt5.Location = new System.Drawing.Point(47, 155);
             this.tbVolt5.Name = "tbVolt5";
             this.tbVolt5.Size = new System.Drawing.Size(66, 21);
             this.tbVolt5.TabIndex = 18;
@@ -264,15 +264,15 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(18, 185);
+            this.label11.Location = new System.Drawing.Point(6, 185);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(35, 12);
+            this.label11.Size = new System.Drawing.Size(125, 12);
             this.label11.TabIndex = 21;
-            this.label11.Text = "电压6";
+            this.label11.Text = "电压6             mv";
             // 
             // tbVolt6
             // 
-            this.tbVolt6.Location = new System.Drawing.Point(59, 182);
+            this.tbVolt6.Location = new System.Drawing.Point(47, 182);
             this.tbVolt6.Name = "tbVolt6";
             this.tbVolt6.Size = new System.Drawing.Size(66, 21);
             this.tbVolt6.TabIndex = 20;
@@ -281,15 +281,15 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(18, 212);
+            this.label12.Location = new System.Drawing.Point(6, 212);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(35, 12);
+            this.label12.Size = new System.Drawing.Size(125, 12);
             this.label12.TabIndex = 23;
-            this.label12.Text = "电压7";
+            this.label12.Text = "电压7             mv";
             // 
             // tbVolt7
             // 
-            this.tbVolt7.Location = new System.Drawing.Point(59, 209);
+            this.tbVolt7.Location = new System.Drawing.Point(47, 209);
             this.tbVolt7.Name = "tbVolt7";
             this.tbVolt7.Size = new System.Drawing.Size(66, 21);
             this.tbVolt7.TabIndex = 22;
@@ -298,15 +298,15 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(18, 239);
+            this.label13.Location = new System.Drawing.Point(6, 239);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(35, 12);
+            this.label13.Size = new System.Drawing.Size(125, 12);
             this.label13.TabIndex = 25;
-            this.label13.Text = "电压8";
+            this.label13.Text = "电压8             mv";
             // 
             // tbVolt8
             // 
-            this.tbVolt8.Location = new System.Drawing.Point(59, 236);
+            this.tbVolt8.Location = new System.Drawing.Point(47, 236);
             this.tbVolt8.Name = "tbVolt8";
             this.tbVolt8.Size = new System.Drawing.Size(66, 21);
             this.tbVolt8.TabIndex = 24;
@@ -315,15 +315,15 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(18, 266);
+            this.label14.Location = new System.Drawing.Point(6, 266);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(35, 12);
+            this.label14.Size = new System.Drawing.Size(125, 12);
             this.label14.TabIndex = 27;
-            this.label14.Text = "电压9";
+            this.label14.Text = "电压9             mv";
             // 
             // tbVolt9
             // 
-            this.tbVolt9.Location = new System.Drawing.Point(59, 263);
+            this.tbVolt9.Location = new System.Drawing.Point(47, 263);
             this.tbVolt9.Name = "tbVolt9";
             this.tbVolt9.Size = new System.Drawing.Size(66, 21);
             this.tbVolt9.TabIndex = 26;
@@ -334,9 +334,9 @@
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(142, 266);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(35, 12);
+            this.label15.Size = new System.Drawing.Size(131, 12);
             this.label15.TabIndex = 47;
-            this.label15.Text = "气压9";
+            this.label15.Text = "气压9             kpa";
             // 
             // tbPress9
             // 
@@ -351,9 +351,9 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(142, 239);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(35, 12);
+            this.label16.Size = new System.Drawing.Size(131, 12);
             this.label16.TabIndex = 45;
-            this.label16.Text = "气压8";
+            this.label16.Text = "气压8             kpa";
             // 
             // tbPress8
             // 
@@ -368,9 +368,9 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(142, 212);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(35, 12);
+            this.label17.Size = new System.Drawing.Size(131, 12);
             this.label17.TabIndex = 43;
-            this.label17.Text = "气压7";
+            this.label17.Text = "气压7             kpa";
             // 
             // tbPress7
             // 
@@ -385,9 +385,9 @@
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(142, 185);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(35, 12);
+            this.label18.Size = new System.Drawing.Size(131, 12);
             this.label18.TabIndex = 41;
-            this.label18.Text = "气压6";
+            this.label18.Text = "气压6             kpa";
             // 
             // tbPress6
             // 
@@ -402,9 +402,9 @@
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(142, 158);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(35, 12);
+            this.label19.Size = new System.Drawing.Size(131, 12);
             this.label19.TabIndex = 39;
-            this.label19.Text = "气压5";
+            this.label19.Text = "气压5             kpa";
             // 
             // tbPress5
             // 
@@ -419,9 +419,9 @@
             this.label20.AutoSize = true;
             this.label20.Location = new System.Drawing.Point(142, 131);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(35, 12);
+            this.label20.Size = new System.Drawing.Size(131, 12);
             this.label20.TabIndex = 37;
-            this.label20.Text = "气压4";
+            this.label20.Text = "气压4             kpa";
             // 
             // tbPress4
             // 
@@ -436,9 +436,9 @@
             this.label21.AutoSize = true;
             this.label21.Location = new System.Drawing.Point(142, 104);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(35, 12);
+            this.label21.Size = new System.Drawing.Size(131, 12);
             this.label21.TabIndex = 35;
-            this.label21.Text = "气压3";
+            this.label21.Text = "气压3             kpa";
             // 
             // tbPress3
             // 
@@ -453,9 +453,9 @@
             this.label22.AutoSize = true;
             this.label22.Location = new System.Drawing.Point(142, 77);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(35, 12);
+            this.label22.Size = new System.Drawing.Size(131, 12);
             this.label22.TabIndex = 33;
-            this.label22.Text = "气压2";
+            this.label22.Text = "气压2             kpa";
             // 
             // tbPress2
             // 
@@ -470,9 +470,9 @@
             this.label23.AutoSize = true;
             this.label23.Location = new System.Drawing.Point(142, 50);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(35, 12);
+            this.label23.Size = new System.Drawing.Size(131, 12);
             this.label23.TabIndex = 31;
-            this.label23.Text = "气压1";
+            this.label23.Text = "气压1             kpa";
             // 
             // tbPress1
             // 
@@ -487,9 +487,9 @@
             this.label24.AutoSize = true;
             this.label24.Location = new System.Drawing.Point(142, 23);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(35, 12);
+            this.label24.Size = new System.Drawing.Size(131, 12);
             this.label24.TabIndex = 29;
-            this.label24.Text = "气压0";
+            this.label24.Text = "气压0             kpa";
             // 
             // tbPress0
             // 
@@ -534,9 +534,9 @@
             this.gbSensor.Controls.Add(this.label2);
             this.gbSensor.Controls.Add(this.label3);
             this.gbSensor.Controls.Add(this.label4);
-            this.gbSensor.Location = new System.Drawing.Point(15, 1);
+            this.gbSensor.Location = new System.Drawing.Point(15, 2);
             this.gbSensor.Name = "gbSensor";
-            this.gbSensor.Size = new System.Drawing.Size(269, 140);
+            this.gbSensor.Size = new System.Drawing.Size(281, 140);
             this.gbSensor.TabIndex = 51;
             this.gbSensor.TabStop = false;
             this.gbSensor.Text = "传感器配置";
@@ -564,50 +564,50 @@
             // 
             // gbCurve
             // 
-            this.gbCurve.Controls.Add(this.label5);
             this.gbCurve.Controls.Add(this.tbVolt0);
             this.gbCurve.Controls.Add(this.tbVolt1);
             this.gbCurve.Controls.Add(this.label6);
             this.gbCurve.Controls.Add(this.tbVolt2);
-            this.gbCurve.Controls.Add(this.label15);
             this.gbCurve.Controls.Add(this.label7);
             this.gbCurve.Controls.Add(this.tbPress9);
             this.gbCurve.Controls.Add(this.tbVolt3);
-            this.gbCurve.Controls.Add(this.label16);
             this.gbCurve.Controls.Add(this.label8);
             this.gbCurve.Controls.Add(this.tbPress8);
             this.gbCurve.Controls.Add(this.tbVolt4);
-            this.gbCurve.Controls.Add(this.label17);
             this.gbCurve.Controls.Add(this.label9);
             this.gbCurve.Controls.Add(this.tbPress7);
             this.gbCurve.Controls.Add(this.tbVolt5);
-            this.gbCurve.Controls.Add(this.label18);
             this.gbCurve.Controls.Add(this.label10);
             this.gbCurve.Controls.Add(this.tbPress6);
             this.gbCurve.Controls.Add(this.tbVolt6);
-            this.gbCurve.Controls.Add(this.label19);
             this.gbCurve.Controls.Add(this.label11);
             this.gbCurve.Controls.Add(this.tbPress5);
             this.gbCurve.Controls.Add(this.tbVolt7);
-            this.gbCurve.Controls.Add(this.label20);
             this.gbCurve.Controls.Add(this.label12);
             this.gbCurve.Controls.Add(this.tbPress4);
             this.gbCurve.Controls.Add(this.tbVolt8);
-            this.gbCurve.Controls.Add(this.label21);
             this.gbCurve.Controls.Add(this.label13);
             this.gbCurve.Controls.Add(this.tbPress3);
             this.gbCurve.Controls.Add(this.tbVolt9);
-            this.gbCurve.Controls.Add(this.label22);
             this.gbCurve.Controls.Add(this.label14);
             this.gbCurve.Controls.Add(this.tbPress2);
             this.gbCurve.Controls.Add(this.tbPress0);
-            this.gbCurve.Controls.Add(this.label23);
             this.gbCurve.Controls.Add(this.label24);
             this.gbCurve.Controls.Add(this.tbPress1);
+            this.gbCurve.Controls.Add(this.label5);
+            this.gbCurve.Controls.Add(this.label23);
+            this.gbCurve.Controls.Add(this.label22);
+            this.gbCurve.Controls.Add(this.label21);
+            this.gbCurve.Controls.Add(this.label20);
+            this.gbCurve.Controls.Add(this.label19);
+            this.gbCurve.Controls.Add(this.label18);
+            this.gbCurve.Controls.Add(this.label17);
+            this.gbCurve.Controls.Add(this.label16);
+            this.gbCurve.Controls.Add(this.label15);
             this.gbCurve.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.gbCurve.Location = new System.Drawing.Point(6, 41);
+            this.gbCurve.Location = new System.Drawing.Point(6, 44);
             this.gbCurve.Name = "gbCurve";
-            this.gbCurve.Size = new System.Drawing.Size(266, 293);
+            this.gbCurve.Size = new System.Drawing.Size(276, 293);
             this.gbCurve.TabIndex = 52;
             this.gbCurve.TabStop = false;
             this.gbCurve.Text = "曲线 - 1 -数据";
@@ -618,7 +618,7 @@
             this.groupBox2.Controls.Add(this.gbCurve);
             this.groupBox2.Location = new System.Drawing.Point(8, 147);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(276, 344);
+            this.groupBox2.Size = new System.Drawing.Size(288, 344);
             this.groupBox2.TabIndex = 53;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "曲线控制";
@@ -643,11 +643,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(892, 493);
+            this.ClientSize = new System.Drawing.Size(302, 493);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gbSensor);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.userCurve1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormSen";
             this.Text = "FormSen";
             this.Load += new System.EventHandler(this.FormSen_Load);

@@ -37,9 +37,6 @@ namespace YKUper
         {
             InitializeComponent();
             tbAddr.Text = "1";
-            tbbaud.Text = "115200";
-
-            Comboboxbaud(cbbaud);
 
             Comboboxn(cbSenAct1);
             tbSendelay1.Text = "0";
@@ -67,22 +64,12 @@ namespace YKUper
             timerRefresh.Enabled = true;
 
             lForm.RecodeInfo("上位机版本为：负压表上位机");
+            GPdata.Comaddr = Convert.ToInt32(tbAddr.Text);     //记录默认的地址
         }
 
         public void Comboboxn(ComboBox box)
         {
             string[] item = { "无动作", "低限制", "高限制", "全部限制" };    //定义一个Item数组，遍历item中每一个变量a，增加到comboBox2的列表中
-            for (int i = 0; i < item.Length; i++)
-            {
-                box.Items.Add(item[i]);
-                box.SelectedIndex = i;    //配置索引序号
-
-            }
-            box.SelectedItem = box.Items[0];    //默认
-        }
-        public void Comboboxbaud(ComboBox box)
-        {
-            string[] item = { "115200", "9600" };    //定义一个Item数组，遍历item中每一个变量a，增加到comboBox2的列表中
             for (int i = 0; i < item.Length; i++)
             {
                 box.Items.Add(item[i]);
@@ -169,8 +156,6 @@ namespace YKUper
         {
             WindosShowData();
             WindosShowLED();
-            label1.Text = GPdata.GPPolarity.ToString();
-
 
             //float[] Volt = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             //float[] Show = {10,20,30,40,50,60,70,80,90,100 };
@@ -184,65 +169,20 @@ namespace YKUper
         void WindosShowData()
         {
             int temp = 0;
-            tbSensor1.Text = GPdata.SensorP1.ToString();
-            tbSensor2.Text = GPdata.SensorP2.ToString();
-            tbSensor3.Text = GPdata.SensorP3.ToString();
-            tbSensor4.Text = GPdata.SensorP4.ToString();
-
-
-
-            temp = Convert.ToInt32(tbAddr.Text);        //记录通讯地址
-            GPdata.Comaddr = temp;
-
-            //temp = Convert.ToInt32(tbbaud.Text);
-            //GPdata.Baudrate = temp;
-
-
-            //GPdata.GPNumberBurn = Data[5];      //485使能
-
-            //temp = Convert.ToInt32(tbbaud.Text);
-            //GPdata.Baudrate = temp;
-
-            temp = cbbaud.SelectedIndex;
-            if (temp == 0) temp = 115200;
-            else if (temp == 1) temp = 9600;
-            GPdata.Baudrate = temp;
+            tbSensor1.Text = ((Int16)GPdata.SensorP1).ToString();
+            tbSensor2.Text = ((Int16)GPdata.SensorP2).ToString();
+            tbSensor3.Text = ((Int16)GPdata.SensorP3).ToString();
+            tbSensor4.Text = ((Int16)GPdata.SensorP4).ToString();
 
             temp = cbSenAct1.SelectedIndex;
             GPdata.GPSenAct1 = temp;
-            temp = Convert.ToInt32(tbSendelay1.Text);
-            GPdata.GPSenDelay1 = temp;
-            temp = Convert.ToInt32(tbSenMin1.Text);
-            GPdata.GPSenMin1 = temp;
-            temp = Convert.ToInt32(tbSenMax1.Text);
-            GPdata.GPSenMax1 = temp;
-
             temp = cbSenAct2.SelectedIndex;
             GPdata.GPSenAct2 = temp;
-            temp = Convert.ToInt32(tbSendelay2.Text);
-            GPdata.GPSenDelay2 = temp;
-            temp = Convert.ToInt32(tbSenMin2.Text);
-            GPdata.GPSenMin2 = temp;
-            temp = Convert.ToInt32(tbSenMax2.Text);
-            GPdata.GPSenMax2 = temp;
-
             temp = cbSenAct3.SelectedIndex;
             GPdata.GPSenAct3 = temp;
-            temp = Convert.ToInt32(tbSendelay3.Text);
-            GPdata.GPSenDelay3 = temp;
-            temp = Convert.ToInt32(tbSenMin3.Text);
-            GPdata.GPSenMin3 = temp;
-            temp = Convert.ToInt32(tbSenMax3.Text);
-            GPdata.GPSenMax3 = temp;
-
             temp = cbSenAct4.SelectedIndex;
             GPdata.GPSenAct4 = temp;
-            temp = Convert.ToInt32(tbSendelay4.Text);
-            GPdata.GPSenDelay4 = temp;
-            temp = Convert.ToInt32(tbSenMin4.Text);
-            GPdata.GPSenMin4 = temp;
-            temp = Convert.ToInt32(tbSenMax4.Text);
-            GPdata.GPSenMax4 = temp;
+      
         }
 
         /// <summary>
@@ -307,23 +247,23 @@ namespace YKUper
             int[] Data = Com.GetFlashDBP(addr);
             WRABLE = false;
 
-            GPdata.Baudrate = Data[0];
-            GPdata.GPSenAct1 = Data[1];
-            GPdata.GPSenDelay1 = Data[2];
-            GPdata.GPSenMin1 = Data[3];
-            GPdata.GPSenMax1 = Data[4];
-            GPdata.GPSenAct2 = Data[5];
-            GPdata.GPSenDelay2 = Data[6];
-            GPdata.GPSenMin2 = Data[7];
-            GPdata.GPSenMax2 = Data[8];
-            GPdata.GPSenAct3 = Data[9];
-            GPdata.GPSenDelay3 = Data[10];
-            GPdata.GPSenMin3 = Data[11];
-            GPdata.GPSenMax3 = Data[12];
-            GPdata.GPSenAct4 = Data[13];
-            GPdata.GPSenDelay4 = Data[14];
-            GPdata.GPSenMin4 = Data[15];
-            GPdata.GPSenMax4 = Data[16];
+            GPdata.GPSenAct1 = Data[0];
+            GPdata.GPSenDelay1 = Data[1];
+            GPdata.GPSenMin1 = Data[2];
+            GPdata.GPSenMax1 = Data[3];
+            GPdata.GPSenAct2 = Data[4];
+            GPdata.GPSenDelay2 = Data[5];
+            GPdata.GPSenMin2 = Data[6];
+            GPdata.GPSenMax2 = Data[7];
+            GPdata.GPSenAct3 = Data[8];
+            GPdata.GPSenDelay3 = Data[9];
+            GPdata.GPSenMin3 = Data[10];
+            GPdata.GPSenMax3 = Data[11];
+            GPdata.GPSenAct4 = Data[12];
+            GPdata.GPSenDelay4 = Data[13];
+            GPdata.GPSenMin4 = Data[14];
+            GPdata.GPSenMax4 = Data[15];
+
             try
             {
                 cbSenAct1.SelectedIndex = GPdata.GPSenAct1;
@@ -379,37 +319,30 @@ namespace YKUper
         private void btWriteP_Click(object sender, EventArgs e)
         {
             int addr = GPdata.Comaddr;
-            int[] data = new int[18];
+            int[] data = new int[16];
 
-            //data[0] = GPdata.GPSen1Selec;
-            //data[1] = GPdata.GPSen2Selec;
-            //data[2] = GPdata.GPSen3Selec;
-            //data[3] = GPdata.GPSen4Selec;
-            data[0] = 1;       //485使能 ，默认允许设置
-            data[1] = 0;// GPdata.Baudrate;
+            data[0] = GPdata.GPSenAct1;
+            data[1] = GPdata.GPSenDelay1;
+            data[2] = GPdata.GPSenMin1;
+            data[3] = GPdata.GPSenMax1;
 
-            data[2] = GPdata.GPSenAct1;
-            data[3] = GPdata.GPSenDelay1;
-            data[4] = GPdata.GPSenMin1;
-            data[5] = GPdata.GPSenMax1;
+            data[4] = GPdata.GPSenAct2;
+            data[5] = GPdata.GPSenDelay2;
+            data[6] = GPdata.GPSenMin2;
+            data[7] = GPdata.GPSenMax2;
 
-            data[6] = GPdata.GPSenAct2;
-            data[7] = GPdata.GPSenDelay2;
-            data[8] = GPdata.GPSenMin2;
-            data[9] = GPdata.GPSenMax2;
+            data[8] = GPdata.GPSenAct3;
+            data[9] = GPdata.GPSenDelay3;
+            data[10] = GPdata.GPSenMin3;
+            data[11] = GPdata.GPSenMax3;
 
-            data[10] = GPdata.GPSenAct3;
-            data[11] = GPdata.GPSenDelay3;
-            data[12] = GPdata.GPSenMin3;
-            data[13] = GPdata.GPSenMax3;
-
-            data[14] = GPdata.GPSenAct4;
-            data[15] = GPdata.GPSenDelay4;
-            data[16] = GPdata.GPSenMin4;
-            data[17] = GPdata.GPSenMax4;
+            data[12] = GPdata.GPSenAct4;
+            data[13] = GPdata.GPSenDelay4;
+            data[14] = GPdata.GPSenMin4;
+            data[15] = GPdata.GPSenMax4;
             while (WRABLE) ;
             WRABLE = true;
-            if (Com.SetFlashDBP(addr, data, 18))
+            if (Com.SetFlashDBP(addr, data, 16))
             {
                 lForm.RecodeInfo("写入参数成功");
             }
@@ -591,22 +524,99 @@ namespace YKUper
 
         private void btReset_Click(object sender, EventArgs e)
         {
-            int addr = GPdata.Comaddr;
-            if (Com.SetReset(addr))
+            if ((int)MessageBox.Show("请确定恢复出厂设置", "提示", MessageBoxButtons.OKCancel) == 1)
             {
-                lForm.RecodeInfo("恢复出厂设置成功");
+                int addr = GPdata.Comaddr;
+                if (Com.SetReset(addr))
+                {
+                    lForm.RecodeInfo("恢复出厂设置成功");
+                }
+                else lForm.RecodeInfo("恢复出厂设置失败");
             }
-            else lForm.RecodeInfo("恢复出厂设置失败");
         }
 
-        /// <summary>
-        /// 波特率设置改变
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cbbaud_SelectedIndexChanged(object sender, EventArgs e)
+        private void tbAddr_Leave(object sender, EventArgs e)
         {
-
+            int temp = Convert.ToInt32(tbAddr.Text);        //记录通讯地址
+            if (temp <= 255 && temp >= 0)
+            {
+                GPdata.Comaddr = temp;
+            }
+            else tbAddr.Text = GPdata.Comaddr.ToString();
         }
+
+        private void tbSendelay1_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSendelay1.Text);
+            GPdata.GPSenDelay1 = temp;
+        }
+
+        private void tbSenMin1_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenMin1.Text);
+            GPdata.GPSenMin1 = temp;
+        }
+
+        private void tbSenMax1_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenMax1.Text);
+            GPdata.GPSenMax1 = temp;
+        }
+
+        private void tbSendelay2_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSendelay2.Text);
+            GPdata.GPSenDelay2 = temp;
+        }
+
+        private void tbSenMin2_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenMin2.Text);
+            GPdata.GPSenMin2 = temp;
+        }
+
+        private void tbSenMax2_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenMax2.Text);
+            GPdata.GPSenMax2 = temp;
+        }
+
+        private void tbSendelay3_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSendelay3.Text);
+            GPdata.GPSenDelay3 = temp;
+        }
+
+        private void tbSenMin3_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenMin3.Text);
+            GPdata.GPSenMin3 = temp;
+        }
+
+        private void tbSenMax3_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenMax3.Text);
+            GPdata.GPSenMax3 = temp;
+        }
+
+        private void tbSendelay4_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSendelay4.Text);
+            GPdata.GPSenDelay4 = temp;
+        }
+        private void tbSenMin4_Leave(object sender, EventArgs e)
+        {
+            int temp = 0;
+            temp = Convert.ToInt32(tbSenMin4.Text);
+            GPdata.GPSenMin4 = temp;
+        }
+
+        private void tbSenMax4_Leave(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenMax4.Text);
+            GPdata.GPSenMax4 = temp;
+        }
+
+
     }
 }

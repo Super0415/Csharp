@@ -110,8 +110,6 @@ namespace Yungku.Common.GaugeP
             Sen2Selec,
             Sen3Selec,
             Sen4Selec,
-            RS485ConfAble,
-            RS485_Baudrate,
             ABLE_APress01,
             DELAY_APress01,
             FlashDB_PRESS01_L,
@@ -982,7 +980,7 @@ namespace Yungku.Common.GaugeP
         }
         /// <summary>
         /// 获取特定位置、长度的参数配置
-        /// 1-波特率；2-1动作配置；3-1动作延时；4-1低阈值动作；5-1高阈值动作
+        ////* 1-波特率；*/2-1动作配置；3-1动作延时；4-1低阈值动作；5-1高阈值动作
         /// 6-2动作配置；7-2动作延时；8-2低阈值动作；9-2高阈值动作；10-3动作配置；11-3动作延时；12-3低阈值动作；
         /// 13-3高阈值动作；14-4动作配置；15-4动作延时；16-4低阈值动作；17-4高阈值动作
         /// </summary>
@@ -990,8 +988,8 @@ namespace Yungku.Common.GaugeP
         public int[] GetFlashDBP(int addr)
         {
             Byte[] Sdata = new byte[8];
-            Byte[] Addr = FUN_UC_HIGH_LOW((UInt16)Protocol.RS485_Baudrate);         //特定位置
-            Byte Len = 17;                                                          //特定长度
+            Byte[] Addr = FUN_UC_HIGH_LOW((UInt16)Protocol.ABLE_APress01);         //特定位置
+            Byte Len = 16;                                                          //特定长度
             Sdata[0] = (Byte)addr;
             Sdata[1] = (Byte)CMD.ReadReg;
             Sdata[2] = Addr[0];
@@ -1020,7 +1018,7 @@ namespace Yungku.Common.GaugeP
         /// <returns></returns>
         public bool SetFlashDBP(int addr, int[] data,int dlen)
         {           
-            Byte[] Addr = FUN_UC_HIGH_LOW((UInt16)Protocol.RS485ConfAble);
+            Byte[] Addr = FUN_UC_HIGH_LOW((UInt16)Protocol.ABLE_APress01);
             Byte Len = (Byte)dlen;
             Byte Sum = (Byte)(Len * 2);
             Byte[] Sdata = new byte[Len * 2 + 9];

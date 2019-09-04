@@ -67,7 +67,6 @@
             this.lbSenMin2 = new System.Windows.Forms.Label();
             this.lbSenAct2 = new System.Windows.Forms.Label();
             this.lbSendelay2 = new System.Windows.Forms.Label();
-            this.tbbaud = new System.Windows.Forms.TextBox();
             this.tbSenMax1 = new System.Windows.Forms.TextBox();
             this.gbControl = new System.Windows.Forms.GroupBox();
             this.btSave = new System.Windows.Forms.Button();
@@ -83,7 +82,6 @@
             this.lbSenAct1 = new System.Windows.Forms.Label();
             this.lbSendelay1 = new System.Windows.Forms.Label();
             this.gbled = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnLed4 = new System.Windows.Forms.Button();
             this.lbLed4 = new System.Windows.Forms.Label();
             this.btnLed3 = new System.Windows.Forms.Button();
@@ -101,8 +99,6 @@
             this.btnOut1 = new System.Windows.Forms.Button();
             this.lbOut1 = new System.Windows.Forms.Label();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
-            this.cbbaud = new System.Windows.Forms.ComboBox();
-            this.lbbaud = new System.Windows.Forms.Label();
             this.gbXMain.SuspendLayout();
             this.gbPara.SuspendLayout();
             this.gbConf.SuspendLayout();
@@ -212,7 +208,6 @@
             // 
             // gbConf
             // 
-            this.gbConf.Controls.Add(this.cbbaud);
             this.gbConf.Controls.Add(this.button2);
             this.gbConf.Controls.Add(this.button1);
             this.gbConf.Controls.Add(this.cbSenAct1);
@@ -240,7 +235,6 @@
             this.gbConf.Controls.Add(this.lbSenMin2);
             this.gbConf.Controls.Add(this.lbSenAct2);
             this.gbConf.Controls.Add(this.lbSendelay2);
-            this.gbConf.Controls.Add(this.lbbaud);
             this.gbConf.Controls.Add(this.tbSenMax1);
             this.gbConf.Controls.Add(this.gbControl);
             this.gbConf.Controls.Add(this.tbAddr);
@@ -294,6 +288,7 @@
             this.tbSenMax4.Size = new System.Drawing.Size(50, 21);
             this.tbSenMax4.TabIndex = 104;
             this.tbSenMax4.Tag = "0";
+            this.tbSenMax4.Leave += new System.EventHandler(this.tbSenMax4_Leave);
             // 
             // lbSenMax4
             // 
@@ -311,6 +306,7 @@
             this.tbSenMin4.Size = new System.Drawing.Size(50, 21);
             this.tbSenMin4.TabIndex = 102;
             this.tbSenMin4.Tag = "0";
+            this.tbSenMin4.Leave += new System.EventHandler(this.tbSenMin4_Leave);
             // 
             // cbSenAct4
             // 
@@ -328,6 +324,7 @@
             this.tbSendelay4.Size = new System.Drawing.Size(50, 21);
             this.tbSendelay4.TabIndex = 99;
             this.tbSendelay4.Tag = "0";
+            this.tbSendelay4.Leave += new System.EventHandler(this.tbSendelay4_Leave);
             // 
             // lbSenMin4
             // 
@@ -363,6 +360,7 @@
             this.tbSenMax3.Size = new System.Drawing.Size(50, 21);
             this.tbSenMax3.TabIndex = 96;
             this.tbSenMax3.Tag = "0";
+            this.tbSenMax3.Leave += new System.EventHandler(this.tbSenMax3_Leave);
             // 
             // lbSenMax3
             // 
@@ -380,6 +378,7 @@
             this.tbSenMin3.Size = new System.Drawing.Size(50, 21);
             this.tbSenMin3.TabIndex = 94;
             this.tbSenMin3.Tag = "0";
+            this.tbSenMin3.Leave += new System.EventHandler(this.tbSenMin3_Leave);
             // 
             // cbSenAct3
             // 
@@ -397,6 +396,7 @@
             this.tbSendelay3.Size = new System.Drawing.Size(50, 21);
             this.tbSendelay3.TabIndex = 91;
             this.tbSendelay3.Tag = "0";
+            this.tbSendelay3.Leave += new System.EventHandler(this.tbSendelay3_Leave);
             // 
             // lbSenMin3
             // 
@@ -432,6 +432,7 @@
             this.tbSenMax2.Size = new System.Drawing.Size(50, 21);
             this.tbSenMax2.TabIndex = 88;
             this.tbSenMax2.Tag = "0";
+            this.tbSenMax2.Leave += new System.EventHandler(this.tbSenMax2_Leave);
             // 
             // lbSenMax2
             // 
@@ -449,6 +450,7 @@
             this.tbSenMin2.Size = new System.Drawing.Size(50, 21);
             this.tbSenMin2.TabIndex = 86;
             this.tbSenMin2.Tag = "0";
+            this.tbSenMin2.Leave += new System.EventHandler(this.tbSenMin2_Leave);
             // 
             // cbSenAct2
             // 
@@ -466,6 +468,7 @@
             this.tbSendelay2.Size = new System.Drawing.Size(50, 21);
             this.tbSendelay2.TabIndex = 83;
             this.tbSendelay2.Tag = "0";
+            this.tbSendelay2.Leave += new System.EventHandler(this.tbSendelay2_Leave);
             // 
             // lbSenMin2
             // 
@@ -494,14 +497,6 @@
             this.lbSendelay2.TabIndex = 82;
             this.lbSendelay2.Text = "动作延时：        ms";
             // 
-            // tbbaud
-            // 
-            this.tbbaud.Location = new System.Drawing.Point(375, 47);
-            this.tbbaud.Name = "tbbaud";
-            this.tbbaud.Size = new System.Drawing.Size(50, 21);
-            this.tbbaud.TabIndex = 68;
-            this.tbbaud.Tag = "0";
-            // 
             // tbSenMax1
             // 
             this.tbSenMax1.Location = new System.Drawing.Point(469, 41);
@@ -509,6 +504,7 @@
             this.tbSenMax1.Size = new System.Drawing.Size(50, 21);
             this.tbSenMax1.TabIndex = 80;
             this.tbSenMax1.Tag = "0";
+            this.tbSenMax1.Leave += new System.EventHandler(this.tbSenMax1_Leave);
             // 
             // gbControl
             // 
@@ -570,6 +566,7 @@
             this.tbAddr.Size = new System.Drawing.Size(76, 21);
             this.tbAddr.TabIndex = 65;
             this.tbAddr.Tag = "0";
+            this.tbAddr.Leave += new System.EventHandler(this.tbAddr_Leave);
             // 
             // lbSenMax1
             // 
@@ -596,6 +593,7 @@
             this.tbSenMin1.Size = new System.Drawing.Size(50, 21);
             this.tbSenMin1.TabIndex = 78;
             this.tbSenMin1.Tag = "0";
+            this.tbSenMin1.Leave += new System.EventHandler(this.tbSenMin1_Leave);
             // 
             // tbSendelay1
             // 
@@ -604,6 +602,7 @@
             this.tbSendelay1.Size = new System.Drawing.Size(50, 21);
             this.tbSendelay1.TabIndex = 72;
             this.tbSendelay1.Tag = "0";
+            this.tbSendelay1.Leave += new System.EventHandler(this.tbSendelay1_Leave);
             // 
             // lbSenMin1
             // 
@@ -634,7 +633,6 @@
             // 
             // gbled
             // 
-            this.gbled.Controls.Add(this.label1);
             this.gbled.Controls.Add(this.btnLed4);
             this.gbled.Controls.Add(this.lbLed4);
             this.gbled.Controls.Add(this.btnLed3);
@@ -651,22 +649,12 @@
             this.gbled.Controls.Add(this.lbOut2);
             this.gbled.Controls.Add(this.btnOut1);
             this.gbled.Controls.Add(this.lbOut1);
-            this.gbled.Controls.Add(this.tbbaud);
             this.gbled.Location = new System.Drawing.Point(6, 70);
             this.gbled.Name = "gbled";
             this.gbled.Size = new System.Drawing.Size(657, 65);
             this.gbled.TabIndex = 96;
             this.gbled.TabStop = false;
             this.gbled.Text = "灯光指示";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(467, 36);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 115;
-            this.label1.Text = "label1";
             // 
             // btnLed4
             // 
@@ -848,25 +836,6 @@
             // 
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
-            // cbbaud
-            // 
-            this.cbbaud.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbaud.FormattingEnabled = true;
-            this.cbbaud.Location = new System.Drawing.Point(206, 14);
-            this.cbbaud.Name = "cbbaud";
-            this.cbbaud.Size = new System.Drawing.Size(76, 20);
-            this.cbbaud.TabIndex = 108;
-            this.cbbaud.SelectedIndexChanged += new System.EventHandler(this.cbbaud_SelectedIndexChanged);
-            // 
-            // lbbaud
-            // 
-            this.lbbaud.AutoSize = true;
-            this.lbbaud.Location = new System.Drawing.Point(148, 17);
-            this.lbbaud.Name = "lbbaud";
-            this.lbbaud.Size = new System.Drawing.Size(125, 12);
-            this.lbbaud.TabIndex = 67;
-            this.lbbaud.Text = "波 特 率：          ";
-            // 
             // FormGaugeP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -926,7 +895,6 @@
         private System.Windows.Forms.Label lbOut2;
         private System.Windows.Forms.Button btnOut1;
         private System.Windows.Forms.Timer timerRefresh;
-        private System.Windows.Forms.TextBox tbbaud;
         private System.Windows.Forms.Label lbSenMin1;
         private System.Windows.Forms.TextBox tbSendelay1;
         private System.Windows.Forms.Label lbSendelay1;
@@ -962,8 +930,5 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbbaud;
-        private System.Windows.Forms.Label lbbaud;
     }
 }
