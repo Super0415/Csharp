@@ -134,7 +134,7 @@ namespace Yungku.Common.IOCardS2
         /// <returns></returns>
         protected string ExecuteCommand(string cmd)
 		{
-			lock (syncRoot)
+	        lock (syncRoot)
 			{
                 try
                 {

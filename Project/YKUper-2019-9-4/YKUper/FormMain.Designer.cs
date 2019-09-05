@@ -56,6 +56,8 @@
             this.btnComt = new System.Windows.Forms.Button();
             this.btnNett = new System.Windows.Forms.Button();
             this.tbRecode = new System.Windows.Forms.TextBox();
+            this.tsmiComAddr = new System.Windows.Forms.ToolStripMenuItem();
+            this.tstbComAddr = new System.Windows.Forms.ToolStripTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -118,7 +120,7 @@
             this.iP地址ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tstbNetip});
             this.iP地址ToolStripMenuItem.Name = "iP地址ToolStripMenuItem";
-            this.iP地址ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.iP地址ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.iP地址ToolStripMenuItem.Text = "IP地址";
             // 
             // tstbNetip
@@ -132,7 +134,7 @@
             this.tsmiNetport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tstbNetport});
             this.tsmiNetport.Name = "tsmiNetport";
-            this.tsmiNetport.Size = new System.Drawing.Size(124, 22);
+            this.tsmiNetport.Size = new System.Drawing.Size(152, 22);
             this.tsmiNetport.Text = "端口";
             // 
             // tstbNetport
@@ -146,7 +148,7 @@
             this.读写超时ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tstbNetime});
             this.读写超时ToolStripMenuItem.Name = "读写超时ToolStripMenuItem";
-            this.读写超时ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.读写超时ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.读写超时ToolStripMenuItem.Text = "读写超时";
             // 
             // tstbNetime
@@ -159,6 +161,7 @@
             // 
             this.串口配置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiCOMname,
+            this.tsmiComAddr,
             this.波特率ToolStripMenuItem,
             this.读写超时ToolStripMenuItem1});
             this.串口配置ToolStripMenuItem.Name = "串口配置ToolStripMenuItem";
@@ -265,6 +268,20 @@
             this.tbRecode.Size = new System.Drawing.Size(677, 90);
             this.tbRecode.TabIndex = 5;
             // 
+            // tsmiComAddr
+            // 
+            this.tsmiComAddr.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tstbComAddr});
+            this.tsmiComAddr.Name = "tsmiComAddr";
+            this.tsmiComAddr.Size = new System.Drawing.Size(152, 22);
+            this.tsmiComAddr.Text = "通讯地址";
+            // 
+            // tstbComAddr
+            // 
+            this.tstbComAddr.Name = "tstbComAddr";
+            this.tstbComAddr.Size = new System.Drawing.Size(100, 23);
+            this.tstbComAddr.TextChanged += new System.EventHandler(this.tstbComAddr_TextChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -319,6 +336,8 @@
         private System.Windows.Forms.Button btnComt;
         private System.Windows.Forms.Button btnNett;
         private System.Windows.Forms.TextBox tbRecode;
+        private System.Windows.Forms.ToolStripMenuItem tsmiComAddr;
+        private System.Windows.Forms.ToolStripTextBox tstbComAddr;
     }
 }
 

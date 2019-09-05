@@ -13,7 +13,7 @@ using Yungku.Common.IOCardS1;
 using Yungku.Common.IOCardS2;
 using Yungku.Common.IOCard.Net;
 using System.Threading;
-
+using Yungku.Common.GaugeP;
 
 
 namespace YKUper
@@ -36,6 +36,10 @@ namespace YKUper
         /// 网口实例
         /// </summary>
         private YKS2CardNet MainNet2 = new YKS2CardNet();
+        /// <summary>
+        /// 串口实例
+        /// </summary>
+        public YKGaugeP GPCom = new YKGaugeP();
         /// <summary>
         /// 创建窗体S1的句柄
         /// </summary>
@@ -86,6 +90,7 @@ namespace YKUper
             tstbNetport.Text = "4000";                   //网络通讯-port
             tstbNetime.Text = "300";                    //网络通讯-timeout
             tstbComtime.Text = "300";                    //串口通讯-timeout
+            tstbComAddr.Text = "1";                     //串口通讯地址
             ComConf();
             UperConf();
         }      
@@ -201,6 +206,26 @@ namespace YKUper
                 } while (num <= checktimes);
                 MainCom1.Close();
             }
+            if (ver == 0 || ver == 3)
+            {
+                GPCom.Port = data.Comport;
+                GPCom.Timeout = data.Comtimeout;
+                GPCom.Open();         //打开串口
+
+                num = 0;
+                do
+                {
+                    if (GPCom.IsExists(data.Comaddr))
+                    {
+                        data.VerUper = 3;
+                        tscbVer.SelectedIndex = data.VerUper; //更新版本号
+                        GPCom.Close();
+                        return true;
+                    }
+                    num++;
+                } while (num <= checktimes);
+                GPCom.Close();
+            }
 
             return false;
         }
@@ -237,8 +262,10 @@ namespace YKUper
         //******************************************************************************
         private void button1_Click(object sender, EventArgs e)
         {
+            RecodeInfo("上位机匹配中请稍后...");
             if (CheckComHeartTimes()|| CheckNetHeartTimes())
             {
+                RecodeInfo("上位机匹配成功！");
             }
             else { RecodeInfo("自动检测失败！"); }
 
@@ -302,7 +329,15 @@ namespace YKUper
         {
             data.Comtimeout = Convert.ToInt32(tstbComtime.Text);
         }
-     
+        /// <summary>
+        /// 同步更新串口通讯地址
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tstbComAddr_TextChanged(object sender, EventArgs e)
+        {
+            data.Comaddr = Convert.ToInt32(tstbComAddr.Text);
+        }
         /// <summary>
         /// 切换上位机版本
         /// </summary>
@@ -456,21 +491,12 @@ namespace YKUper
             string Ver_Card = "未知";
             string Ver_UD = "未知";
             string Ver_SPT = "15221283134@163.com";
+            string Ver_Data = "未知";
             string Name = "未知";
+            
             int sn = 0;
 
-            if (data.VerUper == 2)
-            {
-                string[] info = data.GetVer_Info().Split('\n');    //版本信息-公司
-                Ver_Co = info[0];    //版本信息-公司
-                Ver_Web = info[1];    //版本信息-网址
-                Ver_Card = info[2];    //版本信息-主板名
-                Ver_UD = info[3];       //版本信息-版本号
-                Ver_SPT = info[4];      //版本信息-技术支持
-                Name = data.GetName();
-                sn = data.GetSN();
-            }
-            else if (data.VerUper == 1)
+            if (data.VerUper == 1)
             {
                 string[] info = data.GetVer_Info().Split('\n');    //版本信息-公司
                 Ver_Co = info[0];    //版本信息-公司
@@ -480,10 +506,25 @@ namespace YKUper
                 Ver_Card = "S1 IO";
                 Name = "S1";
             }
-            
-            
+            else if (data.VerUper == 2)
+            {
+                string[] info = data.GetVer_Info().Split('\n');    //版本信息-公司
+                Ver_Co = info[0];    //版本信息-公司
+                Ver_Web = info[1];    //版本信息-网址
+                Ver_Card = info[2];    //版本信息-主板名
+                Ver_UD = info[3];       //版本信息-版本号
+                Ver_SPT = info[4];      //版本信息-技术支持
+                Name = data.GetName();
+                sn = data.GetSN();
+            }  
+            else if (data.VerUper == 3)
+            {
+                string[] info = data.GetVer_Info().Split('\n');    //版本信息-公司
+                Ver_UD = info[0];       //版本信息-版本号
+                Ver_Data = info[1];
+            }
 
-            MessageBox.Show("公司名称：" + Ver_Co + "\n公司网址：" + Ver_Web + "\n产品名称：" + Ver_Card + "\n固件版本：" + Ver_UD + "\n硬件版本：" + Name + "\n产品编号：" + sn + "\n技术支持：" + Ver_SPT, "产品信息", 0);
+            MessageBox.Show("公司名称：" + Ver_Co + "\n公司网址：" + Ver_Web + "\n产品名称：" + Ver_Card + "\n固件版本：" + Ver_UD + "\n固件日期：" + Ver_Data + "\n硬件版本：" + Name + "\n产品编号：" + sn + "\n技术支持：" + Ver_SPT, "产品信息", 0);
         }
 
         /// <summary>
@@ -499,6 +540,7 @@ namespace YKUper
             }
             if (data.COMHardCon == 0)
                 btnComt.Text = "串口未连接";
+                
             if (data.NetHardCon == 0)
                 btnNett.Text = "网口未连接";
 
@@ -514,6 +556,10 @@ namespace YKUper
             {
                 this.Text = "S2 Card Tool V2.0";
             }
+            else if (data.VerUper == 3)
+            {
+                this.Text = "Gauge P Tool V1.0";
+            }
         }
 
         private void tsmiCOMname_MouseDown(object sender, MouseEventArgs e)
@@ -523,5 +569,6 @@ namespace YKUper
             ComConf();
         }
 
+        
     }
 }

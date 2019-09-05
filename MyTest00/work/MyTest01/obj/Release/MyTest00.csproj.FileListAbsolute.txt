@@ -1,9 +1,0 @@
-E:\GITData\Csharp\MyTest00\MyTest00\bin\Release\MyTest00.exe.config
-E:\GITData\Csharp\MyTest00\MyTest00\bin\Release\MyTest00.exe
-E:\GITData\Csharp\MyTest00\MyTest00\bin\Release\MyTest00.pdb
-E:\GITData\Csharp\MyTest00\MyTest00\obj\Release\MyTest00.csprojResolveAssemblyReference.cache
-E:\GITData\Csharp\MyTest00\MyTest00\obj\Release\MyTest00.Form1.resources
-E:\GITData\Csharp\MyTest00\MyTest00\obj\Release\MyTest00.Properties.Resources.resources
-E:\GITData\Csharp\MyTest00\MyTest00\obj\Release\MyTest00.csproj.GenerateResource.Cache
-E:\GITData\Csharp\MyTest00\MyTest00\obj\Release\MyTest00.exe
-E:\GITData\Csharp\MyTest00\MyTest00\obj\Release\MyTest00.pdb

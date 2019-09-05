@@ -122,14 +122,46 @@ namespace YKUper
         /// <param name="e"></param>
         private void threadGP_Refresh()
         {
+            int count = 0;
             while (true)
             {
                 Thread.Sleep(200);
-                if (GPdata.COMHardCon == 1)      //串口数据处理
+                int addr = GPdata.Comaddr;
+                while (WRABLE) ;
+                WRABLE = true;
+                if (Com.IsExists(addr))
+                {
+
+                    GPdata.COMSoftCon = 1;
+                    count = 0;
+                }
+                else
+                {
+                    count++;
+
+                    if (count > 5)
+                    {
+                        count = 0;
+                        GPdata.COMHardCon = 0;
+                        GPdata.COMSoftCon = 0;
+                        lForm.RecodeInfo("心跳异常");
+                        Com.Close();
+                        threadGP.Abort();            //避免重复新建线程
+                    }
+                }
+                WRABLE = false;
+                if (GPdata.COMSoftCon == 1)      //串口数据处理
                 {
                     while (WRABLE) ;
                     WRABLE = true;
-                    int addr = GPdata.Comaddr;
+
+                    if (GPdata.GetFirstNum() == 0)    //读取固件信息
+                    {
+                        GPdata.SetFirstNum(1);
+                        //获取版本信息
+                        GPdata.SetVer_Info(Com.GetVerInfo(addr));
+                    }
+
                     GPdata.GPOutput = Com.GetOutputs(addr);
                     GPdata.GPLed = Com.GetLeds(addr);
                     GPdata.GPPolarity = Com.GetOutputPol(addr);
@@ -245,6 +277,8 @@ namespace YKUper
             while (WRABLE) ;
             WRABLE = true;
             int[] Data = Com.GetFlashDBP(addr);
+            if (Com.MODState == 1) lForm.RecodeInfo("读取参数成功");
+            else lForm.RecodeInfo("读取参数失败");
             WRABLE = false;
 
             GPdata.GPSenAct1 = Data[0];
@@ -513,7 +547,10 @@ namespace YKUper
 
         private void btSave_Click(object sender, EventArgs e)
         {
+            while (WRABLE) ;
+            WRABLE = true;
             int addr = GPdata.Comaddr;
+            WRABLE = false;
             if (Com.SetSaveData(addr))
             {
                 lForm.RecodeInfo("数据保存成功");
@@ -526,7 +563,10 @@ namespace YKUper
         {
             if ((int)MessageBox.Show("请确定恢复出厂设置", "提示", MessageBoxButtons.OKCancel) == 1)
             {
+                while (WRABLE) ;
+                WRABLE = true;
                 int addr = GPdata.Comaddr;
+                WRABLE = false;
                 if (Com.SetReset(addr))
                 {
                     lForm.RecodeInfo("恢复出厂设置成功");

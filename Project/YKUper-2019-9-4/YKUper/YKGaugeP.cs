@@ -82,12 +82,23 @@ namespace Yungku.Common.GaugeP
         enum CMD
         {
             ReadReg  = 0x03,        //读保持寄存器
-            WriteReg = 0x10,      //写保持寄存器
+            WriteReg = 0x10,        //写保持寄存器
+            SPECIAL = 0xFE,         //特殊协议功能
         };
         enum CMD_FUN
         {
             SaveData = 0x01,        //保存数据
-            Reset = 0x02,        //恢复出厂设置
+            Reset = 0x02,           //恢复出厂设置
+        };
+        enum CMD_SPE                //特殊协议功能
+        {
+            Heart = 0x01,           //心跳机制
+            Verb  = 0x02,           //查询版本
+        };
+        enum MOD_STATE                //通讯状态
+        {
+            MOD_ERR = 0,           //通讯故障
+            MOD_OK = 1,            //通讯正常
         };
         enum Protocol
         {
@@ -179,6 +190,15 @@ namespace Yungku.Common.GaugeP
         {
             get { return modaddr; }
             set { modaddr = value; }
+        }
+        private int modstate = 0;
+        /// <summary>
+        /// 设置获取通讯地址
+        /// </summary>
+        public int MODState
+        {
+            get { return modstate; }
+            set { modstate = value; }
         }
 
         public bool IsOpen()
@@ -980,7 +1000,7 @@ namespace Yungku.Common.GaugeP
         }
         /// <summary>
         /// 获取特定位置、长度的参数配置
-        ////* 1-波特率；*/2-1动作配置；3-1动作延时；4-1低阈值动作；5-1高阈值动作
+        ////* 2-1动作配置；3-1动作延时；4-1低阈值动作；5-1高阈值动作
         /// 6-2动作配置；7-2动作延时；8-2低阈值动作；9-2高阈值动作；10-3动作配置；11-3动作延时；12-3低阈值动作；
         /// 13-3高阈值动作；14-4动作配置；15-4动作延时；16-4低阈值动作；17-4高阈值动作
         /// </summary>
@@ -1001,6 +1021,11 @@ namespace Yungku.Common.GaugeP
             Sdata[6] = crc08[0];
             Sdata[7] = crc08[1];
             Byte[] Rdata = GetIntegerValue(Sdata);
+            if (Rdata[0] != Sdata[0] && Rdata[1] != Sdata[1])
+            {
+                modstate = (int)MOD_STATE.MOD_ERR;
+            }
+            else modstate = (int)MOD_STATE.MOD_OK;
             int[] DData = new int[0xFF];
             for(int i = 0;i < Len;i++)
             {
@@ -1099,6 +1124,52 @@ namespace Yungku.Common.GaugeP
             if (Rdata[0] != 0) return true;
 
             return false;
+        }
+
+        public bool IsExists(int addr)
+        {
+            if (!sport.IsOpen)
+                return false;
+
+            Byte[] Sdata = new byte[5];
+            Sdata[0] = (Byte)addr;
+            Sdata[1] = (Byte)CMD.SPECIAL;
+            Sdata[2] = (Byte)CMD_SPE.Heart;
+            UInt16 crc16 = GetCrc16Code(Sdata, 3);
+            Byte[] crc08 = FUN_UC_HIGH_LOW(crc16);
+            Sdata[3] = crc08[0];
+            Sdata[4] = crc08[1];
+            Byte[] Rdata = GetIntegerValue(Sdata);
+            if ((Rdata[0] == Sdata[0]) && (Rdata[1] == Sdata[1]) && (Rdata[2] == Sdata[2]))
+            {
+                modstate = (int)MOD_STATE.MOD_OK;
+                return true;
+            }
+
+            modstate = (int)MOD_STATE.MOD_ERR;
+            return false;
+        }
+        public string GetVerInfo(int addr)
+        {
+            Byte[] Sdata = new byte[5];
+            Sdata[0] = (Byte)addr;
+            Sdata[1] = (Byte)CMD.SPECIAL;
+            Sdata[2] = (Byte)CMD_SPE.Verb;
+            UInt16 crc16 = GetCrc16Code(Sdata, 3);
+            Byte[] crc08 = FUN_UC_HIGH_LOW(crc16);
+            Sdata[3] = crc08[0];
+            Sdata[4] = crc08[1];
+            Byte[] Rdata = GetIntegerValue(Sdata);
+            if (Rdata[0] != 0)
+            {
+                modstate = (int)MOD_STATE.MOD_OK;
+                string str = Encoding.UTF8.GetString(Rdata);
+                string info = str.Split('@')[1].Split('\0')[0];
+                return info;
+            }
+
+            modstate = (int)MOD_STATE.MOD_ERR;
+            return null;
         }
 
         /// <summary>
