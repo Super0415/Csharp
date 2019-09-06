@@ -342,7 +342,6 @@ namespace Yungku.Common.IOCard.DataDeal
         //private YKS2CardNet YKS2net = new YKS2CardNet();
         private YKS1Card YKS1Com = new YKS1Card();
         private YKUCData ucData = new YKUCData();
-
         public ComState Coms = new ComState();
 
         /// <summary>

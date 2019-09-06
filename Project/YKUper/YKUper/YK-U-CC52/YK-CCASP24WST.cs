@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Yungku.Common.CCASP24WST
 {
@@ -11,16 +12,16 @@ namespace Yungku.Common.CCASP24WST
     {
         public enum IOEnum
         {
-            LED2 = 0,//通道1选择指示
-            LED3,//通道2选择指示
-            LED4,//通道3选择指示
-            LED5,//通道4选择指示
-            KEY1,//S3
-            KEY2,//S4
-            KEY3,//S5
-            KEY4,//数字电位器上的按键
-            LockFlag,//按键锁定标志位
-            SW1,    //编码器/按钮 选择标志位
+            LED2 = 0,   //通道4选择指示
+            LED3,       //通道3选择指示
+            LED4,       //通道2选择指示
+            LED5,       //通道1选择指示
+            KEY1,       //S3
+            KEY2,       //S4
+            KEY3,       //S5
+            KEY4,       //数字电位器上的按键
+            LockFlag,   //按键锁定标志位
+            SW1,        //编码器/按钮 选择标志位
         };
 
         public enum EnableEnum
@@ -120,7 +121,7 @@ namespace Yungku.Common.CCASP24WST
         private bool SendCommand(string cmd)
         {
             sport.WriteLine(cmd);
-            sport.ReadLine();
+            //sport.ReadLine();
 
             //以下为握手通讯方式，可靠性较高，但会通讯速度较低
             //sport.ReadExisting();
@@ -145,22 +146,32 @@ namespace Yungku.Common.CCASP24WST
         {
             lock (syncRoot)
             {
-                if (SendCommand(cmd))
+                try
                 {
-                    string ret = sport.ReadLine();
-                    return ret.Trim().ToUpper();
+                    if (SendCommand(cmd))
+                    {
+                        string ret0 = sport.ReadLine();
+                        string ret = sport.ReadLine();
+                        return ret.Trim().ToUpper();
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
                 }
-                else
+                catch 
                 {
                     return string.Empty;
                 }
+
             }
         }
 
         protected int GetIntegerValue(string cmd)
         {
             string ret = ExecuteCommand(cmd);
-            return int.Parse(ret);
+            int temp = ret == "" ? 0 : int.Parse(ret);
+            return temp;
         }
 
         protected bool ExecuteAndCheckOk(string cmd)

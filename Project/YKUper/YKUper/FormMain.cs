@@ -87,6 +87,8 @@ namespace YKUper
         /// 定义委托事件-调光器的串口打开
         /// </summary>
         public event MyDelegate MyEventCOMVerYTUCC52;
+
+
         /// <summary>
         /// 窗体初始化
         /// </summary>
@@ -100,6 +102,7 @@ namespace YKUper
             tstbComAddr.Text = "1";                     //串口通讯地址
             ComConf();
             UperConf();
+
         }      
         /// <summary>
         /// 窗体控件载入过程
@@ -107,7 +110,7 @@ namespace YKUper
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
-        {    
+        {
         }
         /// <summary>
         /// 主窗体关闭过程
@@ -287,6 +290,10 @@ namespace YKUper
         {
             data.NetIP = tstbNetip.Text;
         }
+        private void tstbNetip_Leave(object sender, EventArgs e)
+        {
+
+        }
 
         /// <summary>
         /// 同步更新网络端口
@@ -296,6 +303,7 @@ namespace YKUper
         private void tstbNetport_TextChanged(object sender, EventArgs e)
         {
             data.Netport = Convert.ToInt32(tstbNetport.Text);
+            //data.Netport = tstbNetport.Text == ""? 0:Convert.ToInt32(tstbNetport.Text);
         }
 
         /// <summary>
@@ -438,7 +446,7 @@ namespace YKUper
 
                 if (formS1 != null) formS1.Hide();
                 if (formS2 != null) formS2.Hide();
-                if (formYKUCC52 != null) formYKUCC52.Hide();
+                if (formGaugeP != null) formGaugeP.Hide();
 
                 panel.Controls.Clear();//移除所有控件
                 if (formYKUCC52 == null) formYKUCC52 = new FormYKUCC52();      //避免重复创建窗口，只创建一次，之后使用Hide()与Show()实现窗体的变化
