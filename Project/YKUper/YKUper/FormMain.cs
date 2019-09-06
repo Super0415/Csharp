@@ -602,6 +602,10 @@ namespace YKUper
             {
                 this.Text = "Gauge P Tool V1.0";
             }
+            else if (data.VerUper == 4)
+            {
+                this.Text = "YKUCC52 V1.0";
+            }
         }
 
         private void tsmiCOMname_MouseDown(object sender, MouseEventArgs e)
