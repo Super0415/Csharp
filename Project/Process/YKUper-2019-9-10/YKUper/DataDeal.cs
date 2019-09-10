@@ -315,6 +315,22 @@ namespace Yungku.Common.IOCard.DataDeal
             /// 传感器4采集值对应的显示值
             /// </summary>
             public int[] Sensor4Show;
+            /// <summary>
+            /// 传感器1选用曲线
+            /// </summary>
+            public int GPSen1Calib;
+            /// <summary>
+            /// 传感器2选用曲线
+            /// </summary>
+            public int GPSen2Calib;
+            /// <summary>
+            /// 传感器3选用曲线
+            /// </summary>
+            public int GPSen3Calib;
+            /// <summary>
+            /// 传感器4选用曲线
+            /// </summary>
+            public int GPSen4Calib;
         }
 
 
@@ -1278,8 +1294,39 @@ namespace Yungku.Common.IOCard.DataDeal
             set { ucData.IOState = value; }
             get { return ucData.IOState; }
         }
-
-
+        
+        /// <summary>
+        /// 传感器1校准值
+        /// </summary>
+        public int GPSen1Calib
+        {
+            set { gpdata.GPSen1Calib = value; }
+            get { return gpdata.GPSen1Calib; }
+        }
+        /// <summary>
+        /// 传感器2校准值
+        /// </summary>
+        public int GPSen2Calib
+        {
+            set { gpdata.GPSen2Calib = value; }
+            get { return gpdata.GPSen2Calib; }
+        }
+        /// <summary>
+        /// 传感器3校准值
+        /// </summary>
+        public int GPSen3Calib
+        {
+            set { gpdata.GPSen3Calib = value; }
+            get { return gpdata.GPSen3Calib; }
+        }
+        /// <summary>
+        /// 传感器4校准值
+        /// </summary>
+        public int GPSen4Calib
+        {
+            set { gpdata.GPSen4Calib = value; }
+            get { return gpdata.GPSen4Calib; }
+        }
 
         /// <summary>
         /// 线程处理

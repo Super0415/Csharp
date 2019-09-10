@@ -86,6 +86,14 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cbCurve = new System.Windows.Forms.ComboBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tbSenCalib1 = new System.Windows.Forms.TextBox();
+            this.tbSenCalib2 = new System.Windows.Forms.TextBox();
+            this.lbSenCalib2 = new System.Windows.Forms.Label();
+            this.tbSenCalib3 = new System.Windows.Forms.TextBox();
+            this.lbSenCalib3 = new System.Windows.Forms.Label();
+            this.tbSenCalib4 = new System.Windows.Forms.TextBox();
+            this.lbSenCalib4 = new System.Windows.Forms.Label();
+            this.lbSenCalib1 = new System.Windows.Forms.Label();
             this.gbSensor.SuspendLayout();
             this.gbCurve.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -94,7 +102,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 25);
+            this.label1.Location = new System.Drawing.Point(12, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 0;
@@ -103,23 +111,23 @@
             // cbSenCh1
             // 
             this.cbSenCh1.FormattingEnabled = true;
-            this.cbSenCh1.Location = new System.Drawing.Point(64, 22);
+            this.cbSenCh1.Location = new System.Drawing.Point(61, 49);
             this.cbSenCh1.Name = "cbSenCh1";
-            this.cbSenCh1.Size = new System.Drawing.Size(102, 20);
+            this.cbSenCh1.Size = new System.Drawing.Size(76, 20);
             this.cbSenCh1.TabIndex = 1;
             // 
             // cbSenCh2
             // 
             this.cbSenCh2.FormattingEnabled = true;
-            this.cbSenCh2.Location = new System.Drawing.Point(64, 51);
+            this.cbSenCh2.Location = new System.Drawing.Point(61, 78);
             this.cbSenCh2.Name = "cbSenCh2";
-            this.cbSenCh2.Size = new System.Drawing.Size(102, 20);
+            this.cbSenCh2.Size = new System.Drawing.Size(76, 20);
             this.cbSenCh2.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 54);
+            this.label2.Location = new System.Drawing.Point(12, 81);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 2;
@@ -128,15 +136,15 @@
             // cbSenCh3
             // 
             this.cbSenCh3.FormattingEnabled = true;
-            this.cbSenCh3.Location = new System.Drawing.Point(64, 83);
+            this.cbSenCh3.Location = new System.Drawing.Point(61, 110);
             this.cbSenCh3.Name = "cbSenCh3";
-            this.cbSenCh3.Size = new System.Drawing.Size(102, 20);
+            this.cbSenCh3.Size = new System.Drawing.Size(76, 20);
             this.cbSenCh3.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 86);
+            this.label3.Location = new System.Drawing.Point(12, 113);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 4;
@@ -145,15 +153,15 @@
             // cbSenCh4
             // 
             this.cbSenCh4.FormattingEnabled = true;
-            this.cbSenCh4.Location = new System.Drawing.Point(64, 113);
+            this.cbSenCh4.Location = new System.Drawing.Point(61, 140);
             this.cbSenCh4.Name = "cbSenCh4";
-            this.cbSenCh4.Size = new System.Drawing.Size(102, 20);
+            this.cbSenCh4.Size = new System.Drawing.Size(76, 20);
             this.cbSenCh4.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 116);
+            this.label4.Location = new System.Drawing.Point(12, 143);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 6;
@@ -524,19 +532,27 @@
             // 
             // gbSensor
             // 
+            this.gbSensor.Controls.Add(this.tbSenCalib1);
             this.gbSensor.Controls.Add(this.cbSenCh4);
+            this.gbSensor.Controls.Add(this.tbSenCalib2);
             this.gbSensor.Controls.Add(this.cbSenCh3);
+            this.gbSensor.Controls.Add(this.lbSenCalib2);
             this.gbSensor.Controls.Add(this.cbSenCh2);
+            this.gbSensor.Controls.Add(this.tbSenCalib3);
             this.gbSensor.Controls.Add(this.cbSenCh1);
+            this.gbSensor.Controls.Add(this.lbSenCalib3);
             this.gbSensor.Controls.Add(this.btDWrite);
+            this.gbSensor.Controls.Add(this.tbSenCalib4);
             this.gbSensor.Controls.Add(this.btDRead);
+            this.gbSensor.Controls.Add(this.lbSenCalib4);
             this.gbSensor.Controls.Add(this.label1);
+            this.gbSensor.Controls.Add(this.lbSenCalib1);
             this.gbSensor.Controls.Add(this.label2);
             this.gbSensor.Controls.Add(this.label3);
             this.gbSensor.Controls.Add(this.label4);
-            this.gbSensor.Location = new System.Drawing.Point(15, 2);
+            this.gbSensor.Location = new System.Drawing.Point(8, 7);
             this.gbSensor.Name = "gbSensor";
-            this.gbSensor.Size = new System.Drawing.Size(281, 140);
+            this.gbSensor.Size = new System.Drawing.Size(288, 167);
             this.gbSensor.TabIndex = 51;
             this.gbSensor.TabStop = false;
             this.gbSensor.Text = "传感器配置";
@@ -544,7 +560,7 @@
             // btDWrite
             // 
             this.btDWrite.Enabled = false;
-            this.btDWrite.Location = new System.Drawing.Point(186, 75);
+            this.btDWrite.Location = new System.Drawing.Point(150, 20);
             this.btDWrite.Name = "btDWrite";
             this.btDWrite.Size = new System.Drawing.Size(75, 23);
             this.btDWrite.TabIndex = 9;
@@ -554,7 +570,7 @@
             // 
             // btDRead
             // 
-            this.btDRead.Location = new System.Drawing.Point(186, 34);
+            this.btDRead.Location = new System.Drawing.Point(62, 20);
             this.btDRead.Name = "btDRead";
             this.btDRead.Size = new System.Drawing.Size(75, 23);
             this.btDRead.TabIndex = 8;
@@ -616,7 +632,7 @@
             // 
             this.groupBox2.Controls.Add(this.cbCurve);
             this.groupBox2.Controls.Add(this.gbCurve);
-            this.groupBox2.Location = new System.Drawing.Point(8, 147);
+            this.groupBox2.Location = new System.Drawing.Point(8, 180);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(288, 344);
             this.groupBox2.TabIndex = 53;
@@ -627,7 +643,7 @@
             // 
             this.cbCurve.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCurve.FormattingEnabled = true;
-            this.cbCurve.Location = new System.Drawing.Point(134, 15);
+            this.cbCurve.Location = new System.Drawing.Point(87, 18);
             this.cbCurve.Name = "cbCurve";
             this.cbCurve.Size = new System.Drawing.Size(121, 20);
             this.cbCurve.TabIndex = 53;
@@ -639,11 +655,79 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // tbSenCalib1
+            // 
+            this.tbSenCalib1.Location = new System.Drawing.Point(189, 49);
+            this.tbSenCalib1.Name = "tbSenCalib1";
+            this.tbSenCalib1.Size = new System.Drawing.Size(66, 21);
+            this.tbSenCalib1.TabIndex = 48;
+            this.tbSenCalib1.TextChanged += new System.EventHandler(this.tbSenCalib1_TextChanged);
+            // 
+            // tbSenCalib2
+            // 
+            this.tbSenCalib2.Location = new System.Drawing.Point(189, 78);
+            this.tbSenCalib2.Name = "tbSenCalib2";
+            this.tbSenCalib2.Size = new System.Drawing.Size(66, 21);
+            this.tbSenCalib2.TabIndex = 50;
+            this.tbSenCalib2.TextChanged += new System.EventHandler(this.tbSenCalib2_TextChanged);
+            // 
+            // lbSenCalib2
+            // 
+            this.lbSenCalib2.AutoSize = true;
+            this.lbSenCalib2.Location = new System.Drawing.Point(148, 81);
+            this.lbSenCalib2.Name = "lbSenCalib2";
+            this.lbSenCalib2.Size = new System.Drawing.Size(35, 12);
+            this.lbSenCalib2.TabIndex = 51;
+            this.lbSenCalib2.Text = "校准2";
+            // 
+            // tbSenCalib3
+            // 
+            this.tbSenCalib3.Location = new System.Drawing.Point(189, 110);
+            this.tbSenCalib3.Name = "tbSenCalib3";
+            this.tbSenCalib3.Size = new System.Drawing.Size(66, 21);
+            this.tbSenCalib3.TabIndex = 52;
+            this.tbSenCalib3.TextChanged += new System.EventHandler(this.tbSenCalib3_TextChanged);
+            // 
+            // lbSenCalib3
+            // 
+            this.lbSenCalib3.AutoSize = true;
+            this.lbSenCalib3.Location = new System.Drawing.Point(148, 113);
+            this.lbSenCalib3.Name = "lbSenCalib3";
+            this.lbSenCalib3.Size = new System.Drawing.Size(35, 12);
+            this.lbSenCalib3.TabIndex = 53;
+            this.lbSenCalib3.Text = "校准3";
+            // 
+            // tbSenCalib4
+            // 
+            this.tbSenCalib4.Location = new System.Drawing.Point(189, 140);
+            this.tbSenCalib4.Name = "tbSenCalib4";
+            this.tbSenCalib4.Size = new System.Drawing.Size(66, 21);
+            this.tbSenCalib4.TabIndex = 54;
+            this.tbSenCalib4.TextChanged += new System.EventHandler(this.tbSenCalib4_TextChanged);
+            // 
+            // lbSenCalib4
+            // 
+            this.lbSenCalib4.AutoSize = true;
+            this.lbSenCalib4.Location = new System.Drawing.Point(148, 143);
+            this.lbSenCalib4.Name = "lbSenCalib4";
+            this.lbSenCalib4.Size = new System.Drawing.Size(35, 12);
+            this.lbSenCalib4.TabIndex = 55;
+            this.lbSenCalib4.Text = "校准4";
+            // 
+            // lbSenCalib1
+            // 
+            this.lbSenCalib1.AutoSize = true;
+            this.lbSenCalib1.Location = new System.Drawing.Point(148, 52);
+            this.lbSenCalib1.Name = "lbSenCalib1";
+            this.lbSenCalib1.Size = new System.Drawing.Size(35, 12);
+            this.lbSenCalib1.TabIndex = 49;
+            this.lbSenCalib1.Text = "校准1";
+            // 
             // FormSen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(302, 493);
+            this.ClientSize = new System.Drawing.Size(302, 527);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gbSensor);
             this.Controls.Add(this.button1);
@@ -722,5 +806,13 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox cbCurve;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox tbSenCalib1;
+        private System.Windows.Forms.TextBox tbSenCalib2;
+        private System.Windows.Forms.Label lbSenCalib2;
+        private System.Windows.Forms.TextBox tbSenCalib3;
+        private System.Windows.Forms.Label lbSenCalib3;
+        private System.Windows.Forms.TextBox tbSenCalib4;
+        private System.Windows.Forms.Label lbSenCalib4;
+        private System.Windows.Forms.Label lbSenCalib1;
     }
 }

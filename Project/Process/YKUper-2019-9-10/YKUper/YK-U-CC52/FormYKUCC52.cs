@@ -49,6 +49,7 @@ namespace YKUper
             tFresh.Enabled = true;
             
             lForm.RecodeInfo("上位机版本为：调光器上位机");
+            ToolTipShow(toolTip1, lbSW1, "测试效果");
 
             int[] temp = new int[4] { 0, 0, 0, 0 };
             UCdata.ucPWMstate = temp;

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;   //测试响应时间
 
 namespace Yungku.Common.IOCardS2
 {
@@ -28,7 +29,11 @@ namespace Yungku.Common.IOCardS2
 		private SerialPort sport = new SerialPort();
 		private object syncRoot = new object();
 
-		private int port = 1;
+        private int Testnum = 0;
+        private double TestTBuf = new double();
+        private double TestTSum = new double();
+
+        private int port = 1;
 		/// <summary>
 		/// 设置或获取通讯端口
 		/// </summary>
@@ -136,15 +141,25 @@ namespace Yungku.Common.IOCardS2
 		{
 	        lock (syncRoot)
 			{
+                Stopwatch stopwatch = new Stopwatch();
                 try
                 {
                     sport.WriteLine(cmd);
-
+                    stopwatch.Start(); //  开始监视代码运行时间
                     string ret = sport.ReadLine();
                     if (ret.Equals(cmd))
                     {
                         ret = sport.ReadLine();
-                        return ret.Trim().ToUpper();
+
+                        stopwatch.Stop(); //  停止监视
+                        TimeSpan timespan = stopwatch.Elapsed; //  获取当前实例测量得出的总时间
+                        double milliseconds = timespan.TotalMilliseconds;  //  总毫秒数
+
+                        TestTBuf += milliseconds;
+                        Testnum++;
+                        TestTSum = TestTBuf / Testnum;
+
+                        return ret.Trim().ToUpper();                             //通讯 1315 次，单次通讯时间为 13.059ms                2776 - 13.068
                     }
                     else
                     {

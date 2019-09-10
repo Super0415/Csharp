@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;   //测试响应时间
 
 namespace Yungku.Common.GaugeP
 {
@@ -138,6 +139,10 @@ namespace Yungku.Common.GaugeP
             FlashDB_PRESS04_L,
             FlashDB_PRESS04_H,
             DO_Polarity,
+            Sen1Calib,
+            Sen2Calib,
+            Sen3Calib,
+            Sen4Calib,
 
             Map1_PRESS_Volt = 80,
             Map1_PRESS_Show = 90,
@@ -152,7 +157,12 @@ namespace Yungku.Common.GaugeP
         private SerialPort sport = new SerialPort();
 		private object syncRoot = new object();
 
-		private int port = 1;
+        private int Testnum = 0;
+        private double TestTBuf = new double();
+        private double TestTSum = new double();
+
+
+        private int port = 1;
 		/// <summary>
 		/// 设置或获取通讯端口
 		/// </summary>
@@ -273,9 +283,11 @@ namespace Yungku.Common.GaugeP
 			lock (syncRoot)
 			{
                 Byte[] Rdata = new byte[0xFF];
+                Stopwatch stopwatch = new Stopwatch();
                 try
                 {
                     sport.Write(data, 0, data.Length);
+                    stopwatch.Start(); //  开始监视代码运行时间
                     for (int i = 0; i < 0xFF; i++)
                     {
                         Rdata[i] = (byte)sport.ReadByte();
@@ -286,8 +298,16 @@ namespace Yungku.Common.GaugeP
                             UInt16 crc16 = GetCrc16Code(Rdata, (Byte)(i - 1));
                             if (crc16 == FUN_CREAT_16U(Rdata[i - 1], Rdata[i]))
                             {
+                                
+                                stopwatch.Stop(); //  停止监视
+                                TimeSpan timespan = stopwatch.Elapsed; //  获取当前实例测量得出的总时间
+                                double milliseconds = timespan.TotalMilliseconds;  //  总毫秒数
+
+                                TestTBuf += milliseconds;
+                                Testnum++;
+                                TestTSum = TestTBuf / Testnum;
                                 Clear();
-                                return Rdata;
+                                return Rdata;                                               //通讯 1027 次，单次通讯时间为 14.246ms                1318 - 14.319       //此为modbus协议，无法一次读取判断，每次读取判断均需要计算校验吗，耗费大量时间
                             }
                         }
                     }
@@ -509,7 +529,69 @@ namespace Yungku.Common.GaugeP
             if (Rdata[0] != 0) return true;
 
             return false;
-    }
+        }
+        /// <summary>
+        /// 获取固件内部传感器校准值
+        /// </summary>
+        /// <returns></returns>
+        public int[] GetSensorCalib(int addr)
+        {
+            Byte[] Sdata = new byte[8];
+            Byte[] Addr = FUN_UC_HIGH_LOW((UInt16)Protocol.Sen1Calib);
+            Byte Len = 4;
+            Sdata[0] = (Byte)addr;
+            Sdata[1] = (Byte)CMD.ReadReg;
+            Sdata[2] = Addr[0];
+            Sdata[3] = Addr[1];        //地址
+            Sdata[4] = 0x00;
+            Sdata[5] = Len;
+            UInt16 crc16 = GetCrc16Code(Sdata, 6);
+            Byte[] crc08 = FUN_UC_HIGH_LOW(crc16);
+            Sdata[6] = crc08[0];
+            Sdata[7] = crc08[1];
+            Byte[] Rdata = GetIntegerValue(Sdata);
+            int[] DData = new int[0xFF];
+            for (int i = 0; i < Len; i++)
+            {
+                DData[i] = FUN_CREAT_16U(Rdata[3 + i * 2], Rdata[4 + i * 2]);
+            }
+            return DData;
+        }
+        /// <summary>
+        /// 设置固件内部传感器校准值
+        /// </summary>
+        /// <returns></returns>
+        public bool SetSensorCalib(int addr, int[] data)
+        {
+            Byte[] Addr = FUN_UC_HIGH_LOW((UInt16)Protocol.Sen1Calib);
+            Byte Len = (Byte)4;
+            Byte Sum = (Byte)(Len * 2);
+            Byte[] Sdata = new byte[Len * 2 + 9];
+            Sdata[0] = (Byte)addr;
+            Sdata[1] = (Byte)CMD.WriteReg;
+            Sdata[2] = Addr[0];
+            Sdata[3] = Addr[1];          //地址 - 从 FlashDB 的第0位开始
+            Sdata[4] = 0x00;
+            Sdata[5] = Len;              //读取19个数,超过255重新规划
+            Sdata[6] = Sum;            //读取19 *2 = 46个数,超过255重新规划
+
+            for (int i = 0; i < Len; i++)
+            {
+                Byte[] temp = FUN_UC_HIGH_LOW((UInt16)data[i]);
+                Sdata[7 + i * 2] = temp[0];
+                Sdata[8 + i * 2] = temp[1];
+            }
+
+            UInt16 crc16 = GetCrc16Code(Sdata, (Byte)(7 + Sum));
+            Byte[] crc08 = FUN_UC_HIGH_LOW(crc16);
+            Sdata[7 + Len * 2] = crc08[0];
+            Sdata[8 + Len * 2] = crc08[1];
+            Byte[] Rdata = GetIntegerValue(Sdata);
+            if (Rdata[0] != 0) return true;
+
+            return false;
+        }
+
         /// <summary>
         /// 获取固件内部传感器1的电压值
         /// </summary>

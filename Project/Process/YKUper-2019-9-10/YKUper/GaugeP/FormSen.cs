@@ -22,6 +22,7 @@ namespace YKUper
         int[] Sensor4Volt = new int[10];
         int[] Sensor4Show = new int[10];
         int[] SensorItems = new int[4];
+        int[] SensorCalib = new int[4];
         int SensorSel = new int();
         //String[] item = { "0：无曲线", "1：曲线1", "2：曲线2", "3：曲线3", "4：曲线4" };    //定义一个Item数组，遍历item中每一个变量a，增加到comboBox2的列表中
         private int SenNum;
@@ -136,6 +137,7 @@ namespace YKUper
         private void btDRead_Click(object sender, EventArgs e)
         {
             FormGaugeP lForm = (FormGaugeP)this.Owner;//把Form2的父窗口指针赋给lForm1
+            SensorCalib = lForm.GetSensorCalib();
             SensorItems = lForm.GetSensorItems();
             int len = SensorItems.Length;
             Sensor1Volt = lForm.GetSensorData(0);
@@ -152,6 +154,11 @@ namespace YKUper
             cbSenCh2.SelectedIndex = SensorItems[1];
             cbSenCh3.SelectedIndex = SensorItems[2];
             cbSenCh4.SelectedIndex = SensorItems[3];
+
+            tbSenCalib1.Text = SensorCalib[0].ToString();
+            tbSenCalib2.Text = SensorCalib[1].ToString();
+            tbSenCalib3.Text = SensorCalib[2].ToString();
+            tbSenCalib4.Text = SensorCalib[3].ToString();
 
             btDWrite.Enabled = true;    //
         }
@@ -233,6 +240,8 @@ namespace YKUper
         private void btDWrite_Click(object sender, EventArgs e)
         {
             FormGaugeP lForm = (FormGaugeP)this.Owner;//把Form2的父窗口指针赋给lForm1
+
+            lForm.SetSensorCalib(SensorCalib);
             SensorItems[0] = cbSenCh1.SelectedIndex;
             SensorItems[1] = cbSenCh2.SelectedIndex;
             SensorItems[2] = cbSenCh3.SelectedIndex;
@@ -400,6 +409,30 @@ namespace YKUper
         {
             int temp = Convert.ToInt32(tbPress9.Text);
             Shown_Fresh(SensorSel, 9, temp);
+        }
+
+        private void tbSenCalib1_TextChanged(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenCalib1.Text);
+            SensorCalib[0] = temp;
+        }
+
+        private void tbSenCalib2_TextChanged(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenCalib2.Text);
+            SensorCalib[1] = temp;
+        }
+
+        private void tbSenCalib3_TextChanged(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenCalib3.Text);
+            SensorCalib[2] = temp;
+        }
+
+        private void tbSenCalib4_TextChanged(object sender, EventArgs e)
+        {
+            int temp = Convert.ToInt32(tbSenCalib4.Text);
+            SensorCalib[3] = temp;
         }
     }
 }

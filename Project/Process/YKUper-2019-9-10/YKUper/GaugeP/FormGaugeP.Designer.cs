@@ -521,6 +521,7 @@
             // 
             // btSave
             // 
+            this.btSave.Enabled = false;
             this.btSave.Location = new System.Drawing.Point(9, 78);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(75, 23);
@@ -531,6 +532,7 @@
             // 
             // btReset
             // 
+            this.btReset.Enabled = false;
             this.btReset.Location = new System.Drawing.Point(9, 107);
             this.btReset.Name = "btReset";
             this.btReset.Size = new System.Drawing.Size(75, 23);
@@ -541,6 +543,7 @@
             // 
             // btWriteP
             // 
+            this.btWriteP.Enabled = false;
             this.btWriteP.Location = new System.Drawing.Point(9, 49);
             this.btWriteP.Name = "btWriteP";
             this.btWriteP.Size = new System.Drawing.Size(75, 23);
@@ -834,6 +837,7 @@
             // 
             // timerRefresh
             // 
+            this.timerRefresh.Interval = 50;
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
             // FormGaugeP

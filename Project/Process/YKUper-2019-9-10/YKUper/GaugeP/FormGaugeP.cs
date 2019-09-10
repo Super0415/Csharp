@@ -125,7 +125,7 @@ namespace YKUper
             int count = 0;
             while (true)
             {
-                Thread.Sleep(200);
+                Thread.Sleep(30);
                 int addr = GPdata.Comaddr;
                 while (WRABLE) ;
                 WRABLE = true;
@@ -189,6 +189,12 @@ namespace YKUper
             WindosShowData();
             WindosShowLED();
 
+            if (GPdata.COMSoftCon == 0)
+            {
+                btWriteP.Enabled = false;
+                btSave.Enabled = false;
+                btReset.Enabled = false;
+            }
             //float[] Volt = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             //float[] Show = {10,20,30,40,50,60,70,80,90,100 };
             //GPdata.Sensor1Volt = Volt;
@@ -277,9 +283,19 @@ namespace YKUper
             while (WRABLE) ;
             WRABLE = true;
             int[] Data = Com.GetFlashDBP(addr);
-            if (Com.MODState == 1) lForm.RecodeInfo("读取参数成功");
-            else lForm.RecodeInfo("读取参数失败");
             WRABLE = false;
+            if (Com.MODState == 1)
+            {
+                lForm.RecodeInfo("读取参数成功");
+                btWriteP.Enabled    = true;
+                btSave.Enabled      = true;
+                btReset.Enabled     = true;
+            }
+            else
+            {
+                lForm.RecodeInfo("读取参数失败");
+            }
+            
 
             GPdata.GPSenAct1 = Data[0];
             GPdata.GPSenDelay1 = Data[1];
@@ -427,6 +443,19 @@ namespace YKUper
 
         }
         /// <summary>
+        /// 设置传感器校准值
+        /// </summary>
+        public void SetSensorCalib(int[] items)
+        {
+            int addr = GPdata.Comaddr;
+            if (Com.SetSensorCalib(addr, items))
+            {
+                lForm.RecodeInfo("传感器配置写入成功");
+            }
+            else lForm.RecodeInfo("传感器配置写入失败");
+
+        }
+        /// <summary>
         /// 设置传感器曲线数据
         /// </summary>
         public void SetSensorData(int num ,int[] itemV, int[] itemS)
@@ -494,6 +523,21 @@ namespace YKUper
             GPdata.GPSen2Selec = temp[1];
             GPdata.GPSen3Selec = temp[2];
             GPdata.GPSen4Selec = temp[3];
+            return temp;
+        }
+        /// <summary>
+        /// 获取固件内部4个传感器的校准值
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int[] GetSensorCalib()
+        {
+            int addr = GPdata.Comaddr;
+            int[] temp = Com.GetSensorCalib(addr);
+            GPdata.GPSen1Calib = temp[0];
+            GPdata.GPSen2Calib = temp[1];
+            GPdata.GPSen3Calib = temp[2];
+            GPdata.GPSen4Calib = temp[3];
             return temp;
         }
         /// <summary>

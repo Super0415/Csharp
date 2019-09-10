@@ -661,7 +661,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormYKUCC52";
-            this.Text = "YKUCC52 V1.0";
+            this.Text = "FormYKUCC52";
             this.Load += new System.EventHandler(this.FormYKUCC52_Load);
             this.gbled.ResumeLayout(false);
             this.gbled.PerformLayout();

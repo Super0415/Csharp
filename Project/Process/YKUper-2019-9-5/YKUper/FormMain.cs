@@ -402,6 +402,9 @@ namespace YKUper
                 btnCheck.Enabled = false;
                 btnCheck.Visible = false;
 
+                btnNett.Enabled = true;
+                btnNett.Visible = true;
+
                 if (formS1 != null) formS1.Hide();
                 if (formGaugeP != null) formGaugeP.Hide();
                 if (formYKUCC52 != null) formYKUCC52.Hide();

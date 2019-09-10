@@ -112,7 +112,7 @@
             this.tsmiNetport,
             this.读写超时ToolStripMenuItem});
             this.网络配置ToolStripMenuItem.Name = "网络配置ToolStripMenuItem";
-            this.网络配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.网络配置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.网络配置ToolStripMenuItem.Text = "网络配置";
             // 
             // iP地址ToolStripMenuItem
@@ -120,7 +120,7 @@
             this.iP地址ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tstbNetip});
             this.iP地址ToolStripMenuItem.Name = "iP地址ToolStripMenuItem";
-            this.iP地址ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.iP地址ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.iP地址ToolStripMenuItem.Text = "IP地址";
             // 
             // tstbNetip
@@ -135,7 +135,7 @@
             this.tsmiNetport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tstbNetport});
             this.tsmiNetport.Name = "tsmiNetport";
-            this.tsmiNetport.Size = new System.Drawing.Size(124, 22);
+            this.tsmiNetport.Size = new System.Drawing.Size(152, 22);
             this.tsmiNetport.Text = "端口";
             // 
             // tstbNetport
@@ -149,7 +149,7 @@
             this.读写超时ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tstbNetime});
             this.读写超时ToolStripMenuItem.Name = "读写超时ToolStripMenuItem";
-            this.读写超时ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.读写超时ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.读写超时ToolStripMenuItem.Text = "读写超时";
             // 
             // tstbNetime
@@ -166,7 +166,7 @@
             this.波特率ToolStripMenuItem,
             this.读写超时ToolStripMenuItem1});
             this.串口配置ToolStripMenuItem.Name = "串口配置ToolStripMenuItem";
-            this.串口配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.串口配置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.串口配置ToolStripMenuItem.Text = "串口配置";
             // 
             // tsmiCOMname
@@ -231,7 +231,7 @@
             this.下位机版本ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tscbVer});
             this.下位机版本ToolStripMenuItem.Name = "下位机版本ToolStripMenuItem";
-            this.下位机版本ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.下位机版本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.下位机版本ToolStripMenuItem.Text = "下位机版本";
             // 
             // tscbVer
@@ -300,7 +300,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Card Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);

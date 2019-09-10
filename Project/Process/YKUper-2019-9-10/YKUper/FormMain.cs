@@ -402,6 +402,9 @@ namespace YKUper
                 btnCheck.Enabled = false;
                 btnCheck.Visible = false;
 
+                btnNett.Enabled = true;
+                btnNett.Visible = true;
+
                 if (formS1 != null) formS1.Hide();
                 if (formGaugeP != null) formGaugeP.Hide();
                 if (formYKUCC52 != null) formYKUCC52.Hide();
@@ -601,10 +604,6 @@ namespace YKUper
             else if (data.VerUper == 3)
             {
                 this.Text = "Gauge P Tool V1.0";
-            }
-            else if (data.VerUper == 4)
-            {
-                this.Text = "YKUCC52 V1.0";
             }
         }
 
