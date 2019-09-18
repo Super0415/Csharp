@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{80A33656-D1D5-4270-B9E7-810ED8BF3788}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YKUper</RootNamespace>
+    <AssemblyName>YKUper</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>yk.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="S2\ConfLimt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="S2\ConfLimt.Designer.cs">
+      <DependentUpon>ConfLimt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataDeal.cs" />
+    <Compile Include="GaugeP\FormGaugeP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GaugeP\FormGaugeP.Designer.cs">
+      <DependentUpon>FormGaugeP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GaugeP\FormPol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GaugeP\FormPol.Designer.cs">
+      <DependentUpon>FormPol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="S2\FormS2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="S2\FormS2.Designer.cs">
+      <DependentUpon>FormS2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="S1\FormS1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="S1\FormS1.Designer.cs">
+      <DependentUpon>FormS1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GaugeP\FormSen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GaugeP\FormSen.Designer.cs">
+      <DependentUpon>FormSen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GaugeP\YKGaugeP.cs" />
+    <Compile Include="S1\YKS1Card.cs" />
+    <Compile Include="S2\YKS2Card.cs" />
+    <Compile Include="S2\YKS2Cardnet.cs" />
+    <Compile Include="YK-U-CC52\FormYKUCC52.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="YK-U-CC52\FormYKUCC52.Designer.cs">
+      <DependentUpon>FormYKUCC52.cs</DependentUpon>
+    </Compile>
+    <Compile Include="YK-U-CC52\YK-CCASP24WST.cs" />
+    <EmbeddedResource Include="S2\ConfLimt.resx">
+      <DependentUpon>ConfLimt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GaugeP\FormGaugeP.resx">
+      <DependentUpon>FormGaugeP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GaugeP\FormPol.resx">
+      <DependentUpon>FormPol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="S1\FormS1.resx">
+      <DependentUpon>FormS1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="S2\FormS2.resx">
+      <DependentUpon>FormS2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GaugeP\FormSen.resx">
+      <DependentUpon>FormSen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="YK-U-CC52\FormYKUCC52.resx">
+      <DependentUpon>FormYKUCC52.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Record.txt" />
+    <Content Include="yk.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

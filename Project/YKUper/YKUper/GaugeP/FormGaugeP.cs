@@ -126,7 +126,7 @@ namespace YKUper
             int count = 0;
             while (true)
             {
-                Thread.Sleep(30);
+                Thread.Sleep(50);
                 int addr = GPdata.Comaddr;
                 while (WRABLE) ;
                 WRABLE = true;
@@ -282,7 +282,7 @@ namespace YKUper
         private void btReadP_Click(object sender, EventArgs e)
         {
             int addr = GPdata.Comaddr;
-            while (WRABLE) ;
+            //while (WRABLE) ;
             WRABLE = true;
             int[] Data = Com.GetFlashDBP(addr);
             WRABLE = false;
@@ -392,7 +392,7 @@ namespace YKUper
             data[13] = GPdata.GPSenDelay4;
             data[14] = GPdata.GPSenMin4;
             data[15] = GPdata.GPSenMax4;
-            while (WRABLE) ;
+            //while (WRABLE) ;
             WRABLE = true;
             if (Com.SetFlashDBP(addr, data, 16))
             {
@@ -450,12 +450,10 @@ namespace YKUper
         public void SetSensorCalib(int[] items)
         {
             int addr = GPdata.Comaddr;
-            if (Com.SetSensorCalib(addr, items))
+            if (!Com.SetSensorCalib(addr, items))
             {
-                lForm.RecodeInfo("传感器配置写入成功");
+                lForm.RecodeInfo("传感器校准值写入失败");
             }
-            else lForm.RecodeInfo("传感器配置写入失败");
-
         }
         /// <summary>
         /// 设置传感器曲线数据
@@ -493,11 +491,10 @@ namespace YKUper
 
 
             }
-            if (temb)
+            if (!temb)
             {
-                lForm.RecodeInfo("传感器"+ num + "数据写入成功");
+                lForm.RecodeInfo("传感器" + num + "数据写入失败");
             }
-            else lForm.RecodeInfo("传感器" + num + "数据写入失败");
 
         }
         
@@ -593,7 +590,7 @@ namespace YKUper
 
         private void btSave_Click(object sender, EventArgs e)
         {
-            while (WRABLE) ;
+            //while (WRABLE) ;
             WRABLE = true;
             int addr = GPdata.Comaddr;
             WRABLE = false;
@@ -609,7 +606,7 @@ namespace YKUper
         {
             if ((int)MessageBox.Show("请确定恢复出厂设置", "提示", MessageBoxButtons.OKCancel) == 1)
             {
-                while (WRABLE) ;
+                //while (WRABLE) ;
                 WRABLE = true;
                 int addr = GPdata.Comaddr;
                 WRABLE = false;
