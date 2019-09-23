@@ -291,7 +291,7 @@ namespace YKUper
                 lForm.RecodeInfo("读取参数成功");
                 btWriteP.Enabled    = true;
                 btSave.Enabled      = true;
-                btReset.Enabled     = true;
+                btReset.Enabled = true;
             }
             else
             {

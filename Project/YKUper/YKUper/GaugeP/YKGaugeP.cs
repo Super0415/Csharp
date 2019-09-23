@@ -203,7 +203,7 @@ namespace Yungku.Common.GaugeP
         }
         private int modstate = 0;
         /// <summary>
-        /// 设置获取通讯地址
+        /// 设置获取通讯状态
         /// </summary>
         public int MODState
         {
@@ -347,6 +347,10 @@ namespace Yungku.Common.GaugeP
             Sdata[6] = crc08[0];
             Sdata[7] = crc08[1];
             Byte[] Rdata = GetIntegerValue(Sdata);
+            if ((Rdata[1] == cmd + 0x80) && (Rdata[2] == 0x02))
+            {
+                modstate = (int)MOD_STATE.MOD_ERR;
+            }
             return FUN_CREAT_16U(Rdata[3], Rdata[4]);
         }
         /// <summary>
@@ -374,6 +378,10 @@ namespace Yungku.Common.GaugeP
             Sdata[7] = crc08[1];
 
             Byte[] Rdata = GetIntegerValue(Sdata);
+            if ((Rdata[1] == cmd + 0x80)&&(Rdata[2] == 0x02))
+            {
+                modstate = (int)MOD_STATE.MOD_ERR;
+            }
             int[] DData = new int[leng];
             for (int i = 0; i < leng; i++)
             {
@@ -406,7 +414,11 @@ namespace Yungku.Common.GaugeP
             Sdata[9] = crc08[0];
             Sdata[10] = crc08[1];
             Byte[] Rdata = GetIntegerValue(Sdata);
-            if (Rdata[0] != 0) return true;
+            if ((Rdata[1] == cmd + 0x80) && (Rdata[2] == 0x02))
+            {
+                modstate = (int)MOD_STATE.MOD_ERR;
+            }
+            if (Rdata[0] == Sdata[0] && Rdata[1] == Sdata[1]) return true;
             return false;
         }
         /// <summary>
@@ -439,6 +451,10 @@ namespace Yungku.Common.GaugeP
             Sdata[7 + N * 2] = crc08[0];
             Sdata[8 + N * 2] = crc08[1];
             Byte[] Rdata = GetIntegerValue(Sdata);
+            if ((Rdata[1] == cmd + 0x80) && (Rdata[2] == 0x02))
+            {
+                modstate = (int)MOD_STATE.MOD_ERR;
+            }
             if (Rdata[0] != 0) return true;
             return false;
         }

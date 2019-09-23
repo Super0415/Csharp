@@ -225,16 +225,16 @@ namespace YKUper
             tbVolt8.Text = tempV[8].ToString();
             tbVolt9.Text = tempV[9].ToString();
 
-            tbPress0.Text = tempS[0].ToString();
-            tbPress1.Text = tempS[1].ToString();
-            tbPress2.Text = tempS[2].ToString();
-            tbPress3.Text = tempS[3].ToString();
-            tbPress4.Text = tempS[4].ToString();
-            tbPress5.Text = tempS[5].ToString();
-            tbPress6.Text = tempS[6].ToString();
-            tbPress7.Text = tempS[7].ToString();
-            tbPress8.Text = tempS[8].ToString();
-            tbPress9.Text = tempS[9].ToString();
+            tbPress0.Text = ((Int16)tempS[0]).ToString();
+            tbPress1.Text = ((Int16)tempS[1]).ToString();
+            tbPress2.Text = ((Int16)tempS[2]).ToString();
+            tbPress3.Text = ((Int16)tempS[3]).ToString();
+            tbPress4.Text = ((Int16)tempS[4]).ToString();
+            tbPress5.Text = ((Int16)tempS[5]).ToString();
+            tbPress6.Text = ((Int16)tempS[6]).ToString();
+            tbPress7.Text = ((Int16)tempS[7]).ToString();
+            tbPress8.Text = ((Int16)tempS[8]).ToString();
+            tbPress9.Text = ((Int16)tempS[9]).ToString();
         }
 
         private void btDWrite_Click(object sender, EventArgs e)

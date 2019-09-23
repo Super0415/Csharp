@@ -172,7 +172,7 @@
             this.tbVolt0.Name = "tbVolt0";
             this.tbVolt0.Size = new System.Drawing.Size(66, 21);
             this.tbVolt0.TabIndex = 8;
-            this.tbVolt0.TextChanged += new System.EventHandler(this.tbVolt0_TextChanged);
+            this.tbVolt0.Leave += new System.EventHandler(this.tbVolt0_TextChanged);
             // 
             // label5
             // 
@@ -198,7 +198,7 @@
             this.tbVolt1.Name = "tbVolt1";
             this.tbVolt1.Size = new System.Drawing.Size(66, 21);
             this.tbVolt1.TabIndex = 10;
-            this.tbVolt1.TextChanged += new System.EventHandler(this.tbVolt1_TextChanged);
+            this.tbVolt1.Leave += new System.EventHandler(this.tbVolt1_TextChanged);
             // 
             // label7
             // 
@@ -215,7 +215,7 @@
             this.tbVolt2.Name = "tbVolt2";
             this.tbVolt2.Size = new System.Drawing.Size(66, 21);
             this.tbVolt2.TabIndex = 12;
-            this.tbVolt2.TextChanged += new System.EventHandler(this.tbVolt2_TextChanged);
+            this.tbVolt2.Leave += new System.EventHandler(this.tbVolt2_TextChanged);
             // 
             // label8
             // 
@@ -232,7 +232,7 @@
             this.tbVolt3.Name = "tbVolt3";
             this.tbVolt3.Size = new System.Drawing.Size(66, 21);
             this.tbVolt3.TabIndex = 14;
-            this.tbVolt3.TextChanged += new System.EventHandler(this.tbVolt3_TextChanged);
+            this.tbVolt3.Leave += new System.EventHandler(this.tbVolt3_TextChanged);
             // 
             // label9
             // 
@@ -249,7 +249,7 @@
             this.tbVolt4.Name = "tbVolt4";
             this.tbVolt4.Size = new System.Drawing.Size(66, 21);
             this.tbVolt4.TabIndex = 16;
-            this.tbVolt4.TextChanged += new System.EventHandler(this.tbVolt4_TextChanged);
+            this.tbVolt4.Leave += new System.EventHandler(this.tbVolt4_TextChanged);
             // 
             // label10
             // 
@@ -266,7 +266,7 @@
             this.tbVolt5.Name = "tbVolt5";
             this.tbVolt5.Size = new System.Drawing.Size(66, 21);
             this.tbVolt5.TabIndex = 18;
-            this.tbVolt5.TextChanged += new System.EventHandler(this.tbVolt5_TextChanged);
+            this.tbVolt5.Leave += new System.EventHandler(this.tbVolt5_TextChanged);
             // 
             // label11
             // 
@@ -283,7 +283,7 @@
             this.tbVolt6.Name = "tbVolt6";
             this.tbVolt6.Size = new System.Drawing.Size(66, 21);
             this.tbVolt6.TabIndex = 20;
-            this.tbVolt6.TextChanged += new System.EventHandler(this.tbVolt6_TextChanged);
+            this.tbVolt6.Leave += new System.EventHandler(this.tbVolt6_TextChanged);
             // 
             // label12
             // 
@@ -300,7 +300,7 @@
             this.tbVolt7.Name = "tbVolt7";
             this.tbVolt7.Size = new System.Drawing.Size(66, 21);
             this.tbVolt7.TabIndex = 22;
-            this.tbVolt7.TextChanged += new System.EventHandler(this.tbVolt7_TextChanged);
+            this.tbVolt7.Leave += new System.EventHandler(this.tbVolt7_TextChanged);
             // 
             // label13
             // 
@@ -317,7 +317,7 @@
             this.tbVolt8.Name = "tbVolt8";
             this.tbVolt8.Size = new System.Drawing.Size(66, 21);
             this.tbVolt8.TabIndex = 24;
-            this.tbVolt8.TextChanged += new System.EventHandler(this.tbVolt8_TextChanged);
+            this.tbVolt8.Leave += new System.EventHandler(this.tbVolt8_TextChanged);
             // 
             // label14
             // 
@@ -334,7 +334,7 @@
             this.tbVolt9.Name = "tbVolt9";
             this.tbVolt9.Size = new System.Drawing.Size(66, 21);
             this.tbVolt9.TabIndex = 26;
-            this.tbVolt9.TextChanged += new System.EventHandler(this.tbVolt9_TextChanged);
+            this.tbVolt9.Leave += new System.EventHandler(this.tbVolt9_TextChanged);
             // 
             // label15
             // 
@@ -351,7 +351,7 @@
             this.tbPress9.Name = "tbPress9";
             this.tbPress9.Size = new System.Drawing.Size(66, 21);
             this.tbPress9.TabIndex = 46;
-            this.tbPress9.TextChanged += new System.EventHandler(this.tbPress9_TextChanged);
+            this.tbPress9.Leave += new System.EventHandler(this.tbPress9_TextChanged);
             // 
             // label16
             // 
@@ -368,7 +368,7 @@
             this.tbPress8.Name = "tbPress8";
             this.tbPress8.Size = new System.Drawing.Size(66, 21);
             this.tbPress8.TabIndex = 44;
-            this.tbPress8.TextChanged += new System.EventHandler(this.tbPress8_TextChanged);
+            this.tbPress8.Leave += new System.EventHandler(this.tbPress8_TextChanged);
             // 
             // label17
             // 
@@ -385,7 +385,7 @@
             this.tbPress7.Name = "tbPress7";
             this.tbPress7.Size = new System.Drawing.Size(66, 21);
             this.tbPress7.TabIndex = 42;
-            this.tbPress7.TextChanged += new System.EventHandler(this.tbPress7_TextChanged);
+            this.tbPress7.Leave += new System.EventHandler(this.tbPress7_TextChanged);
             // 
             // label18
             // 
@@ -402,7 +402,7 @@
             this.tbPress6.Name = "tbPress6";
             this.tbPress6.Size = new System.Drawing.Size(66, 21);
             this.tbPress6.TabIndex = 40;
-            this.tbPress6.TextChanged += new System.EventHandler(this.tbPress6_TextChanged);
+            this.tbPress6.Leave += new System.EventHandler(this.tbPress6_TextChanged);
             // 
             // label19
             // 
@@ -419,7 +419,7 @@
             this.tbPress5.Name = "tbPress5";
             this.tbPress5.Size = new System.Drawing.Size(66, 21);
             this.tbPress5.TabIndex = 38;
-            this.tbPress5.TextChanged += new System.EventHandler(this.tbPress5_TextChanged);
+            this.tbPress5.Leave += new System.EventHandler(this.tbPress5_TextChanged);
             // 
             // label20
             // 
@@ -436,7 +436,7 @@
             this.tbPress4.Name = "tbPress4";
             this.tbPress4.Size = new System.Drawing.Size(66, 21);
             this.tbPress4.TabIndex = 36;
-            this.tbPress4.TextChanged += new System.EventHandler(this.tbPress4_TextChanged);
+            this.tbPress4.Leave += new System.EventHandler(this.tbPress4_TextChanged);
             // 
             // label21
             // 
@@ -453,7 +453,7 @@
             this.tbPress3.Name = "tbPress3";
             this.tbPress3.Size = new System.Drawing.Size(66, 21);
             this.tbPress3.TabIndex = 34;
-            this.tbPress3.TextChanged += new System.EventHandler(this.tbPress3_TextChanged);
+            this.tbPress3.Leave += new System.EventHandler(this.tbPress3_TextChanged);
             // 
             // label22
             // 
@@ -470,7 +470,7 @@
             this.tbPress2.Name = "tbPress2";
             this.tbPress2.Size = new System.Drawing.Size(66, 21);
             this.tbPress2.TabIndex = 32;
-            this.tbPress2.TextChanged += new System.EventHandler(this.tbPress2_TextChanged);
+            this.tbPress2.Leave += new System.EventHandler(this.tbPress2_TextChanged);
             // 
             // label23
             // 
@@ -487,7 +487,7 @@
             this.tbPress1.Name = "tbPress1";
             this.tbPress1.Size = new System.Drawing.Size(66, 21);
             this.tbPress1.TabIndex = 30;
-            this.tbPress1.TextChanged += new System.EventHandler(this.tbPress1_TextChanged);
+            this.tbPress1.Leave += new System.EventHandler(this.tbPress1_TextChanged);
             // 
             // label24
             // 
@@ -504,7 +504,7 @@
             this.tbPress0.Name = "tbPress0";
             this.tbPress0.Size = new System.Drawing.Size(66, 21);
             this.tbPress0.TabIndex = 28;
-            this.tbPress0.TextChanged += new System.EventHandler(this.tbPress0_TextChanged);
+            this.tbPress0.Leave += new System.EventHandler(this.tbPress0_TextChanged);
             // 
             // button1
             // 

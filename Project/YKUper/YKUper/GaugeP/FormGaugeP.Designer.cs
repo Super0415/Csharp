@@ -532,7 +532,6 @@
             // 
             // btReset
             // 
-            this.btReset.Enabled = false;
             this.btReset.Location = new System.Drawing.Point(9, 107);
             this.btReset.Name = "btReset";
             this.btReset.Size = new System.Drawing.Size(75, 23);
