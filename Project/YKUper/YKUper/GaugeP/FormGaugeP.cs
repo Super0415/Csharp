@@ -194,7 +194,7 @@ namespace YKUper
             {
                 btWriteP.Enabled = false;
                 btSave.Enabled = false;
-                btReset.Enabled = false;
+                //btReset.Enabled = false;
                 tbAddr.ReadOnly = false;
             }
             //float[] Volt = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -291,7 +291,7 @@ namespace YKUper
                 lForm.RecodeInfo("读取参数成功");
                 btWriteP.Enabled    = true;
                 btSave.Enabled      = true;
-                btReset.Enabled = true;
+                //btReset.Enabled = true;
             }
             else
             {
