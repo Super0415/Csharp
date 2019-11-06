@@ -107,13 +107,6 @@ namespace AutoMessage
                             if (Rebuff.Equals(MainData[i].cmd))
                             {
                                 Stbuff = MainData[i].feedback;
-
-                                //string[] FB = Stbuff.Split(' ');
-                                // Byte[] StData = new Byte[FB.Length];
-                                //for (int j = 0; j < FB.Length; j++)
-                                //{
-                                //    StData[j] = Convert.ToByte(FB[j]);
-                                //}
                                 Byte[] StData = strToToHexByte(Stbuff);
 
                                 COM.Write(StData, 0, StData.Length);
