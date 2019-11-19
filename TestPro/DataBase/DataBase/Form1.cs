@@ -13,7 +13,7 @@ namespace DataBase
 {
     public partial class Form1 : Form
     {
-
+        Form2 form2 = null;
         ListData test1 = null;
         public Form1()
         {
@@ -25,10 +25,9 @@ namespace DataBase
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
-            form2.Owner = this;
-            test1.OnlySubformShow(form2);
-            Recode_Info("发送按钮尝试打开窗口2");
+            if (form2 == null) return;
+            Recode_Info("向窗口2发送：" + textBox1.Text);
+            form2.Show_From_Form1();
 
         }
 
@@ -39,6 +38,13 @@ namespace DataBase
         public void Recode_Info(string info)
         {
             tb_Info.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + "\r" + info + "\r\n");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            form2 = new Form2(this);
+            form2.Owner = this;
+            test1.OnlySubformShow(form2);
         }
     }
 }

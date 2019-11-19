@@ -42,10 +42,11 @@ namespace TestDataBase
         private List<Form> AllForms = new List<Form>();
 
         /// <summary>
-        /// 显示唯一的窗体
+        /// 点击显示唯一的窗体
         /// </summary>
         /// <param name="Form"></param>
-        public void OnlySubformShow(Form Form)
+        /// <returns>是否存在窗体</returns>
+        public bool OnlySubformShow(Form Form)
         {
             //判断窗体是否已经弹出，默认false
             bool hasform = false;
@@ -69,6 +70,7 @@ namespace TestDataBase
                 //并打开该窗体
                 Form.Show();
             }
+            return hasform;
         }
 
         /// <summary>
