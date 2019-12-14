@@ -51,7 +51,7 @@ namespace MonitorSerial
                 combox1.Items.Add(ports[i]);             //配置选项
                 combox1.SelectedIndex = i;               //配置索引序号
             }
-            combox1.SelectedItem = combox1.Items[2];      //默认为列表第1个变量
+            combox1.SelectedItem = combox1.Items[0];      //默认为列表第1个变量
 
             for (int i = 0; i < ports.Length; i++)
             {
@@ -366,6 +366,10 @@ namespace MonitorSerial
             timout = Convert.ToInt32(tbTimout.Text);
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
