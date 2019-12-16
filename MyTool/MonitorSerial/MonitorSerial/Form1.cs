@@ -194,6 +194,7 @@ namespace MonitorSerial
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                    btnConnect.Text = "未连接";
                 }
             }
         }

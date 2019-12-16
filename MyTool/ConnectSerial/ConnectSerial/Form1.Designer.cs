@@ -38,6 +38,9 @@
             this.cbbComU = new System.Windows.Forms.ComboBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.tbRecode = new System.Windows.Forms.TextBox();
+            this.cbHexView = new System.Windows.Forms.CheckBox();
+            this.cbPLCSum = new System.Windows.Forms.CheckBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbTimout
@@ -113,7 +116,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(538, 4);
+            this.btnConnect.Location = new System.Drawing.Point(513, 4);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(75, 23);
             this.btnConnect.TabIndex = 18;
@@ -130,11 +133,44 @@
             this.tbRecode.Size = new System.Drawing.Size(609, 374);
             this.tbRecode.TabIndex = 27;
             // 
+            // cbHexView
+            // 
+            this.cbHexView.AutoSize = true;
+            this.cbHexView.Location = new System.Drawing.Point(620, 51);
+            this.cbHexView.Name = "cbHexView";
+            this.cbHexView.Size = new System.Drawing.Size(72, 16);
+            this.cbHexView.TabIndex = 28;
+            this.cbHexView.Text = "十六进制";
+            this.cbHexView.UseVisualStyleBackColor = true;
+            // 
+            // cbPLCSum
+            // 
+            this.cbPLCSum.AutoSize = true;
+            this.cbPLCSum.Location = new System.Drawing.Point(619, 73);
+            this.cbPLCSum.Name = "cbPLCSum";
+            this.cbPLCSum.Size = new System.Drawing.Size(66, 16);
+            this.cbPLCSum.TabIndex = 29;
+            this.cbPLCSum.Text = "PLC校验";
+            this.cbPLCSum.UseVisualStyleBackColor = true;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(610, 4);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 30;
+            this.btnClear.Text = "清空";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(627, 415);
+            this.ClientSize = new System.Drawing.Size(724, 415);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.cbPLCSum);
+            this.Controls.Add(this.cbHexView);
             this.Controls.Add(this.tbRecode);
             this.Controls.Add(this.tbTimout);
             this.Controls.Add(this.lbTimout);
@@ -165,6 +201,9 @@
         private System.Windows.Forms.ComboBox cbbComU;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.TextBox tbRecode;
+        private System.Windows.Forms.CheckBox cbHexView;
+        private System.Windows.Forms.CheckBox cbPLCSum;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 
