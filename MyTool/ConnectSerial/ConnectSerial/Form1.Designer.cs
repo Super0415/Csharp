@@ -148,9 +148,9 @@
             this.cbPLCSum.AutoSize = true;
             this.cbPLCSum.Location = new System.Drawing.Point(619, 73);
             this.cbPLCSum.Name = "cbPLCSum";
-            this.cbPLCSum.Size = new System.Drawing.Size(66, 16);
+            this.cbPLCSum.Size = new System.Drawing.Size(78, 16);
             this.cbPLCSum.TabIndex = 29;
-            this.cbPLCSum.Text = "PLC校验";
+            this.cbPLCSum.Text = "PLC和校验";
             this.cbPLCSum.UseVisualStyleBackColor = true;
             // 
             // btnClear

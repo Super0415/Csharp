@@ -102,5 +102,22 @@ namespace _16进制与ASCII互换
                 tbHex.Text = tbbuffHex;
             }
         }
+
+        private void btnPLCSum_Click(object sender, EventArgs e)
+        {
+            char[] ASCII = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',};
+            string PLC_Info = tbPLC.Text.Trim();
+            string[] SinglePLC = PLC_Info.Split(' ');
+            int SumI = 0;
+            for (int i = 1; i < SinglePLC.Length; i++)
+            {
+                int num_Dec = Convert.ToInt32(SinglePLC[i], 16);
+                SumI += num_Dec;
+            }
+            int First = SumI % 16;
+            int Second = (SumI-First) / 16 % 16;
+
+            tbPLCSum.Text = Convert.ToString(Convert.ToInt32(ASCII[Second]), 16) + " " + Convert.ToString(Convert.ToInt32(ASCII[First]), 16);
+        }
     }
 }

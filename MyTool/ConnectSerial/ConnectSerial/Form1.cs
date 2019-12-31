@@ -34,8 +34,7 @@ namespace ConnectSerial
         /// </summary>
         bool Listening = false;
 
-        string UpToDownBuff = "";
-        string DownToUpBuff = "";
+        private object syncRoot = new object();
 
         public Form1()
         {
@@ -83,7 +82,11 @@ namespace ConnectSerial
         /// <param name="info"></param>
         public void RecodeInfo(string info)
         {
-            tbRecode.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff ") + " " + info + "\r\n");
+            lock (syncRoot)
+            {
+                tbRecode.AppendText(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff ") + " " + info + "\r\n");
+            }
+            
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -173,7 +176,7 @@ namespace ConnectSerial
         }
 
 
-        List<byte> list = new List<byte>();
+        List<byte> listU = new List<byte>();
         /// <summary>
         /// 接收完整的上层数据并发送到下层
         /// </summary>
@@ -181,6 +184,7 @@ namespace ConnectSerial
         /// <param name="e"></param>
         private void COMUDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            string UpToDownBuff = "";
             if (!COMU.IsOpen) return;
             if (!COMD.IsOpen) return;
             try
@@ -192,19 +196,19 @@ namespace ConnectSerial
                 COMU.Read(buf, 0, n);//读取缓冲数据
                 builderU.Clear();//清除字符串构造器的内容
 
-                list.AddRange(buf);
-                byte[] ListBuff = new byte[list.LongCount()];
-                list.CopyTo(ListBuff);
+                listU.AddRange(buf);
+                byte[] ListBuff = new byte[listU.LongCount()];
+                listU.CopyTo(ListBuff);
                 if (cbPLCSum.Checked)
                 {
-                    if (!CheckSumForPLCMD(ListBuff, 0, n))
+                    if (!CheckSumForPLCMD(ListBuff, 0, ListBuff.Length))
                     {
                         return;
                     }
-
-
                 }
 
+
+                COMD.Write(ListBuff, 0, ListBuff.Length);
                 //判断是否是显示为16进制
                 if (cbHexView.Checked)
                 {
@@ -219,14 +223,10 @@ namespace ConnectSerial
                     //直接按ASCII规则转换成字符串
                     builderU.Append(Encoding.ASCII.GetString(ListBuff));
                 }
-                ////追加的形式添加到文本框末端，并滚动到最后。
-                //this.txGet.AppendText(builderU.ToString());
-                ////修改接收计数
-                //labelGetCount.Text = "Get:" + received_count.ToString();
 
                 UpToDownBuff = builderU.ToString();
-                list.Clear();
-                RecodeInfo(UpToDownBuff);
+                listU.Clear();
+                RecodeInfo("向下发送:" + UpToDownBuff);
 
             }
             finally
@@ -234,6 +234,8 @@ namespace ConnectSerial
                 Listening = false;//我用完了，ui可以关闭串口了。
             }
         }
+
+        List<byte> listD = new List<byte>();
         /// <summary>
         /// 接收完整的下层数据并发送到上层
         /// </summary>
@@ -241,8 +243,55 @@ namespace ConnectSerial
         /// <param name="e"></param>
         private void COMDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            string DownToUpBuff = "";
             if (!COMU.IsOpen) return;
             if (!COMD.IsOpen) return;
+            try
+            {
+                Listening = true;//设置标记，说明我已经开始处理数据，一会儿要使用系统UI的。
+                int n = COMD.BytesToRead;//先记录下来，避免某种原因，人为的原因，操作几次之间时间长，缓存不一致
+                byte[] buf = new byte[n];//声明一个临时数组存储当前来的串口数据
+
+                COMD.Read(buf, 0, n);//读取缓冲数据
+                builderD.Clear();//清除字符串构造器的内容
+
+                listD.AddRange(buf);
+                byte[] ListBuff = new byte[listD.LongCount()];
+                listD.CopyTo(ListBuff);
+                if (cbPLCSum.Checked)
+                {
+                    if (!CheckSumForPLCMD(ListBuff, 0, ListBuff.Length))
+                    {
+                        return;
+                    }
+                }
+
+
+                COMU.Write(ListBuff, 0, ListBuff.Length);
+                //判断是否是显示为16进制
+                if (cbHexView.Checked)
+                {
+                    //依次的拼接出16进制字符串
+                    foreach (byte b in ListBuff)
+                    {
+                        builderD.Append(b.ToString("X2") + " ");
+                    }
+                }
+                else
+                {
+                    //直接按ASCII规则转换成字符串
+                    builderD.Append(Encoding.ASCII.GetString(ListBuff));
+                }
+
+                DownToUpBuff = builderD.ToString();
+                listD.Clear();
+                RecodeInfo("向上发送:" + DownToUpBuff);
+
+            }
+            finally
+            {
+                Listening = false;//我用完了，ui可以关闭串口了。
+            }
         }
 
 
@@ -283,9 +332,18 @@ namespace ConnectSerial
             return false;
         }
 
+        /// <summary>
+        /// 清空记录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClear_Click(object sender, EventArgs e)
         {
             tbRecode.Clear();
+            builderU.Clear();
+            builderD.Clear();
+            listU.Clear();
+            listD.Clear();
         }
     }
 }
