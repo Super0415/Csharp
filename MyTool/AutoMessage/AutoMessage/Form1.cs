@@ -104,7 +104,7 @@ namespace AutoMessage
                         Stbuff = "未指定此响应指令";
                         for (int i = 0;i < MainData.Length; i++)
                         {
-                            if (Rebuff.Equals(MainData[i].cmd))
+                            if (Rebuff.ToUpper().Equals(MainData[i].cmd.ToUpper()))
                             {
                                 Stbuff = MainData[i].feedback;
                                 Byte[] StData = strToToHexByte(Stbuff);

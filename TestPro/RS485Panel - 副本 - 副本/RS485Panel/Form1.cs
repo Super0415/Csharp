@@ -71,9 +71,9 @@ namespace RS485Panel
             /// </summary>
             public bool CommState;
             /// <summary>
-            /// 通讯状态计数
+            /// 通讯状态通知使能
             /// </summary>
-            public byte CommStateCount;
+            public byte CommStateEnable;
 
             /// <summary>
             /// 固定输入口状态
@@ -93,23 +93,10 @@ namespace RS485Panel
         };
 
         /// <summary>
-        /// 所以信息集Data
+        /// 当前Data的索引号
         /// </summary>
-        DataStruct[] Data = new DataStruct[0x100];
-        /// <summary>
-        /// 活动中的信息索引号
-        /// </summary>
-        int[] DataNum = new int[0x100];
-        /// <summary>
-        /// 活动中的信息总数
-        /// </summary>
-        int DataTotal = 0;
+        List<DataStruct> Data = new List<DataStruct>();
 
-
-        byte[] TESTCMDinfo = new byte[7];
-        int TESTCMDCode = 0xFFFF;
-        long TESTCMDSendNum = 0;
-        long TESTCMDReceNum = 0;
 
         #endregion
 
@@ -245,8 +232,6 @@ namespace RS485Panel
             cbbRate.SelectedIndex = 0;
             cbCheckMode.Checked = false;
             //tbAddr.Text = "0";
-
-            Control.CheckForIllegalCrossThreadCalls = false;
         }
 
         /// <summary>
@@ -258,49 +243,43 @@ namespace RS485Panel
         {
             try
             {
-                if (cbbCom.Text.Equals("刷新"))
-                {
-                    RecodeInfo("请选择串口！");
-                    return;
-                }
                 if (!ComState)
                 {
                     RecodeInfo("打开串口");
                     btnOpen.Text = "关闭";
 
+                    //Thread thread_Match = new Thread(thread_MatchLower);
+                    //thread_Match.Start();
+
                     thread_MatchLower();
+                   
+                    
 
                     if (Data.Count() != 0)
                     {
+                        if (cbCheck.Checked) RecodeInfo("匹配总线从机成功");
                         Com.Port = ComPort;
                         Com.BaudRate = ComRate;
                         Com.Timeout = 100;
                         Com.Open();         //打开串口
                         ComState = true;
 
+
                         thread = new Thread(thread_AutoDeal);
                         thread.Start();
                         timer1.Enabled = true;
                         panel1.Enabled = true;
 
-                        ComAddr = Data[DataNum[0]].ComAddr;
-                        tbAddr.Text = ComAddr.ToString();
-                        if (cbCheck.Checked)
-                        {
-                            RecodeInfo("匹配总线从机成功!");
-                            RecodeInfo("匹配总线地址：",false,false);
-                            for (int i = 0; i < DataTotal; i++)
-                            {
-                                RecodeInfo(DataNum[i].ToString() + " " ,false, false);
-                            }
-                            RecodeInfo("", false);  //换行
-                        }
+                        ComAddr = Data[0].ComAddr;
+                        tbAddr.Text = Data[0].ComAddr.ToString();
                     }
                     else
                     {
                         if (cbCheck.Checked) RecodeInfo("当前总线无挂载从机！关闭串口！");
                         btnOpen.Text = "打开";
                     }
+
+
                 }
                 else
                 {
@@ -319,78 +298,147 @@ namespace RS485Panel
                 btnOpen.Text = "打开";
                 MessageBox.Show(ex.Message);
             }
+
         }
+
+        /// <summary>
+        /// 检测当前地址通讯状态
+        /// </summary>
+        //private void CheckNowAddr()
+        //{
+        //    int index = Data.FindIndex(a => a.ComAddr == ComAddr);
+        //    DataStruct model = Data.Where(c => c.ComAddr == ComAddr).FirstOrDefault();
+
+        //    if ( !Com.Radio_FindAddr(model.ComAddr))
+        //    {
+        //        //model.CommState = false;
+        //        Data[index] = model;
+        //        RecodeInfo("当前从机：" + model.ComAddr.ToString() + "掉线！");
+        //    }
+
+        //}
 
         /// <summary>
         /// 获取总线上从机地址
         /// </summary>
         private void thread_MatchLower()
         {
-            //初始化
-            DataTotal = 0;
-            for (int i = 0; i < 0x100; i++)
-                DataNum[i] = 0x100;
+            Com.Port = ComPort;
+            Com.BaudRate = ComRate;
+            Com.Timeout = 30;
+            Com.Open();         //打开串口
+
+            if (cbCheck.Checked) RecodeInfo("匹配总线从机中，预计5s，请稍等...");
+
+            DataStruct Temp = new DataStruct();
+            for (int i = 0; i <= 0xFF; i++)
+            {
 
 
-            if (!cbCheck.Checked)   //不查总线
-            {
-                for (int i = 0; i < 0x100; i++)
+                Temp.ComAddr = i;
+
+                if (!cbCheck.Checked)       //不查总线
                 {
-                    DataNum[DataTotal] = i;
-                    Data[DataNum[DataTotal]].ComAddr = i;
-                    Data[DataNum[DataTotal]].CommState = true;
-                    DataTotal++;
-                }
-            }
-            else      //查总线
-            {
-                try
-                {
-                    Com.Port = ComPort;
-                    Com.BaudRate = ComRate;
-                    Com.Timeout = 30;
-                    Com.Open();         //打开串口
-                    if (cbCheck.Checked) RecodeInfo("匹配总线从机中，预计5s，请稍等...");
-                    for (int i = 0; i <= 0xFF; i++)
+                    //if (Com.Radio_FindAddr(i))
+                    //{
+                    //    Temp.CommState = true;
+                    //}
+                    if (!Data.Exists(e => e.ComAddr == i))  //原集合中没有此元素
                     {
-
-                        if (Com.Radio_FindAddr(i))
+                        Data.Add(Temp);
+                    }
+                    //else
+                    //{
+                    //    Data[Data.FindIndex(a => a.ComAddr == i)] = Temp;
+                    //}
+                    
+                }
+                else                    //查总线
+                {
+                    if (Com.Radio_FindAddr(i))
+                    {
+                        Temp.CommState = true;
+                        if (Data.Exists(e => e.ComAddr == i))
                         {
-                            DataNum[DataTotal] = i;
-                            Data[DataNum[DataTotal]].ComAddr = i;
-                            Data[DataNum[DataTotal]].CommState = true;
-                            DataTotal++;
+                            Data[Data.FindIndex(a => a.ComAddr == i)] = Temp;
                         }
                         else
                         {
-                            for (int j = 0; j < DataNum.Length; j++)
-                            {
-                                if (DataTotal != 0 && DataNum[j] == i)
-                                {
-                                    for (int k = j; k < DataNum.Length; k++)
-                                    {
-                                        DataNum[k] = DataNum[k + 1];
-                                    }
-                                    DataTotal--;
-                                }
-                            }
-                        }
-                        if (cbCheck.Checked)
-                        {
-                            if (i == 30) RecodeInfo("匹配总线从机中，预计4s，请稍等...");
-                            else if (i == 60) RecodeInfo("匹配总线从机中，预计3s，请稍等...");
-                            else if (i == 90) RecodeInfo("匹配总线从机中，预计2s，请稍等...");
-                            else if (i == 120) RecodeInfo("匹配总线从机中，预计1s，请稍等...");
-                        }
+                            Data.Add(Temp);
+                        } 
+                        
                     }
-                    Array.Sort(DataNum); //从小到大排序。
-                    Com.Close();         //关闭串口
+                    else
+                    {
+                        Data.RemoveAll(a => a.ComAddr == i);
+                    }
+                    
                 }
-                catch (Exception)
+
+
+
+
+
+
+
+
+                //if (!cbCheck.Checked || Com.Radio_FindAddr(i))
+                //{
+                //    Temp.CommState = true;
+                //    if (Data.Exists(e => e.ComAddr == i))
+                //    {
+                //        Data[Data.FindIndex(a => a.ComAddr == i)] = Temp;
+                //    }
+                //    else Data.Add(Temp);
+                //}
+                //else
+                //{
+                //    if (Data.Exists(e => e.ComAddr == i))
+                //    {
+                //        Data.RemoveAll(a => a.ComAddr == i);
+                //    }
+                //}
+
+
+
+
+                Data.Sort((left, right) =>
+
                 {
-                    RecodeInfo("总线匹配失败！");
+
+                    if (left.ComAddr > right.ComAddr)
+
+                        return 1;
+
+                    else if (left.ComAddr == right.ComAddr)
+
+                        return 0;
+
+                    else
+
+                        return -1;
+
+                });
+                if (cbCheck.Checked)
+                {
+                    if (i == 30) RecodeInfo("匹配总线从机中，预计4s，请稍等...");
+                    else if (i == 60) RecodeInfo("匹配总线从机中，预计3s，请稍等...");
+                    else if (i == 90) RecodeInfo("匹配总线从机中，预计2s，请稍等...");
+                    else if (i == 120) RecodeInfo("匹配总线从机中，预计1s，请稍等...");
                 }
+                
             }
+            if (cbCheck.Checked)
+            {
+                RecodeInfo("匹配从机数量：" + Data.Count.ToString());
+                RecodeInfo("地址：", false, false);
+                foreach (DataStruct d in Data)
+                {
+                    RecodeInfo(d.ComAddr.ToString() + " ", false, false);
+                }
+                RecodeInfo("", false);
+            }
+            Com.Close();         //关闭串口
         }
 
         /// <summary>
@@ -405,13 +453,14 @@ namespace RS485Panel
                 
                 if (TestCMDModel)
                 {
-                    if (TESTCMDCode == 0xFFFF) Com.SetCheckNum(TESTCMDSendNum);
                     if (TESTCMDSendNum == 0)
                     {
                         TESTCMDCode = Com.Test_SendCMD(TESTCMDinfo);
                     }
                     else
                     {
+                        if(TESTCMDCode == 0xFFFF) Com.SetCheckNum(TESTCMDSendNum);
+
                         long[] info = Com.GetCheckInfo();
                         TESTCMDReceNum = info[1];
                         if (TESTCMDReceNum < TESTCMDSendNum)
@@ -419,64 +468,85 @@ namespace RS485Panel
                             TESTCMDCode = Com.Test_SendCMD(TESTCMDinfo);
                         }
                     }              
+
                 }
-
-                if (cbCheckSlave.Checked == true)
-                {
-                    int index = Array.IndexOf(DataNum, ComAddr);
-                    if (index != (-1))
+                if(cbCheckSlave.Checked == true)
+                { 
+                    if (Data.Exists(c => c.ComAddr == ComAddr))
                     {
-                        int indexD = DataNum[index];    //通讯地址
+                        int index = Data.FindIndex(a => a.ComAddr == ComAddr);
+                        //DataStruct model = Data.Where(c => c.ComAddr == ComAddr).FirstOrDefault();
+                        DataStruct model = Data.Where(c => c.ComAddr == ComAddr).FirstOrDefault();           
+                        //DataStruct model = Data[index];
 
-                        Rmsg = Com.Query_AllFixdInput(indexD, 0xFF);    //查固定输入
+                        Rmsg = Com.Query_AllFixdInput(ComAddr, 0xFF);    //查固定输入
                         if (Rmsg != null && Rmsg[5] == 0)
                         {
-                            Data[indexD].State_FixedInput = Rmsg[4];
-                            Data[indexD].CommState = true;
-                            if (Data[indexD].CommStateCount != 0)
-                            {
-                                Data[indexD].CommStateCount = 0;
-                                RecodeInfo("从机：" + Data[indexD].ComAddr.ToString() + "上线！");
-                            }
+                            model.State_FixedInput = Rmsg[4];
+                            model.CommStateEnable = 0x00;
+                            model.CommState = true;
+                            Data[index] = model;
                         }
                         else
                         {
-                            if (Rmsg == null && Data[indexD].CommState == true)
-                            {
-                                if (Data[indexD].CommStateCount < 0x03)
-                                {
-                                    Data[indexD].CommStateCount++;
-                                }
-                                else
-                                {
-                                    Data[indexD].CommState = false;
-                                }
-                            }
+                            //if(model.CommState!=false)
+                                model.CommStateEnable |= 0x1 << 0;
+                            model.CommState = false;
+                            Data[index] = model;
                         }
 
-                        Rmsg = Com.Query_AllFixdOutput(indexD, 0xFF);   //查固定输出???
+                        Rmsg = Com.Query_AllFixdOutput(ComAddr, 0xFF);   //查固定输出???
                         if (Rmsg != null && Rmsg[5] == 0)
                         {
-                            Data[indexD].State_FixedOutput = Rmsg[4];
-                            Data[indexD].CommState = true;
-                           
+                            model.State_FixedOutput = Rmsg[4];
+                            model.CommStateEnable = 0x00;
+                            Data[index] = model;
+                        }
+                        else
+                        {
+                            //if (model.CommState != false)
+                                model.CommStateEnable |= 0x1 << 1;
+                            model.CommState = false;
+                            Data[index] = model;
                         }
 
-                        Rmsg = Com.Query_TypeIO(indexD, 0xFF);         //查可调类型
+                        Rmsg = Com.Query_TypeIO(ComAddr, 0xFF);         //查可调类型
                         if (Rmsg != null && Rmsg[5] == 0)
                         {
-                            Data[indexD].Type_IO = Rmsg[4];
-                            Data[indexD].CommState = true;
+                            model.Type_IO = Rmsg[4];
+                            model.CommStateEnable = 0x00;
+                            Data[index] = model;
+                        }
+                        else
+                        {
+                            //if (model.CommState != false)
+                                model.CommStateEnable |= 0x1 << 2;
+                            model.CommState = false;
+                            Data[index] = model;
                         }
 
-                        Rmsg = Com.Query_TypeIO_State(indexD, 0xFF);   //查可调输入输出状态
+                        Rmsg = Com.Query_TypeIO_State(ComAddr, 0xFF);   //查可调输入输出状态
                         if (Rmsg != null && Rmsg[5] == 0)
                         {
-                            Data[indexD].Type_IOState = Rmsg[4];
-                            Data[indexD].CommState = true;
+                            model.Type_IOState = Rmsg[4];
+                            model.CommStateEnable = 0x00;
+                            Data[index] = model;
                         }
-                    }    
+                        else
+                        {
+                            //if (model.CommState != false)
+                                model.CommStateEnable |= 0x1 << 3;
+                            model.CommState = false;
+                            Data[index] = model;
+                        }
+
+
+                    }
+
+
+                    
                 }
+
                 Thread.Sleep(30);
             }
         }
@@ -492,6 +562,8 @@ namespace RS485Panel
         }
 
 
+        int index;
+        DataStruct model;
         /// <summary>
         /// 刷新显示数据
         /// </summary>
@@ -499,56 +571,102 @@ namespace RS485Panel
         /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
+            #region  删除
+            //lbLedFixedX0.BackColor = (State_FixedInput & 1 << 0) == 0 ? MyGray : Color.Green;
+            //lbLedFixedX1.BackColor = (State_FixedInput & 1 << 1) == 0 ? MyGray : Color.Green;
+            //lbLedFixedX2.BackColor = (State_FixedInput & 1 << 2) == 0 ? MyGray : Color.Green;
+            //lbLedFixedX3.BackColor = (State_FixedInput & 1 << 3) == 0 ? MyGray : Color.Green;
+            //lbLedFixedX4.BackColor = (State_FixedInput & 1 << 4) == 0 ? MyGray : Color.Green;
+            //lbLedFixedX5.BackColor = (State_FixedInput & 1 << 5) == 0 ? MyGray : Color.Green;
+            //lbLedFixedX6.BackColor = (State_FixedInput & 1 << 6) == 0 ? MyGray : Color.Green;
+            //lbLedFixedX7.BackColor = (State_FixedInput & 1 << 7) == 0 ? MyGray : Color.Green;
 
-            if (Data[ComAddr].CommState)
+            //lbLedFixedY0.BackColor = (State_FixedOutput & 1 << 0) == 0 ? MyGray : Color.Green;
+            //lbLedFixedY1.BackColor = (State_FixedOutput & 1 << 1) == 0 ? MyGray : Color.Green;
+            //lbLedFixedY2.BackColor = (State_FixedOutput & 1 << 2) == 0 ? MyGray : Color.Green;
+            //lbLedFixedY3.BackColor = (State_FixedOutput & 1 << 3) == 0 ? MyGray : Color.Green;
+            //lbLedFixedY4.BackColor = (State_FixedOutput & 1 << 4) == 0 ? MyGray : Color.Green;
+            //lbLedFixedY5.BackColor = (State_FixedOutput & 1 << 5) == 0 ? MyGray : Color.Green;
+            //lbLedFixedY6.BackColor = (State_FixedOutput & 1 << 6) == 0 ? MyGray : Color.Green;
+            //lbLedFixedY7.BackColor = (State_FixedOutput & 1 << 7) == 0 ? MyGray : Color.Green;
+
+            //btnTypeSet0.Text = (Type_IO & 1 << 0) == 0 ? "X0" : "Y0";
+            //btnTypeSet1.Text = (Type_IO & 1 << 1) == 0 ? "X1" : "Y1";
+            //btnTypeSet2.Text = (Type_IO & 1 << 2) == 0 ? "X2" : "Y2";
+            //btnTypeSet3.Text = (Type_IO & 1 << 3) == 0 ? "X3" : "Y3";
+            //btnTypeSet4.Text = (Type_IO & 1 << 4) == 0 ? "X4" : "Y4";
+            //btnTypeSet5.Text = (Type_IO & 1 << 5) == 0 ? "X5" : "Y5";
+            //btnTypeSet6.Text = (Type_IO & 1 << 6) == 0 ? "X6" : "Y6";
+            //btnTypeSet7.Text = (Type_IO & 1 << 7) == 0 ? "X7" : "Y7";
+
+            //lbTypeSet0.BackColor = (Type_IOState >> 0 & 0x01) == 0 ? Color.Green : MyGray;
+            //lbTypeSet1.BackColor = (Type_IOState >> 1 & 0x01) == 0 ? Color.Green : MyGray;
+            //lbTypeSet2.BackColor = (Type_IOState >> 2 & 0x01) == 0 ? Color.Green : MyGray;
+            //lbTypeSet3.BackColor = (Type_IOState >> 3 & 0x01) == 0 ? Color.Green : MyGray;
+            //lbTypeSet4.BackColor = (Type_IOState >> 4 & 0x01) == 0 ? Color.Green : MyGray;
+            //lbTypeSet5.BackColor = (Type_IOState >> 5 & 0x01) == 0 ? Color.Green : MyGray;
+            //lbTypeSet6.BackColor = (Type_IOState >> 6 & 0x01) == 0 ? Color.Green : MyGray;
+            //lbTypeSet7.BackColor = (Type_IOState >> 7 & 0x01) == 0 ? Color.Green : MyGray;
+            #endregion
+
+            index = Data.FindIndex(a => a.ComAddr == ComAddr);
+            //DataStruct model = Data.Where(c => c.ComAddr == ComAddr).FirstOrDefault();           
+            model = Data[index];
+
+            if (model.CommState)
             {
                 #region 通讯显示
-                lbLedFixedX0.BackColor = (Data[ComAddr].State_FixedInput & 1 << 0) == 0 ? MyGray : Color.Green;
-                lbLedFixedX1.BackColor = (Data[ComAddr].State_FixedInput & 1 << 1) == 0 ? MyGray : Color.Green;
-                lbLedFixedX2.BackColor = (Data[ComAddr].State_FixedInput & 1 << 2) == 0 ? MyGray : Color.Green;
-                lbLedFixedX3.BackColor = (Data[ComAddr].State_FixedInput & 1 << 3) == 0 ? MyGray : Color.Green;
-                lbLedFixedX4.BackColor = (Data[ComAddr].State_FixedInput & 1 << 4) == 0 ? MyGray : Color.Green;
-                lbLedFixedX5.BackColor = (Data[ComAddr].State_FixedInput & 1 << 5) == 0 ? MyGray : Color.Green;
-                lbLedFixedX6.BackColor = (Data[ComAddr].State_FixedInput & 1 << 6) == 0 ? MyGray : Color.Green;
-                lbLedFixedX7.BackColor = (Data[ComAddr].State_FixedInput & 1 << 7) == 0 ? MyGray : Color.Green;
+                lbLedFixedX0.BackColor = (model.State_FixedInput & 1 << 0) == 0 ? MyGray : Color.Green;
+                lbLedFixedX1.BackColor = (model.State_FixedInput & 1 << 1) == 0 ? MyGray : Color.Green;
+                lbLedFixedX2.BackColor = (model.State_FixedInput & 1 << 2) == 0 ? MyGray : Color.Green;
+                lbLedFixedX3.BackColor = (model.State_FixedInput & 1 << 3) == 0 ? MyGray : Color.Green;
+                lbLedFixedX4.BackColor = (model.State_FixedInput & 1 << 4) == 0 ? MyGray : Color.Green;
+                lbLedFixedX5.BackColor = (model.State_FixedInput & 1 << 5) == 0 ? MyGray : Color.Green;
+                lbLedFixedX6.BackColor = (model.State_FixedInput & 1 << 6) == 0 ? MyGray : Color.Green;
+                lbLedFixedX7.BackColor = (model.State_FixedInput & 1 << 7) == 0 ? MyGray : Color.Green;
 
-                lbLedFixedY0.BackColor = (Data[ComAddr].State_FixedOutput & 1 << 0) == 0 ? MyGray : Color.Green;
-                lbLedFixedY1.BackColor = (Data[ComAddr].State_FixedOutput & 1 << 1) == 0 ? MyGray : Color.Green;
-                lbLedFixedY2.BackColor = (Data[ComAddr].State_FixedOutput & 1 << 2) == 0 ? MyGray : Color.Green;
-                lbLedFixedY3.BackColor = (Data[ComAddr].State_FixedOutput & 1 << 3) == 0 ? MyGray : Color.Green;
-                lbLedFixedY4.BackColor = (Data[ComAddr].State_FixedOutput & 1 << 4) == 0 ? MyGray : Color.Green;
-                lbLedFixedY5.BackColor = (Data[ComAddr].State_FixedOutput & 1 << 5) == 0 ? MyGray : Color.Green;
-                lbLedFixedY6.BackColor = (Data[ComAddr].State_FixedOutput & 1 << 6) == 0 ? MyGray : Color.Green;
-                lbLedFixedY7.BackColor = (Data[ComAddr].State_FixedOutput & 1 << 7) == 0 ? MyGray : Color.Green;
+                lbLedFixedY0.BackColor = (model.State_FixedOutput & 1 << 0) == 0 ? MyGray : Color.Green;
+                lbLedFixedY1.BackColor = (model.State_FixedOutput & 1 << 1) == 0 ? MyGray : Color.Green;
+                lbLedFixedY2.BackColor = (model.State_FixedOutput & 1 << 2) == 0 ? MyGray : Color.Green;
+                lbLedFixedY3.BackColor = (model.State_FixedOutput & 1 << 3) == 0 ? MyGray : Color.Green;
+                lbLedFixedY4.BackColor = (model.State_FixedOutput & 1 << 4) == 0 ? MyGray : Color.Green;
+                lbLedFixedY5.BackColor = (model.State_FixedOutput & 1 << 5) == 0 ? MyGray : Color.Green;
+                lbLedFixedY6.BackColor = (model.State_FixedOutput & 1 << 6) == 0 ? MyGray : Color.Green;
+                lbLedFixedY7.BackColor = (model.State_FixedOutput & 1 << 7) == 0 ? MyGray : Color.Green;
 
-                btnTypeSet0.Text = (Data[ComAddr].Type_IO & 1 << 0) == 0 ? "X0" : "Y0";
-                btnTypeSet1.Text = (Data[ComAddr].Type_IO & 1 << 1) == 0 ? "X1" : "Y1";
-                btnTypeSet2.Text = (Data[ComAddr].Type_IO & 1 << 2) == 0 ? "X2" : "Y2";
-                btnTypeSet3.Text = (Data[ComAddr].Type_IO & 1 << 3) == 0 ? "X3" : "Y3";
-                btnTypeSet4.Text = (Data[ComAddr].Type_IO & 1 << 4) == 0 ? "X4" : "Y4";
-                btnTypeSet5.Text = (Data[ComAddr].Type_IO & 1 << 5) == 0 ? "X5" : "Y5";
-                btnTypeSet6.Text = (Data[ComAddr].Type_IO & 1 << 6) == 0 ? "X6" : "Y6";
-                btnTypeSet7.Text = (Data[ComAddr].Type_IO & 1 << 7) == 0 ? "X7" : "Y7";
+                btnTypeSet0.Text = (model.Type_IO & 1 << 0) == 0 ? "X0" : "Y0";
+                btnTypeSet1.Text = (model.Type_IO & 1 << 1) == 0 ? "X1" : "Y1";
+                btnTypeSet2.Text = (model.Type_IO & 1 << 2) == 0 ? "X2" : "Y2";
+                btnTypeSet3.Text = (model.Type_IO & 1 << 3) == 0 ? "X3" : "Y3";
+                btnTypeSet4.Text = (model.Type_IO & 1 << 4) == 0 ? "X4" : "Y4";
+                btnTypeSet5.Text = (model.Type_IO & 1 << 5) == 0 ? "X5" : "Y5";
+                btnTypeSet6.Text = (model.Type_IO & 1 << 6) == 0 ? "X6" : "Y6";
+                btnTypeSet7.Text = (model.Type_IO & 1 << 7) == 0 ? "X7" : "Y7";
 
-                lbTypeSet0.BackColor = (Data[ComAddr].Type_IOState >> 0 & 0x01) == 0 ? Color.Green : MyGray;
-                lbTypeSet1.BackColor = (Data[ComAddr].Type_IOState >> 1 & 0x01) == 0 ? Color.Green : MyGray;
-                lbTypeSet2.BackColor = (Data[ComAddr].Type_IOState >> 2 & 0x01) == 0 ? Color.Green : MyGray;
-                lbTypeSet3.BackColor = (Data[ComAddr].Type_IOState >> 3 & 0x01) == 0 ? Color.Green : MyGray;
-                lbTypeSet4.BackColor = (Data[ComAddr].Type_IOState >> 4 & 0x01) == 0 ? Color.Green : MyGray;
-                lbTypeSet5.BackColor = (Data[ComAddr].Type_IOState >> 5 & 0x01) == 0 ? Color.Green : MyGray;
-                lbTypeSet6.BackColor = (Data[ComAddr].Type_IOState >> 6 & 0x01) == 0 ? Color.Green : MyGray;
-                lbTypeSet7.BackColor = (Data[ComAddr].Type_IOState >> 7 & 0x01) == 0 ? Color.Green : MyGray;
+                lbTypeSet0.BackColor = (model.Type_IOState >> 0 & 0x01) == 0 ? Color.Green : MyGray;
+                lbTypeSet1.BackColor = (model.Type_IOState >> 1 & 0x01) == 0 ? Color.Green : MyGray;
+                lbTypeSet2.BackColor = (model.Type_IOState >> 2 & 0x01) == 0 ? Color.Green : MyGray;
+                lbTypeSet3.BackColor = (model.Type_IOState >> 3 & 0x01) == 0 ? Color.Green : MyGray;
+                lbTypeSet4.BackColor = (model.Type_IOState >> 4 & 0x01) == 0 ? Color.Green : MyGray;
+                lbTypeSet5.BackColor = (model.Type_IOState >> 5 & 0x01) == 0 ? Color.Green : MyGray;
+                lbTypeSet6.BackColor = (model.Type_IOState >> 6 & 0x01) == 0 ? Color.Green : MyGray;
+                lbTypeSet7.BackColor = (model.Type_IOState >> 7 & 0x01) == 0 ? Color.Green : MyGray;
+
+
+
                 #endregion
             }
             else
             {
-                #region   当前从机掉线
-                if (Data[ComAddr].CommState == false && Data[ComAddr].CommStateCount != 0x00)
+                if ((model.CommStateEnable & 0x1F) == 0xF)
+                //if (model.CommState == false && model.CommStateEnable == 0)
                 {
-                    Data[ComAddr].CommStateCount = 0;
-                    RecodeInfo("当前从机：" + Data[ComAddr].ComAddr.ToString() + "掉线！");
+                    model.CommStateEnable |= 0x10;
+                    Data.RemoveAt(index);
+                    Data.Insert(index, model);
+                    //Data[index] = model;
+                    RecodeInfo("当前从机：" + model.ComAddr.ToString() + "掉线！");
                 }
-                #endregion
                 #region 默认灯光效果
                 lbLedFixedX0.BackColor = MyGray;
                 lbLedFixedX1.BackColor = MyGray;
@@ -618,7 +736,9 @@ namespace RS485Panel
                     if (info[1] != 0) lbCMDSTime.Text = ((double)((double)info[0] / (double)info[1])).ToString("0.00");
                     lbCMDErrNum.Text = info[2].ToString();
                 }
+
             }
+
             #endregion
 
         }
@@ -672,22 +792,14 @@ namespace RS485Panel
         /// <param name="e"></param>
         private void btnAddrSub_Click(object sender, EventArgs e)
         {
+            int index = Data.FindIndex(a => a.ComAddr == ComAddr);
 
-            //int index = Array.IndexOf(DataNum, ComAddr);
-            //if (index != (-1))
-            //{
-            //    int indexD = DataNum[index];
-
-
-                //int index = Data.FindIndex(a => a.ComAddr == ComAddr);
-            int index = Array.IndexOf(DataNum, ComAddr);
-
-            int max = DataTotal-1;
+            int max = Data.Count()-1;
 
             if (index > 0) index--;
             else index = max;
 
-            tbAddr.Text = DataNum[index].ToString();
+            tbAddr.Text = Data[index].ComAddr.ToString();
             //CheckNowAddr();
         }
 
@@ -698,14 +810,13 @@ namespace RS485Panel
         /// <param name="e"></param>
         private void btnAddrAdd_Click(object sender, EventArgs e)
         {
-            //int index = Data.FindIndex(a => a.ComAddr == ComAddr);
-            int index = Array.IndexOf(DataNum, ComAddr);
-            int max = DataTotal-1;
+            int index = Data.FindIndex(a => a.ComAddr == ComAddr);
+            int max = Data.Count()-1;
 
             if (index < max) index++;
             else index = 0;
 
-            tbAddr.Text = DataNum[index].ToString();
+            tbAddr.Text = Data[index].ComAddr.ToString();
             //CheckNowAddr();
         }
 
@@ -754,7 +865,10 @@ namespace RS485Panel
         /// <summary>
         /// 测试报文
         /// </summary>
-
+        byte[] TESTCMDinfo = new byte[7];
+        int TESTCMDCode = 0xFFFF;
+        long TESTCMDSendNum = 0;
+        long TESTCMDReceNum = 0;
         /// <summary>
         /// 报文测试
         /// </summary>
@@ -819,66 +933,6 @@ namespace RS485Panel
                 groupBox6.Enabled = false;
                 this.Size = new Size(498, 552);
             }
-        }
-
-        private void cbbRate_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                ComRate = Convert.ToInt32(cbbRate.Text);
-            }
-            catch
-            {
-                cbbRate.Text = ComRate.ToString();
-            }
-
-        }
-
-        
-        /// <summary>
-        /// 面板数据变化
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void panel1_EnabledChanged(object sender, EventArgs e)
-        {
-            #region 默认灯光效果
-            lbLedFixedX0.BackColor = MyGray;
-            lbLedFixedX1.BackColor = MyGray;
-            lbLedFixedX2.BackColor = MyGray;
-            lbLedFixedX3.BackColor = MyGray;
-            lbLedFixedX4.BackColor = MyGray;
-            lbLedFixedX5.BackColor = MyGray;
-            lbLedFixedX6.BackColor = MyGray;
-            lbLedFixedX7.BackColor = MyGray;
-
-            lbLedFixedY0.BackColor = MyGray;
-            lbLedFixedY1.BackColor = MyGray;
-            lbLedFixedY2.BackColor = MyGray;
-            lbLedFixedY3.BackColor = MyGray;
-            lbLedFixedY4.BackColor = MyGray;
-            lbLedFixedY5.BackColor = MyGray;
-            lbLedFixedY6.BackColor = MyGray;
-            lbLedFixedY7.BackColor = MyGray;
-
-            btnTypeSet0.Text = "X0";
-            btnTypeSet1.Text = "X1";
-            btnTypeSet2.Text = "X2";
-            btnTypeSet3.Text = "X3";
-            btnTypeSet4.Text = "X4";
-            btnTypeSet5.Text = "X5";
-            btnTypeSet6.Text = "X6";
-            btnTypeSet7.Text = "X7";
-
-            lbTypeSet0.BackColor = MyGray;
-            lbTypeSet1.BackColor = MyGray;
-            lbTypeSet2.BackColor = MyGray;
-            lbTypeSet3.BackColor = MyGray;
-            lbTypeSet4.BackColor = MyGray;
-            lbTypeSet5.BackColor = MyGray;
-            lbTypeSet6.BackColor = MyGray;
-            lbTypeSet7.BackColor = MyGray;
-            #endregion
         }
     }
 }

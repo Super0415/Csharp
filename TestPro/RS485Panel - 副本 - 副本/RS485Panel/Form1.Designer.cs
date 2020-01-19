@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbLedFixedX7 = new System.Windows.Forms.Label();
             this.lbFixedX7 = new System.Windows.Forms.Label();
@@ -98,34 +97,34 @@
             this.btnAddrAdd = new System.Windows.Forms.Button();
             this.tbAddr = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.cbCheckSlave = new System.Windows.Forms.CheckBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.测试指令 = new System.Windows.Forms.Label();
-            this.lbCMDErrNum = new System.Windows.Forms.Label();
-            this.tbCMDInfo = new System.Windows.Forms.TextBox();
-            this.btnCMD = new System.Windows.Forms.Button();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tbCMDNum = new System.Windows.Forms.TextBox();
-            this.lbCMDSTime = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.lbCMDTTime = new System.Windows.Forms.Label();
-            this.lbCMDSum = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.性能测试 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnTest1 = new System.Windows.Forms.Button();
-            this.tbTestNum = new System.Windows.Forms.TextBox();
-            this.lbTestTTime = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.lbTestNum = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.lbTestSTime = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.lbErrnum = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lbTestSTime = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lbTestNum = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lbTestTTime = new System.Windows.Forms.Label();
+            this.tbTestNum = new System.Windows.Forms.TextBox();
+            this.btnTest1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.性能测试 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.lbCMDSum = new System.Windows.Forms.Label();
+            this.lbCMDTTime = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lbCMDSTime = new System.Windows.Forms.Label();
+            this.tbCMDNum = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.btnCMD = new System.Windows.Forms.Button();
+            this.tbCMDInfo = new System.Windows.Forms.TextBox();
+            this.lbCMDErrNum = new System.Windows.Forms.Label();
+            this.测试指令 = new System.Windows.Forms.Label();
+            this.cbCheckSlave = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -133,8 +132,8 @@
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -400,7 +399,6 @@
             this.cbbRate.Size = new System.Drawing.Size(66, 20);
             this.cbbRate.TabIndex = 3;
             this.cbbRate.SelectionChangeCommitted += new System.EventHandler(this.cbbRate_SelectionChangeCommitted);
-            this.cbbRate.TextChanged += new System.EventHandler(this.cbbRate_TextChanged);
             // 
             // lbRate
             // 
@@ -890,7 +888,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(468, 317);
             this.panel1.TabIndex = 20;
-            this.panel1.EnabledChanged += new System.EventHandler(this.panel1_EnabledChanged);
             // 
             // groupBox5
             // 
@@ -951,17 +948,136 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "测试模组";
             // 
-            // cbCheckSlave
+            // panel2
             // 
-            this.cbCheckSlave.AutoSize = true;
-            this.cbCheckSlave.Checked = true;
-            this.cbCheckSlave.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbCheckSlave.Location = new System.Drawing.Point(6, 18);
-            this.cbCheckSlave.Name = "cbCheckSlave";
-            this.cbCheckSlave.Size = new System.Drawing.Size(72, 16);
-            this.cbCheckSlave.TabIndex = 9;
-            this.cbCheckSlave.Text = "从机循环";
-            this.cbCheckSlave.UseVisualStyleBackColor = true;
+            this.panel2.Controls.Add(this.性能测试);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.btnTest1);
+            this.panel2.Controls.Add(this.tbTestNum);
+            this.panel2.Controls.Add(this.lbTestTTime);
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.lbTestNum);
+            this.panel2.Controls.Add(this.label9);
+            this.panel2.Controls.Add(this.lbTestSTime);
+            this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.lbErrnum);
+            this.panel2.Location = new System.Drawing.Point(6, 57);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(190, 193);
+            this.panel2.TabIndex = 22;
+            // 
+            // lbErrnum
+            // 
+            this.lbErrnum.AutoSize = true;
+            this.lbErrnum.Location = new System.Drawing.Point(97, 135);
+            this.lbErrnum.Name = "lbErrnum";
+            this.lbErrnum.Size = new System.Drawing.Size(11, 12);
+            this.lbErrnum.TabIndex = 11;
+            this.lbErrnum.Text = "0";
+            this.lbErrnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(14, 135);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 12);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "误码次数(ms)";
+            // 
+            // lbTestSTime
+            // 
+            this.lbTestSTime.AutoSize = true;
+            this.lbTestSTime.Location = new System.Drawing.Point(97, 115);
+            this.lbTestSTime.Name = "lbTestSTime";
+            this.lbTestSTime.Size = new System.Drawing.Size(11, 12);
+            this.lbTestSTime.TabIndex = 9;
+            this.lbTestSTime.Text = "0";
+            this.lbTestSTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(14, 115);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 12);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "单次时间(ms)";
+            // 
+            // lbTestNum
+            // 
+            this.lbTestNum.AutoSize = true;
+            this.lbTestNum.Location = new System.Drawing.Point(97, 93);
+            this.lbTestNum.Name = "lbTestNum";
+            this.lbTestNum.Size = new System.Drawing.Size(11, 12);
+            this.lbTestNum.TabIndex = 7;
+            this.lbTestNum.Text = "0";
+            this.lbTestNum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(14, 93);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(77, 12);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "测试次数(次)";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(14, 70);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(77, 12);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "总耗时间(ms)";
+            // 
+            // lbTestTTime
+            // 
+            this.lbTestTTime.AutoSize = true;
+            this.lbTestTTime.Location = new System.Drawing.Point(97, 70);
+            this.lbTestTTime.Name = "lbTestTTime";
+            this.lbTestTTime.Size = new System.Drawing.Size(11, 12);
+            this.lbTestTTime.TabIndex = 4;
+            this.lbTestTTime.Text = "0";
+            this.lbTestTTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbTestNum
+            // 
+            this.tbTestNum.Location = new System.Drawing.Point(73, 30);
+            this.tbTestNum.Name = "tbTestNum";
+            this.tbTestNum.Size = new System.Drawing.Size(100, 21);
+            this.tbTestNum.TabIndex = 2;
+            this.tbTestNum.Text = "0";
+            // 
+            // btnTest1
+            // 
+            this.btnTest1.Location = new System.Drawing.Point(16, 163);
+            this.btnTest1.Name = "btnTest1";
+            this.btnTest1.Size = new System.Drawing.Size(166, 23);
+            this.btnTest1.TabIndex = 0;
+            this.btnTest1.Text = "开始";
+            this.btnTest1.UseVisualStyleBackColor = true;
+            this.btnTest1.Click += new System.EventHandler(this.btnTest1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 33);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "设置次数";
+            // 
+            // 性能测试
+            // 
+            this.性能测试.AutoSize = true;
+            this.性能测试.Location = new System.Drawing.Point(14, 6);
+            this.性能测试.Name = "性能测试";
+            this.性能测试.Size = new System.Drawing.Size(53, 12);
+            this.性能测试.TabIndex = 12;
+            this.性能测试.Text = "性能测试";
             // 
             // panel3
             // 
@@ -983,97 +1099,23 @@
             this.panel3.Size = new System.Drawing.Size(190, 213);
             this.panel3.TabIndex = 23;
             // 
-            // 测试指令
+            // label18
             // 
-            this.测试指令.AutoSize = true;
-            this.测试指令.Location = new System.Drawing.Point(14, 9);
-            this.测试指令.Name = "测试指令";
-            this.测试指令.Size = new System.Drawing.Size(53, 12);
-            this.测试指令.TabIndex = 24;
-            this.测试指令.Text = "测试指令";
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(14, 114);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(77, 12);
+            this.label18.TabIndex = 18;
+            this.label18.Text = "测试次数(次)";
             // 
-            // lbCMDErrNum
+            // label19
             // 
-            this.lbCMDErrNum.AutoSize = true;
-            this.lbCMDErrNum.Location = new System.Drawing.Point(97, 156);
-            this.lbCMDErrNum.Name = "lbCMDErrNum";
-            this.lbCMDErrNum.Size = new System.Drawing.Size(11, 12);
-            this.lbCMDErrNum.TabIndex = 23;
-            this.lbCMDErrNum.Text = "0";
-            this.lbCMDErrNum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tbCMDInfo
-            // 
-            this.tbCMDInfo.Location = new System.Drawing.Point(16, 25);
-            this.tbCMDInfo.Name = "tbCMDInfo";
-            this.tbCMDInfo.Size = new System.Drawing.Size(166, 21);
-            this.tbCMDInfo.TabIndex = 12;
-            this.tbCMDInfo.Text = "01 03 00 00 00 00 02";
-            // 
-            // btnCMD
-            // 
-            this.btnCMD.Location = new System.Drawing.Point(16, 180);
-            this.btnCMD.Name = "btnCMD";
-            this.btnCMD.Size = new System.Drawing.Size(166, 23);
-            this.btnCMD.TabIndex = 13;
-            this.btnCMD.Text = "开始";
-            this.btnCMD.UseVisualStyleBackColor = true;
-            this.btnCMD.Click += new System.EventHandler(this.btnCMD_Click);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(14, 156);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(77, 12);
-            this.label14.TabIndex = 22;
-            this.label14.Text = "误码次数(ms)";
-            // 
-            // tbCMDNum
-            // 
-            this.tbCMDNum.Location = new System.Drawing.Point(73, 58);
-            this.tbCMDNum.Name = "tbCMDNum";
-            this.tbCMDNum.Size = new System.Drawing.Size(100, 21);
-            this.tbCMDNum.TabIndex = 14;
-            this.tbCMDNum.Text = "0";
-            // 
-            // lbCMDSTime
-            // 
-            this.lbCMDSTime.AutoSize = true;
-            this.lbCMDSTime.Location = new System.Drawing.Point(97, 136);
-            this.lbCMDSTime.Name = "lbCMDSTime";
-            this.lbCMDSTime.Size = new System.Drawing.Size(11, 12);
-            this.lbCMDSTime.TabIndex = 21;
-            this.lbCMDSTime.Text = "0";
-            this.lbCMDSTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 61);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "发送次数";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(14, 136);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(77, 12);
-            this.label16.TabIndex = 20;
-            this.label16.Text = "单次时间(ms)";
-            // 
-            // lbCMDTTime
-            // 
-            this.lbCMDTTime.AutoSize = true;
-            this.lbCMDTTime.Location = new System.Drawing.Point(97, 91);
-            this.lbCMDTTime.Name = "lbCMDTTime";
-            this.lbCMDTTime.Size = new System.Drawing.Size(11, 12);
-            this.lbCMDTTime.TabIndex = 16;
-            this.lbCMDTTime.Text = "0";
-            this.lbCMDTTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(14, 91);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(77, 12);
+            this.label19.TabIndex = 17;
+            this.label19.Text = "总耗时间(ms)";
             // 
             // lbCMDSum
             // 
@@ -1085,154 +1127,109 @@
             this.lbCMDSum.Text = "0";
             this.lbCMDSum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label19
+            // lbCMDTTime
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(14, 91);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(77, 12);
-            this.label19.TabIndex = 17;
-            this.label19.Text = "总耗时间(ms)";
+            this.lbCMDTTime.AutoSize = true;
+            this.lbCMDTTime.Location = new System.Drawing.Point(97, 91);
+            this.lbCMDTTime.Name = "lbCMDTTime";
+            this.lbCMDTTime.Size = new System.Drawing.Size(11, 12);
+            this.lbCMDTTime.TabIndex = 16;
+            this.lbCMDTTime.Text = "0";
+            this.lbCMDTTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label18
+            // label16
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(14, 114);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(77, 12);
-            this.label18.TabIndex = 18;
-            this.label18.Text = "测试次数(次)";
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(14, 136);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(77, 12);
+            this.label16.TabIndex = 20;
+            this.label16.Text = "单次时间(ms)";
             // 
-            // panel2
+            // label3
             // 
-            this.panel2.Controls.Add(this.性能测试);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.btnTest1);
-            this.panel2.Controls.Add(this.tbTestNum);
-            this.panel2.Controls.Add(this.lbTestTTime);
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.lbTestNum);
-            this.panel2.Controls.Add(this.label9);
-            this.panel2.Controls.Add(this.lbTestSTime);
-            this.panel2.Controls.Add(this.label11);
-            this.panel2.Controls.Add(this.lbErrnum);
-            this.panel2.Location = new System.Drawing.Point(6, 57);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(190, 193);
-            this.panel2.TabIndex = 22;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 61);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "发送次数";
             // 
-            // 性能测试
+            // lbCMDSTime
             // 
-            this.性能测试.AutoSize = true;
-            this.性能测试.Location = new System.Drawing.Point(14, 6);
-            this.性能测试.Name = "性能测试";
-            this.性能测试.Size = new System.Drawing.Size(53, 12);
-            this.性能测试.TabIndex = 12;
-            this.性能测试.Text = "性能测试";
+            this.lbCMDSTime.AutoSize = true;
+            this.lbCMDSTime.Location = new System.Drawing.Point(97, 136);
+            this.lbCMDSTime.Name = "lbCMDSTime";
+            this.lbCMDSTime.Size = new System.Drawing.Size(11, 12);
+            this.lbCMDSTime.TabIndex = 21;
+            this.lbCMDSTime.Text = "0";
+            this.lbCMDSTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label1
+            // tbCMDNum
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 33);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "设置次数";
+            this.tbCMDNum.Location = new System.Drawing.Point(73, 58);
+            this.tbCMDNum.Name = "tbCMDNum";
+            this.tbCMDNum.Size = new System.Drawing.Size(100, 21);
+            this.tbCMDNum.TabIndex = 14;
+            this.tbCMDNum.Text = "0";
             // 
-            // btnTest1
+            // label14
             // 
-            this.btnTest1.Location = new System.Drawing.Point(16, 163);
-            this.btnTest1.Name = "btnTest1";
-            this.btnTest1.Size = new System.Drawing.Size(166, 23);
-            this.btnTest1.TabIndex = 0;
-            this.btnTest1.Text = "开始";
-            this.btnTest1.UseVisualStyleBackColor = true;
-            this.btnTest1.Click += new System.EventHandler(this.btnTest1_Click);
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(14, 156);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(77, 12);
+            this.label14.TabIndex = 22;
+            this.label14.Text = "误码次数(ms)";
             // 
-            // tbTestNum
+            // btnCMD
             // 
-            this.tbTestNum.Location = new System.Drawing.Point(73, 30);
-            this.tbTestNum.Name = "tbTestNum";
-            this.tbTestNum.Size = new System.Drawing.Size(100, 21);
-            this.tbTestNum.TabIndex = 2;
-            this.tbTestNum.Text = "0";
+            this.btnCMD.Location = new System.Drawing.Point(16, 180);
+            this.btnCMD.Name = "btnCMD";
+            this.btnCMD.Size = new System.Drawing.Size(166, 23);
+            this.btnCMD.TabIndex = 13;
+            this.btnCMD.Text = "开始";
+            this.btnCMD.UseVisualStyleBackColor = true;
+            this.btnCMD.Click += new System.EventHandler(this.btnCMD_Click);
             // 
-            // lbTestTTime
+            // tbCMDInfo
             // 
-            this.lbTestTTime.AutoSize = true;
-            this.lbTestTTime.Location = new System.Drawing.Point(97, 70);
-            this.lbTestTTime.Name = "lbTestTTime";
-            this.lbTestTTime.Size = new System.Drawing.Size(11, 12);
-            this.lbTestTTime.TabIndex = 4;
-            this.lbTestTTime.Text = "0";
-            this.lbTestTTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tbCMDInfo.Location = new System.Drawing.Point(16, 25);
+            this.tbCMDInfo.Name = "tbCMDInfo";
+            this.tbCMDInfo.Size = new System.Drawing.Size(166, 21);
+            this.tbCMDInfo.TabIndex = 12;
+            this.tbCMDInfo.Text = "01 03 00 00 00 00 02";
             // 
-            // label5
+            // lbCMDErrNum
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(14, 70);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 12);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "总耗时间(ms)";
+            this.lbCMDErrNum.AutoSize = true;
+            this.lbCMDErrNum.Location = new System.Drawing.Point(97, 156);
+            this.lbCMDErrNum.Name = "lbCMDErrNum";
+            this.lbCMDErrNum.Size = new System.Drawing.Size(11, 12);
+            this.lbCMDErrNum.TabIndex = 23;
+            this.lbCMDErrNum.Text = "0";
+            this.lbCMDErrNum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label7
+            // 测试指令
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(14, 93);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(77, 12);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "测试次数(次)";
+            this.测试指令.AutoSize = true;
+            this.测试指令.Location = new System.Drawing.Point(14, 9);
+            this.测试指令.Name = "测试指令";
+            this.测试指令.Size = new System.Drawing.Size(53, 12);
+            this.测试指令.TabIndex = 24;
+            this.测试指令.Text = "测试指令";
             // 
-            // lbTestNum
+            // cbCheckSlave
             // 
-            this.lbTestNum.AutoSize = true;
-            this.lbTestNum.Location = new System.Drawing.Point(97, 93);
-            this.lbTestNum.Name = "lbTestNum";
-            this.lbTestNum.Size = new System.Drawing.Size(11, 12);
-            this.lbTestNum.TabIndex = 7;
-            this.lbTestNum.Text = "0";
-            this.lbTestNum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 115);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(77, 12);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "单次时间(ms)";
-            // 
-            // lbTestSTime
-            // 
-            this.lbTestSTime.AutoSize = true;
-            this.lbTestSTime.Location = new System.Drawing.Point(97, 115);
-            this.lbTestSTime.Name = "lbTestSTime";
-            this.lbTestSTime.Size = new System.Drawing.Size(11, 12);
-            this.lbTestSTime.TabIndex = 9;
-            this.lbTestSTime.Text = "0";
-            this.lbTestSTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(14, 135);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(77, 12);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "误码次数(ms)";
-            // 
-            // lbErrnum
-            // 
-            this.lbErrnum.AutoSize = true;
-            this.lbErrnum.Location = new System.Drawing.Point(97, 135);
-            this.lbErrnum.Name = "lbErrnum";
-            this.lbErrnum.Size = new System.Drawing.Size(11, 12);
-            this.lbErrnum.TabIndex = 11;
-            this.lbErrnum.Text = "0";
-            this.lbErrnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cbCheckSlave.AutoSize = true;
+            this.cbCheckSlave.Checked = true;
+            this.cbCheckSlave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbCheckSlave.Location = new System.Drawing.Point(6, 18);
+            this.cbCheckSlave.Name = "cbCheckSlave";
+            this.cbCheckSlave.Size = new System.Drawing.Size(72, 16);
+            this.cbCheckSlave.TabIndex = 9;
+            this.cbCheckSlave.Text = "从机循环";
+            this.cbCheckSlave.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -1244,9 +1241,8 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "RS485通讯板上位机V1.0";
+            this.Text = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -1261,10 +1257,10 @@
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
