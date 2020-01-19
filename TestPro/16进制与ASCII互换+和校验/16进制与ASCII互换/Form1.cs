@@ -119,5 +119,35 @@ namespace _16进制与ASCII互换
 
             tbPLCSum.Text = Convert.ToString(Convert.ToInt32(ASCII[Second]), 16) + " " + Convert.ToString(Convert.ToInt32(ASCII[First]), 16);
         }
+
+        private void btnXOR_Click(object sender, EventArgs e)
+        {
+            byte[] info = new byte[7];
+            string PLC_Info = tbPLC.Text.Trim();
+            string[] SinglePLC = PLC_Info.Split(' ');
+            for (int i = 0; i < SinglePLC.Length; i++)
+            {
+                info[i] = Convert.ToByte(SinglePLC[i],16);
+            }
+            info[6] = Get_Crc(info,6);
+            tbPLCSum.Text = Convert.ToString(info[6], 16).ToUpper();
+        }
+
+        /// <summary>
+        /// 异或和校验码
+        /// </summary>
+        /// <param name="buf"></param>
+        /// <param name="len"></param>
+        /// <returns></returns>
+        byte Get_Crc(byte[] buf, byte len)
+        {
+            byte crc = 0;
+            byte i = 0;
+            for (i = 0; i < len; i++)
+            {
+                crc ^= buf[i];
+            }
+            return crc;
+        }
     }
 }

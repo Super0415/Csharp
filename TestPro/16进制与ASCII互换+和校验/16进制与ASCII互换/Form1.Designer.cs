@@ -40,6 +40,7 @@
             this.lbPLCSum = new System.Windows.Forms.Label();
             this.btnPLCSum = new System.Windows.Forms.Button();
             this.tbPLCSum = new System.Windows.Forms.TextBox();
+            this.btnXOR = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbASCII
@@ -128,17 +129,17 @@
             this.lbPLCSum.AutoSize = true;
             this.lbPLCSum.Location = new System.Drawing.Point(12, 175);
             this.lbPLCSum.Name = "lbPLCSum";
-            this.lbPLCSum.Size = new System.Drawing.Size(119, 12);
+            this.lbPLCSum.Size = new System.Drawing.Size(53, 12);
             this.lbPLCSum.TabIndex = 9;
-            this.lbPLCSum.Text = "PLC和校验（包含02）";
+            this.lbPLCSum.Text = "校验计算";
             // 
             // btnPLCSum
             // 
-            this.btnPLCSum.Location = new System.Drawing.Point(315, 202);
+            this.btnPLCSum.Location = new System.Drawing.Point(298, 188);
             this.btnPLCSum.Name = "btnPLCSum";
-            this.btnPLCSum.Size = new System.Drawing.Size(75, 23);
+            this.btnPLCSum.Size = new System.Drawing.Size(126, 23);
             this.btnPLCSum.TabIndex = 10;
-            this.btnPLCSum.Text = "---->";
+            this.btnPLCSum.Text = "PLC和校验->";
             this.btnPLCSum.UseVisualStyleBackColor = true;
             this.btnPLCSum.Click += new System.EventHandler(this.btnPLCSum_Click);
             // 
@@ -150,11 +151,22 @@
             this.tbPLCSum.Size = new System.Drawing.Size(147, 48);
             this.tbPLCSum.TabIndex = 11;
             // 
+            // btnXOR
+            // 
+            this.btnXOR.Location = new System.Drawing.Point(298, 217);
+            this.btnXOR.Name = "btnXOR";
+            this.btnXOR.Size = new System.Drawing.Size(126, 23);
+            this.btnXOR.TabIndex = 12;
+            this.btnXOR.Text = "异或和校验->";
+            this.btnXOR.UseVisualStyleBackColor = true;
+            this.btnXOR.Click += new System.EventHandler(this.btnXOR_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(645, 250);
+            this.Controls.Add(this.btnXOR);
             this.Controls.Add(this.tbPLCSum);
             this.Controls.Add(this.btnPLCSum);
             this.Controls.Add(this.lbPLCSum);
@@ -188,6 +200,7 @@
         private System.Windows.Forms.Label lbPLCSum;
         private System.Windows.Forms.Button btnPLCSum;
         private System.Windows.Forms.TextBox tbPLCSum;
+        private System.Windows.Forms.Button btnXOR;
     }
 }
 
