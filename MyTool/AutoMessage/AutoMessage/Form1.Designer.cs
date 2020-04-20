@@ -36,6 +36,7 @@
             this.lbBaud = new System.Windows.Forms.Label();
             this.tbRecode = new System.Windows.Forms.TextBox();
             this.pl1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnIncrease = new System.Windows.Forms.Button();
             this.btnReduce = new System.Windows.Forms.Button();
             this.cbHex = new System.Windows.Forms.CheckBox();
@@ -120,6 +121,7 @@
             // 
             // pl1
             // 
+            this.pl1.Controls.Add(this.label1);
             this.pl1.Controls.Add(this.btnIncrease);
             this.pl1.Controls.Add(this.btnReduce);
             this.pl1.Controls.Add(this.cbHex);
@@ -146,6 +148,16 @@
             this.pl1.Name = "pl1";
             this.pl1.Size = new System.Drawing.Size(441, 176);
             this.pl1.TabIndex = 8;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(5, 157);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 12);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "接收次数：0";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // btnIncrease
             // 
@@ -453,6 +465,7 @@
         private System.Windows.Forms.ToolStripMenuItem 重命名ToolStripMenuItem;
         private System.Windows.Forms.Button btnIncrease;
         private System.Windows.Forms.Button btnReduce;
+        private System.Windows.Forms.Label label1;
     }
 }
 

@@ -27,7 +27,12 @@ namespace AutoMessage
         /// <summary>
         /// 指令序号
         /// </summary>
-        int index = 0;  
+        int index = 0;
+
+        /// <summary>
+        /// 接收次数
+        /// </summary>
+        int ReNum = 0;
 
         /// <summary>
         /// 串口通讯选项配置
@@ -101,6 +106,8 @@ namespace AutoMessage
                         }
 
                         RecodeInfo("\r\n接收数据：" + Rebuff.ToUpper());
+                        ReNum++;
+                        label1.Text = "接收次数：" + ReNum.ToString();
                         Stbuff = "未指定此响应指令";
                         for (int i = 0;i < MainData.Length; i++)
                         {
@@ -108,8 +115,15 @@ namespace AutoMessage
                             {
                                 Stbuff = MainData[i].feedback;
                                 Byte[] StData = strToToHexByte(Stbuff);
-
-                                COM.Write(StData, 0, StData.Length);
+                                try
+                                {
+                                    COM.Write(StData, 0, StData.Length);
+                                }
+                                catch
+                                {
+                                    RecodeInfo("\r\n发送失败！");
+                                }
+                                
                                 break;
                             }
                         }
@@ -165,8 +179,6 @@ namespace AutoMessage
 
                     btnConnect.Text = "已连接";
                     RecodeInfo("串口已连接");
-
-
 
                 }
                 catch (Exception ex)
@@ -307,6 +319,12 @@ namespace AutoMessage
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             System.Environment.Exit(0); //关闭主窗体时，关闭所有线程
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            ReNum = 0;
+            label1.Text = "接收次数：" + ReNum.ToString();
         }
     }
 }
