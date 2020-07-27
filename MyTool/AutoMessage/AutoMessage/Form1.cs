@@ -262,7 +262,19 @@ namespace AutoMessage
         {
             try
             {
-                FileStream fs = new FileStream("CMD.txt", FileMode.OpenOrCreate, FileAccess.Read);
+                string fileName = "CMD.txt";
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                openFileDialog1.InitialDirectory = "C:\\";
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = openFileDialog1.FileName;
+                }
+
+                this.Name = fileName;
+
+
+
+                FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Read);
                 StreamReader m_streamReader = new StreamReader(fs);
 
                 string line;
