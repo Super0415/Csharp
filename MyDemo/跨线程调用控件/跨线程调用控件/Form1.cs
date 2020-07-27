@@ -278,7 +278,7 @@ namespace 跨线程调用控件
         private void 开启线程_Click(object sender, EventArgs e)
         {
             RecordInfo("开启线程");
-            backgroundWorker1.RunWorkerAsync(); 
+            backgroundWorker1.RunWorkerAsync();     //开始
         }
 
         private void 关闭线程_Click(object sender, EventArgs e)
