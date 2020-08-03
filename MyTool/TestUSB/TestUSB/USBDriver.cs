@@ -1,9 +1,11 @@
 ﻿using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 
 namespace TestUSB
 {
@@ -117,11 +119,18 @@ namespace TestUSB
 		[DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Auto)]
 		private static extern bool SetupDiGetDeviceInterfaceDetail(IntPtr deviceInfoSet, ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData, IntPtr deviceInterfaceDetailData,
 			int deviceInterfaceDetailDataSize, ref int requiredSize, SP_DEVINFO_DATA deviceInfoData);
-		#endregion
 
-		#region  常量
+        //额外添加接口
+        [DllImport("hid.dll", SetLastError = true)]
+        private static extern int HidD_GetPreparsedData(
+            int hObject,                                // IN HANDLE  HidDeviceObject,   
+            ref int pPHIDP_PREPARSED_DATA);
 
-		public enum DIGCF
+        #endregion
+
+        #region  常量
+
+        public enum DIGCF
 		{
 			DIGCF_DEFAULT = 0x1,
 			DIGCF_PRESENT = 0x2,
@@ -254,7 +263,7 @@ namespace TestUSB
 		/// <summary>
 		/// 接收长度
 		/// </summary>
-		public ulong RecvLen { get { return _RecvLen; } set { _RecvLen = value; } }
+		public ulong RecvLen { get { return _RecvLen; } /*set { _RecvLen = value; }*/ }
 		private ulong _RecvLen = 0;
 
 
@@ -269,7 +278,7 @@ namespace TestUSB
             {
                 _CanRead = false;
                 _CanWrite = false;
-                HIDInfoList[n].fs.Close();
+                HIDInfoList[n].fs.Close();             
                 return true;
             }
             catch (Exception)
@@ -333,62 +342,111 @@ namespace TestUSB
 			return -1;
 		}
 
-
-		/// <summary>
-		/// 异步发送
-		/// </summary>
-		/// <param name="n">设备号</param>
-		/// <param name="s">要发送的64位byte[]</param>
-		public async void Send(int n, byte[] s)
+       
+        /// <summary>
+        /// 异步发送
+        /// </summary>
+        /// <param name="n">设备号</param>
+        /// <param name="s">要发送的64位byte[]</param>
+        public async void Send(int n, byte[] s)
 		{
-			_CanWrite = false;
-			byte[] SendBuffer = new byte[65];
-			SendBuffer[0] = 0x00;
-			for (int i = 0; i < 64; i++)
+            //_CanWrite = false;
+            //byte[] SendBuffer = new byte[65];
+            //SendBuffer[0] = 0x00;
+            //for (int i = 0; i < 64; i++)
+            //         {
+            //             if(i<s.Length) SendBuffer[i + 1] = s[i];
+            //             else SendBuffer[i + 1] = 0;
+            //         }
+            //try
+            //{
+            //	await List[n].fs.WriteAsync(SendBuffer, 0, 65);
+            //}
+            //catch (Exception ex)
+            //{
+            //             MessageBox.Show(ex.ToString());
+            //	return;
+            //}
+            //_CanWrite = true;
+
+
+
+            _CanWrite = false;
+            byte[] SendBuffer = new byte[65];
+            SendBuffer[0] = 0x00;
+            for (int i = 0; i < 64; i++)
             {
-                if(i<s.Length) SendBuffer[i + 1] = s[i];
+                if (i < s.Length) SendBuffer[i + 1] = s[i];
                 else SendBuffer[i + 1] = 0;
             }
-			try
-			{
-				await List[n].fs.WriteAsync(SendBuffer, 0, 65);
-			}
-			catch (Exception)
-			{
-				return;
-			}
-			_CanWrite = true;
-		}
-		/// <summary>
-		/// 异步接收
-		/// </summary>
-		public async void Recv(int n, byte[] r, List<byte> l)
-		{
-			_CanRead = false;
-			byte[] RecvBuffer = new byte[65];
-			int count = 0;
-			try
-			{
-				count = await List[n].fs.ReadAsync(RecvBuffer, 0, 65);
-			}
-			catch (Exception)
-			{
-				return;
-			}
+            try
+            {
+                await List[n].fs.WriteAsync(SendBuffer, 0, 65);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return;
+            }
+            _CanWrite = true;
 
-			if (count >= 63)
-			{
-				for (int i = 0; i < 64; i++) { r[i] = RecvBuffer[i + 1]; l.Add(r[i]); }
-				_RecvLen++;
-				if (_RecvLen > 1844674407370955160)
-				{
-					_RecvLen = 0;
-				}
-			}
-			_CanRead = true;
-		}
-	#endregion
-	}
+
+
+        }
+        public Dictionary<int, string> RecvBuffer = new Dictionary<int, string>();
+        List<byte> buff2 = new List<byte>();
+        /// <summary>
+        /// 异步接收
+        /// </summary>
+        public void Recv(int n)
+        {
+            _CanRead = false;
+            byte[] buff1 = new byte[65];
+            
+            int count = 0;
+
+            try
+            {
+                count = List[n].fs.Read(buff1, 0, 65);
+            }
+            catch (Exception ex)
+            {
+
+                return;
+            }
+
+            if (count >= 63)
+            {
+                for (int i = 0; i < 64; i++)
+                {
+                    if (buff1[i + 1] != '\0')
+                    {
+                        buff2.Add(buff1[i + 1]);
+                    }
+                    if (buff1[i] == '\r' && buff1[i + 1] == '\n')
+                    {
+                        RecvBuffer[RecvBuffer.Count] = Encoding.Default.GetString(buff2.ToArray());
+                        buff2.Clear();
+                    }
+                }
+                _RecvLen++;
+                if (_RecvLen > 1844674407370955160)
+                {
+                    _RecvLen = 0;
+                }
+                _CanRead = true;
+
+
+            }
+        }
+
+        void Clear()
+        {
+            RecvBuffer.Clear();
+        }
+
+        #endregion
+    }
 }
 
 	

@@ -32,6 +32,8 @@
             this.cbbUSBdevice = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tbUSBInfo = new System.Windows.Forms.TextBox();
+            this.cmsUSBInfo = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.清空文本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.tbPVN = new System.Windows.Forms.TextBox();
@@ -43,18 +45,22 @@
             this.lbPID = new System.Windows.Forms.Label();
             this.lbSelect = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cbHex = new System.Windows.Forms.CheckBox();
             this.gbSend = new System.Windows.Forms.GroupBox();
             this.btnSent = new System.Windows.Forms.Button();
             this.tbSend = new System.Windows.Forms.TextBox();
             this.gbReceive = new System.Windows.Forms.GroupBox();
             this.tbReceive = new System.Windows.Forms.TextBox();
-            this.cbHex = new System.Windows.Forms.CheckBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.cmsReceiveInfo = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.清空ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
+            this.cmsUSBInfo.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.gbSend.SuspendLayout();
             this.gbReceive.SuspendLayout();
+            this.cmsReceiveInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbbUSBdevice
@@ -77,11 +83,27 @@
             // 
             // tbUSBInfo
             // 
+            this.tbUSBInfo.ContextMenuStrip = this.cmsUSBInfo;
             this.tbUSBInfo.Location = new System.Drawing.Point(3, 226);
             this.tbUSBInfo.Multiline = true;
             this.tbUSBInfo.Name = "tbUSBInfo";
+            this.tbUSBInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbUSBInfo.Size = new System.Drawing.Size(214, 217);
             this.tbUSBInfo.TabIndex = 1;
+            // 
+            // cmsUSBInfo
+            // 
+            this.cmsUSBInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.清空文本ToolStripMenuItem});
+            this.cmsUSBInfo.Name = "cmsTest";
+            this.cmsUSBInfo.Size = new System.Drawing.Size(125, 26);
+            // 
+            // 清空文本ToolStripMenuItem
+            // 
+            this.清空文本ToolStripMenuItem.Name = "清空文本ToolStripMenuItem";
+            this.清空文本ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.清空文本ToolStripMenuItem.Text = "清空文本";
+            this.清空文本ToolStripMenuItem.Click += new System.EventHandler(this.USBInfoClear_Click);
             // 
             // groupBox1
             // 
@@ -192,6 +214,16 @@
             this.panel2.Size = new System.Drawing.Size(564, 446);
             this.panel2.TabIndex = 2;
             // 
+            // cbHex
+            // 
+            this.cbHex.AutoSize = true;
+            this.cbHex.Location = new System.Drawing.Point(453, 23);
+            this.cbHex.Name = "cbHex";
+            this.cbHex.Size = new System.Drawing.Size(60, 16);
+            this.cbHex.TabIndex = 5;
+            this.cbHex.Text = "16进制";
+            this.cbHex.UseVisualStyleBackColor = true;
+            // 
             // gbSend
             // 
             this.gbSend.Controls.Add(this.btnSent);
@@ -233,26 +265,33 @@
             // 
             // tbReceive
             // 
+            this.tbReceive.ContextMenuStrip = this.cmsReceiveInfo;
             this.tbReceive.Location = new System.Drawing.Point(6, 20);
             this.tbReceive.Multiline = true;
             this.tbReceive.Name = "tbReceive";
+            this.tbReceive.ReadOnly = true;
+            this.tbReceive.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbReceive.Size = new System.Drawing.Size(416, 253);
             this.tbReceive.TabIndex = 2;
             // 
-            // cbHex
-            // 
-            this.cbHex.AutoSize = true;
-            this.cbHex.Location = new System.Drawing.Point(453, 23);
-            this.cbHex.Name = "cbHex";
-            this.cbHex.Size = new System.Drawing.Size(60, 16);
-            this.cbHex.TabIndex = 5;
-            this.cbHex.Text = "16进制";
-            this.cbHex.UseVisualStyleBackColor = true;
-            // 
             // timer1
             // 
-            this.timer1.Enabled = true;
+            this.timer1.Interval = 10;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // cmsReceiveInfo
+            // 
+            this.cmsReceiveInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.清空ToolStripMenuItem});
+            this.cmsReceiveInfo.Name = "cmsReceiveInfo";
+            this.cmsReceiveInfo.Size = new System.Drawing.Size(101, 26);
+            // 
+            // 清空ToolStripMenuItem
+            // 
+            this.清空ToolStripMenuItem.Name = "清空ToolStripMenuItem";
+            this.清空ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.清空ToolStripMenuItem.Text = "清空";
+            this.清空ToolStripMenuItem.Click += new System.EventHandler(this.ReceiveClear_Click);
             // 
             // Form1
             // 
@@ -265,6 +304,7 @@
             this.Text = "HID - USB";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.cmsUSBInfo.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -273,6 +313,7 @@
             this.gbSend.PerformLayout();
             this.gbReceive.ResumeLayout(false);
             this.gbReceive.PerformLayout();
+            this.cmsReceiveInfo.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -300,6 +341,10 @@
         private System.Windows.Forms.TextBox tbReceive;
         private System.Windows.Forms.CheckBox cbHex;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ContextMenuStrip cmsUSBInfo;
+        private System.Windows.Forms.ToolStripMenuItem 清空文本ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmsReceiveInfo;
+        private System.Windows.Forms.ToolStripMenuItem 清空ToolStripMenuItem;
     }
 }
 
