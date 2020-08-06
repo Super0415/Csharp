@@ -19,6 +19,7 @@ namespace 获取可选文件路径
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            openFileDialog1.InitialDirectory = @"../";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string fName = openFileDialog1.FileName;
