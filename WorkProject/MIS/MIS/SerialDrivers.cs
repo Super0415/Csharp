@@ -91,6 +91,11 @@ namespace MIS
             thread = new Thread(CheckSerial);
             thread.IsBackground = true;
             thread.Start();
+
+            //Port = "COM9";
+            //Open();
+            //SendReadCmd(0);
+
             stopwatch = new Stopwatch();
 
             mydata = MyData.Instance;
@@ -107,10 +112,12 @@ namespace MIS
             {
                 if (statePort == true)
                 {
+
                     if (stopwatch.ElapsedMilliseconds > 3000)
                     {
                         stopwatch.Restart();
                         statePort = false;
+                        stateNFC = false;
                     }
                     else if (stopwatch.ElapsedMilliseconds > 1000)
                     {
@@ -186,21 +193,70 @@ namespace MIS
                 //缓存数据           
                 buffer.AddRange(buf);
                 //验证数据完整
-                if (buffer.Count == 23)
+
+                int countX = buffer.Count / 23;
+                int countY = buffer.Count % 23;
+                if (countY != 0 || countX == 0)
+                    return;
+
+                byte[] buff = buffer.ToArray();
+                byte[] bu = new byte[23];
+                for (int i = 0; i < countX; i++)
                 {
-                    //验证帧头帧尾
-                    if (buffer[0] == 0xEB && buffer[1] == 0x91 && buffer[21] == 0xAA && buffer[22] == 0xBB)
+                    for (int j = 0; j < 23; j++)
                     {
-                        if (CheckDataOut(buffer.ToArray()) == buffer[20])
+                        bu[j] = buff[j + i * 23];
+                    }
+
+                    //验证帧头帧尾
+                    if (bu[0] == 0xeb && bu[1] == 0x91 && bu[21] == 0xaa && bu[22] == 0xbb)
+                    {
+
+
+                        if (CheckDataOut(bu) == bu[20])
                         {
-                            AnalysisData(buffer.ToArray());
-                            statePort = true;
-                            myPort = Port;
-                            stopwatch.Restart();
+
+                            try
+                            {
+
+
+                                AnalysisData(bu);
+                                statePort = true;
+                                myPort = port;
+                                stopwatch.Restart();
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine(ex.ToString());
+                            }
+                        }
+                        else
+                        {
+
                         }
                     }
-                    buffer.Clear();
+
                 }
+                buffer.Clear();
+                //if (buffer.Count == 23)
+                //{
+                //    //验证帧头帧尾
+                //    if (buffer[0] == 0xEB && buffer[1] == 0x91 && buffer[21] == 0xAA && buffer[22] == 0xBB)
+                //    {
+                //        if (CheckDataOut(buffer.ToArray()) == buffer[20])
+                //        {
+                //            AnalysisData(buffer.ToArray());
+                //            statePort = true;
+                //            myPort = Port;
+                //            stopwatch.Restart();
+                //        }
+                //    }
+                //    buffer.Clear();
+                //}
+                //else if(buffer.Count > 23)
+                //{
+                //    buffer.Clear();
+                //}
             }
             catch (Exception ex)
             {
@@ -245,8 +301,8 @@ namespace MIS
         /// 发送写卡指令
         /// </summary>
         /// <param name="n">区块号</param>
-        /// <param name="data">数据</param>
-        private void SendWriteCmd(int n, byte[] data)
+        /// <param name="data">数据(最大16字节)</param>
+        public void SendWriteCmd(int n, byte[] data)
         {
             byte[] msg = new byte[23];
             int len = 16 < data.Length ? 16 : data.Length;
@@ -269,8 +325,8 @@ namespace MIS
         /// 发送读卡指令        
         /// </summary>
         /// <param name="n">区块号</param>
-        /// <param name="data">数据</param>
-        private void SendReadCmd(int n)
+        /// <param name="data">数据(最大16字节)</param>
+        public void SendReadCmd(int n)
         {
             byte[] msg = new byte[23];
             int len = 16;
@@ -305,6 +361,19 @@ namespace MIS
             return (byte)(0x100 - (byte)Sum);
         }
 
+        /// <summary>
+        /// 根据块地址，寻找块序号
+        /// </summary>
+        /// <param name="recData"></param>
+        private int GetBlockNum(byte recData)
+        {
+            for (int i = 0; i < BlockNumber.Length; i++)
+            {
+                if (BlockNumber[i] == recData)
+                    return i;
+            }
+            return int.MaxValue;
+        }
 
         /// <summary>
         /// 当前通讯卡号
@@ -325,45 +394,69 @@ namespace MIS
             {
                 case 0x00:      //无NFC卡
                     stateNFC = false;
-                    mydata.ReflashCardState(nowCard, "FAIL");
-                    mydata.ReflashCardActionState(nowCard, "无卡");
+                    //mydata.ReflashCardState(nowCard, "FAIL");
+                    mydata.ReflashCardActionState(nowCard, MyData.ActionStr.无卡);
                     break;
                 case 0x01:      //识别卡并校验成功
                     DistinguishCardAndCheckOK(data);
-                    mydata.ReflashCardState(nowCard, "OK");
+                    //mydata.ReflashCardState(nowCard, "OK");
                     stateNFC = true;
                     break;
                 case 0x02:      //识别卡但校验失败
                     DistinguishCardAndCheckFail(data);
-                    mydata.ReflashCardState(nowCard, "FAIL");
+                    //mydata.ReflashCardState(nowCard, "FAIL");
                     stateNFC = true;
                     break;
                 case 0x03:      //读卡成功，数据有效
                     stateNFC = true;
-                    ReadCarkOK(data);
-                    mydata.ReflashCardState(nowCard, "OK");
-                    mydata.ReflashCardActionState(nowCard, "读卡成功");
+                    //ReadCarkOK(data);
+                    //mydata.ReflashCardState(nowCard, "OK");
+                    mydata.ReflashCardActionState(nowCard, MyData.ActionStr.读卡中);
+                    int numR = GetBlockNum(data[3]);
+                    if (numR == int.MaxValue)
+                    {
+                        mydata.ReflashCardActionState(nowCard, MyData.ActionStr.读卡失败);
+                    }
+                    else
+                    {
+                        byte[] buff = new byte[22];
+                        for (int i = 0; i < 16; i++)
+                        {
+                            buff[i] = data[4 + i];
+                        }
+                        mydata.DealRecData(nowCard, numR, buff);
+                        mydata.ReflashComState(nowCard, numR, true);
+                    }
                     break;
                 case 0x04:      //读卡失败，数据无效
-                    mydata.ReflashCardState(nowCard, "FAIL");
-                    mydata.ReflashCardActionState(nowCard, "读卡失败");
+                    //mydata.ReflashCardState(nowCard, "FAIL");
+                    mydata.ReflashCardActionState(nowCard, MyData.ActionStr.读卡失败);
                     stateNFC = false;
                     break;
                 case 0x05:      //写卡成功，数据无效
-                    mydata.ReflashCardActionState(nowCard, "写卡成功");
+                    mydata.ReflashCardActionState(nowCard, MyData.ActionStr.写卡中);
+                    mydata.ReceWriteDel(nowCard);
+                    //int numW = GetBlockNum(data[3]);
+                    //if (numW == int.MaxValue)
+                    //{
+                    //    mydata.ReflashCardActionState(nowCard, MyData.ActionStr.读卡失败);
+                    //}
+                    //else
+                    //{
+                    //    mydata.ReflashComState(nowCard, numW, true);
+                    //}
                     break;
                 case 0x06:      //写卡失败，数据无效
-                    mydata.ReflashCardActionState(nowCard, "写卡失败");
+                    mydata.ReflashCardActionState(nowCard, MyData.ActionStr.写卡失败);
                     break;
                 case 0x07:      //非法存储块操作
-                    mydata.ReflashCardActionState(nowCard, "非法操作");
+                    mydata.ReflashCardActionState(nowCard, MyData.ActionStr.非法操作);
                     break;
                 case 0xFF:      //硬件初始化失败
                     stateNFC = false;
-                    mydata.ReflashCardActionState(nowCard, "初始化失败");
+                    mydata.ReflashCardActionState(nowCard, MyData.ActionStr.初始化失败);
                     break;
                 case 0xEE:      //硬件初始化成功
-                    mydata.ReflashCardActionState(nowCard, "初始化成功");
                     break;
 
             }
@@ -385,7 +478,7 @@ namespace MIS
                     buff[i] = data[4+i];
                 }
                 string str = System.Text.Encoding.Default.GetString(buff);
-                mydata.ReadUserInfo(nowCard, buff[3], str);
+                mydata.ReadUserInfo(nowCard, data[3], str);
             }
         }
 
@@ -399,10 +492,13 @@ namespace MIS
             if (!mydata.IsRepeat(num.ToString()))
             {
                 nowCard = num.ToString();
-                mydata.Add(nowCard);
+                mydata.NFCAdd(nowCard);
                 
             }
         }
+
+
+
 
         /// <summary>
         /// 识别卡并校验成功
@@ -414,7 +510,7 @@ namespace MIS
             if (!mydata.IsRepeat(num.ToString()))
             {
                 nowCard = num.ToString();
-                mydata.Add(nowCard);                
+                mydata.NFCAdd(nowCard);                
             }
         }
 
