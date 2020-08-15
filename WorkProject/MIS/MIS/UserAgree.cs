@@ -104,7 +104,7 @@ namespace MIS
         /// <param name="select"></param>
         private void SendWriteNFCCmd(int select,string cardId)
         {
-            Thread.Sleep(100);
+            Thread.Sleep(50);
             MyData.DetailInfo buff = dicdata[cardId];
             string str = buff.userInfoW[(MyData.Item)select];
             byte[] temp = System.Text.Encoding.Default.GetBytes(str);
@@ -147,7 +147,7 @@ namespace MIS
         /// <param name="select"></param>
         private void SendReadNFCCmd(int select, string cardId)
         {
-            Thread.Sleep(100);
+            Thread.Sleep(50);
             MyData.DetailInfo buff = dicdata[cardId];
             //string str = buff.userInfoR[(MyData.Item)select];
             //byte[] temp = System.Text.Encoding.UTF8.GetBytes(str);

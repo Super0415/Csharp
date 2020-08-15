@@ -88,6 +88,11 @@ namespace MIS
         /// <param name="e"></param>
         private void btnWrite_Click(object sender, EventArgs e)
         {
+            if (!userAgree.GetStateNFC())
+            {
+                MessageBox.Show("无NFC卡！");
+                return;
+            }
             string NowNFCCard = userAgree.GetNowNFCCard();
             WriteInfo iForm = new WriteInfo(NowNFCCard, MyData.ProductType.NFC.ToString());
             iForm.Owner = this;
@@ -106,7 +111,7 @@ namespace MIS
                 MyData.DetailInfo buff = data[NowNFCCard];
                 int index = dataGridView1.Rows.Add();//获取新的一行
                 dataGridView1.Rows[index].Cells[0].Value = index + 1;
-                dataGridView1.Rows[index].Cells[1].Value = buff.userInfoW[MyData.Item.comType] + (buff.actionstate == MyData.ActionStr.读卡完成 ? MyData.ActionStr.写卡成功 : MyData.ActionStr.写卡失败);
+                dataGridView1.Rows[index].Cells[1].Value = buff.userInfoW[MyData.Item.comType] + (buff.actionstate == MyData.ActionStr.读卡完成 ? MyData.ActionStr.写卡完成 : MyData.ActionStr.写卡失败);
                 dataGridView1.Rows[index].Cells[2].Value = buff.userInfoW[MyData.Item.name];
                 dataGridView1.Rows[index].Cells[3].Value = buff.userInfoW[MyData.Item.sex];
                 dataGridView1.Rows[index].Cells[4].Value = buff.userInfoW[MyData.Item.age];
@@ -129,10 +134,10 @@ namespace MIS
         /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
-            string NowNFCCard = userAgree.GetNowNFCCard();
-            WriteInfo iForm = new WriteInfo(NowNFCCard, MyData.ProductType.USBkey.ToString());
-            iForm.Owner = this;
-            iForm.Show();
+            //string NowNFCCard = userAgree.GetNowNFCCard();
+            //WriteInfo iForm = new WriteInfo(NowNFCCard, MyData.ProductType.USBkey.ToString());
+            //iForm.Owner = this;
+            //iForm.Show();
         }
 
         /// <summary>
