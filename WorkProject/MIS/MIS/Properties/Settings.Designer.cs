@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TestUSB.Properties
+namespace MIS.Properties
 {
 
 
