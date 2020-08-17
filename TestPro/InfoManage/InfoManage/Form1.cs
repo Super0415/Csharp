@@ -21,7 +21,19 @@ namespace InfoManage
 
         private void tsmiSave_Click(object sender, EventArgs e)
         {
-            
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = "请选择文件路径";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string foldPath = dialog.SelectedPath;
+                //DirectoryInfo theFolder = new DirectoryInfo(foldPath);
+                //FileInfo[] dirInfo = theFolder.GetFiles();
+                ////遍历文件夹
+                //foreach (FileInfo file in dirInfo)
+                //{
+                //    MessageBox.Show(file.ToString());
+                //}
+            }
         }
 
         private void tsmiOpen_Click(object sender, EventArgs e)
